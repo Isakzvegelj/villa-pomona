@@ -25,6 +25,10 @@ class DashboardHandler(http.server.SimpleHTTPRequestHandler):
                 with open(INBOX_PATH, 'r') as f:
                     inbox_content = f.read()
 
+            # The daemon doesn't store the command queue in a file currently,
+            # but we can see the queue depth in STATUS.md if we add it there.
+            # STATUS.md is already being read.
+
             import markdown
             try:
                 # Basic conversion if markdown library is available, 

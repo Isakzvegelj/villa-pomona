@@ -2,12 +2,16 @@ import asyncio
 import discord
 import subprocess
 import os
+import sys
 import time
 import json
+import re
 from datetime import datetime
+from collections import deque
 
 # Paths
 CLAW_DIR = "/Users/isakzvegelj/clawd"
+VERSION = "v1.1.0"
 INBOX_PATH = os.path.join(CLAW_DIR, "INBOX.md")
 STATUS_PATH = os.path.join(CLAW_DIR, "STATUS.md")
 DROP_DIR = os.path.join(CLAW_DIR, "drop")
@@ -46,26 +50,86 @@ class RalphBot(discord.Client):
         super().__init__(*args, **kwargs)
         self.bot_config = bot_config
         self.bg_task = None
+        self.worker_task = None
+        self.command_queue = deque()
+        self.active_task_info = None
+        self.task_event = asyncio.Event()
+        self.last_usage = None
 
     async def setup_hook(self) -> None:
         self.bg_task = self.loop.create_task(self.monitor_loop())
+        self.worker_task = self.loop.create_task(self.queue_worker())
+
+    async def send_whatsapp(self, message):
+        phone = self.bot_config.get("whatsapp_phone")
+        if not phone:
+            return False
+        
+        try:
+            cmd = [
+                "/Users/isakzvegelj/.npm-global/bin/clawdbot", 
+                "message", "send", 
+                "--target", phone, 
+                "--message", message
+            ]
+            process = await asyncio.create_subprocess_exec(
+                *cmd,
+                stdout=asyncio.subprocess.PIPE,
+                stderr=asyncio.subprocess.PIPE
+            )
+            await process.communicate()
+            return process.returncode == 0
+        except Exception as e:
+            print(f"Error sending WhatsApp: {e}")
+            return False
+
+    async def queue_worker(self):
+        await self.wait_until_ready()
+        print(f"[{datetime.now().strftime('%H:%M:%S')}] Queue worker started.")
+        while not self.is_closed():
+            if not self.command_queue or IS_PROCESSING:
+                try:
+                    await asyncio.wait_for(self.task_event.wait(), timeout=2.0)
+                except asyncio.TimeoutError:
+                    pass
+                self.task_event.clear()
+
+            if self.command_queue and not IS_PROCESSING:
+                task = self.command_queue.popleft()
+                self.active_task_info = task
+                try:
+                    await self._execute_agent(
+                        task["channel"], 
+                        task["prompt"], 
+                        task["is_chat"], 
+                        task["reason"]
+                    )
+                finally:
+                    self.active_task_info = None
+            
+            await asyncio.sleep(0.1)
 
     async def on_ready(self):
         print(f'Logged in as {self.user} (ID: {self.user.id})')
+        print(f'Ralph Version: {VERSION}')
         print('------')
         cid = self.bot_config.get("channel_id")
         if cid:
             channel = self.get_channel(int(cid))
             if channel:
-                await channel.send("🤖 **Ralph is online.** System re-aligned for Discord communication. Type `!help` for instructions.")
+                await channel.send(f"🤖 **Ralph {VERSION} is online.** Command queue system initialized. Type `!help` for instructions.")
         else:
             print("Warning: No Channel ID set. Use !setchannel in a channel to bind Ralph.")
+        
+        # WhatsApp Backup Notification
+        await self.send_whatsapp(f"🤖 Ralph {VERSION} is online. Discord is primary, WhatsApp is backup.")
 
     async def on_message(self, message):
         if message.author == self.user:
             return
 
         content = message.content.strip()
+        print(f"[{datetime.now().strftime('%H:%M:%S')}] Message from {message.author}: {content}")
         is_dm = isinstance(message.channel, discord.DMChannel)
         is_bound_channel = str(message.channel.id) == self.bot_config.get("channel_id")
 
@@ -83,8 +147,17 @@ class RalphBot(discord.Client):
         if content.startswith('!status') or content.startswith('!check'):
             await self.send_status(message.channel)
 
-        elif content.startswith('!queue') or content.startswith('!inbox'):
+        elif content.startswith('!version'):
+            await message.channel.send(f"🤖 **Ralph Version:** `{VERSION}`")
+
+        elif content.startswith('!queue') or content.startswith('!inbox') or content.startswith('!commands'):
             await self.send_queue(message.channel)
+
+        elif content.startswith('!usage') or content.startswith('!stats'):
+            await self.send_usage(message.channel)
+
+        elif content.startswith('!start'):
+            await self.send_start_guide(message.channel)
 
         elif content.startswith('!reset '):
             target = content[7:].strip().lower()
@@ -120,7 +193,7 @@ class RalphBot(discord.Client):
         elif content.startswith('!listkeys'):
             keys = self.bot_config.get("api_keys", {}).keys()
             if keys:
-                await message.channel.send(f"🔑 **Stored Keys:**\\n" + "\\n".join([f"- `{k}`" for k in keys]))
+                await message.channel.send(f"🔑 **Stored Keys:**\n" + "\n".join([f"- `{k}`" for k in keys]))
             else:
                 await message.channel.send("Empty 🔑 keychain.")
 
@@ -129,14 +202,13 @@ class RalphBot(discord.Client):
             if not parts:
                 # Show current model
                 current_model = self.bot_config.get("model", "default")
-                await message.channel.send(f"🤖 **Current Model:** `{current_model}`\\n\\nUse `!model \u003cprovider/model\u003e` to change (e.g., `!model anthropic/claude-sonnet-4`).")
+                await message.channel.send(f"🤖 **Current Model:** `{current_model}`\n\nUse `!model <provider/model>` to change (e.g., `!model anthropic/claude-sonnet-4`).")
             else:
                 # Set new model
                 new_model = parts[0]
                 self.bot_config["model"] = new_model
                 save_config(self.bot_config)
                 await message.channel.send(f"✅ **Model switched to:** `{new_model}`")
-
 
         elif content.startswith('!resume'):
             self.bot_config["api_error_paused"] = False
@@ -149,6 +221,13 @@ class RalphBot(discord.Client):
         elif content.startswith('!pulse'):
             await message.channel.send("⚡ Triggering manual pulse...")
             await self.trigger_heartbeat("Manual pulse requested")
+
+        elif content.startswith('!whatsapp '):
+            msg = content[10:].strip()
+            if await self.send_whatsapp(f"💬 Discord Bridge: {msg}"):
+                await message.channel.send("✅ WhatsApp message sent.")
+            else:
+                await message.channel.send("❌ Failed to send WhatsApp message.")
 
         elif content.startswith('!help'):
             await self.send_help(message.channel)
@@ -168,7 +247,8 @@ class RalphBot(discord.Client):
                 f"You are {identity}, {personality}. The user ({message.author.name}) is talking to you. "
                 f"Message: \"{content}\". "
                 "Respond naturally. If they gave you a task, you MUST append it to /Users/isakzvegelj/clawd/INBOX.md using your tools and confirm to the user. "
-                "If they are just chatting, respond as your personality."
+                "If they are just chatting, respond as your personality. "
+                "IMPORTANT: Stay within /Users/isakzvegelj/clawd and relevant project directories. Do NOT search the entire home directory."
             )
             await self.run_agent(message.channel, prompt, is_chat=True)
 
@@ -192,13 +272,16 @@ class RalphBot(discord.Client):
         ), inline=False)
 
         embed.add_field(name="🎮 Core Commands", value=(
-            "`!status` - View current focus, uptime, and system load.\\n"
-            "`!queue` / `!inbox` - View the detailed task queue from INBOX.md.\\n"
-            "`!pulse` - Force an immediate project check.\\n"
-            "`!model [provider/model]` - View or switch AI model.\\n"
-            "`!reset [clawd/ralph]` - Restart the specified service.\\n"
-            "`!setkey [NAME] [VAL]` - Update API keys.\\n"
-            "`!help` - Show this guide."
+            "`!status` - View current focus, uptime, and system load.\n"
+            "`!queue` / `!inbox` / `!commands` - View tasks and command queue.\n"
+            "`!usage` / `!stats` - View model token usage and context.\n"
+            "`!pulse` - Force an immediate project check.\n"
+            "`!whatsapp [msg]` - Send a test message to your WhatsApp backup.\n"
+            "`!model [provider/model]` - View or switch AI model.\n"
+            "`!reset [clawd/ralph]` - Restart the specified service.\n"
+            "`!setkey [NAME] [VAL]` - Update API keys.\n"
+            "`!start` - View the getting started guide.\n"
+            "`!help` - Show this list."
         ), inline=False)
         
         embed.add_field(name="🚀 How to Take Advantage", value=(
@@ -209,13 +292,60 @@ class RalphBot(discord.Client):
         
         await channel.send(embed=embed)
 
+    async def send_start_guide(self, channel):
+        embed = discord.Embed(title="🚀 Getting Started with Ralph & Clawd", color=0x2ecc71)
+        embed.description = (
+            "Welcome! I am **Ralph**, the system daemon, and **Clawd** is your AI Familiar. "
+            "Together, we maintain your projects and execute tasks autonomously."
+        )
+
+        embed.add_field(name="1️⃣ The First Step: Chat", value=(
+            "You don't need complex commands. Just talk to us naturally.\n"
+            "• \"Clawd, help me organize my thoughts on the new project.\"\n"
+            "• \"Ralph, check the system load.\""
+        ), inline=False)
+
+        embed.add_field(name="2️⃣ Task Management", value=(
+            "When you mention a task, we add it to the `INBOX.md`.\n"
+            "Every 30 minutes, a **Pulse** is triggered, and we work on the queue.\n"
+            "Use `!queue` to see what's pending."
+        ), inline=False)
+
+        embed.add_field(name="3️⃣ Core Control Commands", value=(
+            "`!status` - Check if we are currently processing a task.\n"
+            "`!task <msg>` - Quickly drop a task into the inbox.\n"
+            "`!pulse` - Force us to start working immediately.\n"
+            "`!help` - View all available technical commands."
+        ), inline=False)
+
+        embed.add_field(name="🔒 Privacy & Security", value=(
+            "We only operate within the `/Users/isakzvegelj/clawd` directory unless instructed otherwise. "
+            "Your data and keys are handled with robotic precision."
+        ), inline=False)
+
+        await channel.send(embed=embed)
+
     async def send_status(self, channel):
         uptime = str(datetime.now() - START_TIME).split('.')[0]
         status_text = "Processing ⚙️" if IS_PROCESSING else "Idle 🟢"
-        embed = discord.Embed(title="Ralph Status Report", color=0x00ff00 if not IS_PROCESSING else 0xffff00)
+        embed = discord.Embed(title=f"Ralph Status Report ({VERSION})", color=0x00ff00 if not IS_PROCESSING else 0xffff00)
         embed.add_field(name="Status", value=status_text, inline=True)
+        embed.add_field(name="Version", value=VERSION, inline=True)
         embed.add_field(name="Uptime", value=uptime, inline=True)
         embed.add_field(name="System", value=get_sys_info(), inline=True)
+        
+        if self.active_task_info:
+            prompt = self.active_task_info["prompt"]
+            if len(prompt) > 100: prompt = prompt[:97] + "..."
+            embed.add_field(name="Active Command", value=f"`{prompt}`", inline=False)
+        
+        q_len = len(self.command_queue)
+        embed.add_field(name="Command Queue", value=f"{q_len} pending", inline=True)
+        
+        if self.last_usage:
+            u = self.last_usage
+            total = u.get('input', 0) + u.get('output', 0) + u.get('reasoning', 0)
+            embed.add_field(name="Last Context", value=f"{total:,} tokens", inline=True)
         
         active_tasks = []
         if os.path.exists(INBOX_PATH):
@@ -223,8 +353,8 @@ class RalphBot(discord.Client):
                 lines = f.readlines()
                 active_tasks = [l.strip().replace("- [ ] ", "").strip() for l in lines if "- [ ]" in l]
         
-        task_list = "\n".join([f"• {t}" for t in active_tasks[:10]]) if active_tasks else "No pending tasks"
-        embed.add_field(name=f"Current Queue ({len(active_tasks)})", value=task_list, inline=False)
+        task_list = "\n".join([f"• {t}" for t in active_tasks[:5]]) if active_tasks else "No pending tasks"
+        embed.add_field(name=f"INBOX Tasks ({len(active_tasks)})", value=task_list, inline=False)
         await channel.send(embed=embed)
 
     async def send_queue(self, channel):
@@ -233,7 +363,6 @@ class RalphBot(discord.Client):
         if os.path.exists(INBOX_PATH):
             with open(INBOX_PATH, "r") as f:
                 lines = f.readlines()
-                # Parse high level goals and current queue
                 current_section = None
                 for line in lines:
                     if "## 🚀 HIGH LEVEL GOALS" in line:
@@ -250,13 +379,27 @@ class RalphBot(discord.Client):
                         elif current_section == "queue":
                             queue.append(task)
         
-        embed = discord.Embed(title="📋 Current Task Queue", color=0x3498db)
+        embed = discord.Embed(title="📋 Ralph & Clawd Queue", color=0x3498db)
         
+        # Pending Commands (System Level)
+        if self.command_queue:
+            cmd_list = []
+            for i, cmd in enumerate(list(self.command_queue)[:5]):
+                p = cmd["prompt"]
+                if len(p) > 50: p = p[:47] + "..."
+                cmd_list.append(f"{i+1}. `{p}`")
+            
+            val = "\n".join(cmd_list)
+            if len(self.command_queue) > 5:
+                val += f"\n*... and {len(self.command_queue) - 5} more*"
+            embed.add_field(name="⚡ Pending Commands", value=val, inline=False)
+        elif self.active_task_info:
+            embed.add_field(name="⚡ Pending Commands", value="*Current command is being processed...*", inline=False)
+
         if goals:
-            embed.add_field(name="🚀 High Level Goals", value="\n".join([f"• {g}" for g in goals]), inline=False)
+            embed.add_field(name="🚀 High Level Goals", value="\n".join([f"• {g}" for g in goals[:5]]), inline=False)
         
         if queue:
-            # Discord has a limit of 1024 characters per field, so we might need to truncate
             task_text = ""
             for i, t in enumerate(queue):
                 line = f"{i+1}. {t}\n"
@@ -265,26 +408,36 @@ class RalphBot(discord.Client):
                 else:
                     task_text += f"... and {len(queue) - i} more."
                     break
-            embed.add_field(name="📝 Active Tasks", value=task_text or "No active tasks", inline=False)
+            embed.add_field(name="📝 Active Tasks (INBOX)", value=task_text or "No active tasks", inline=False)
         
-        if not goals and not queue:
+        if not goals and not queue and not self.command_queue:
             embed.description = "The queue is currently empty! 🏖️"
             
         await channel.send(embed=embed)
 
-    async def run_agent(self, channel, prompt, is_chat=False):
-        global IS_PROCESSING
-        if IS_PROCESSING:
-            if is_chat and channel:
-                await channel.send("⌛ I'm currently busy with another task. Please wait a moment...")
-            return
-
+    async def run_agent(self, channel, prompt, is_chat=False, reason=None):
         # Check if we are in a "paused" state due to API error
         if self.bot_config.get("api_error_paused", False):
             if channel:
                 await channel.send("⚠️ **System Paused:** System is paused due to a previous API error. Use `!resume` after fixing the key.")
             return
 
+        self.command_queue.append({
+            "channel": channel,
+            "prompt": prompt,
+            "is_chat": is_chat,
+            "reason": reason,
+            "timestamp": datetime.now()
+        })
+        self.task_event.set()
+        
+        if IS_PROCESSING or len(self.command_queue) > 1:
+            if channel:
+                pos = len(self.command_queue)
+                await channel.send(f"📥 **Command Queued:** Position #{pos}")
+
+    async def _execute_agent(self, channel, prompt, is_chat=False, reason=None):
+        global IS_PROCESSING
         IS_PROCESSING = True
         
         # Determine if we should show typing
@@ -295,7 +448,9 @@ class RalphBot(discord.Client):
                 await typing_ctx.__aenter__()
 
             if channel and not is_chat:
-                await channel.send("⚡ **Pulse Triggered...**")
+                msg = "⚡ **Pulse Triggered...**"
+                if reason: msg = f"⚡ **Pulse Triggered:** {reason}..."
+                await channel.send(msg)
 
             # Prepare environment with stored API keys
             env = os.environ.copy()
@@ -304,16 +459,14 @@ class RalphBot(discord.Client):
 
             # Log the command for debugging
             print(f"[DEBUG] Running: {OPENCODE_BIN} run \"{prompt[:100]}...\"")
-            print(f"[DEBUG] Working directory: {CLAW_DIR}")
-
+            
             # Build command with optional model parameter
-            cmd_args = [OPENCODE_BIN, "run"]
+            cmd_args = [OPENCODE_BIN, "run", "--format", "json"]
             
             # Add model if specified in config
             model = self.bot_config.get("model")
             if model:
                 cmd_args.extend(["--model", model])
-                print(f"[DEBUG] Using model: {model}")
             
             cmd_args.append(prompt)
 
@@ -324,33 +477,79 @@ class RalphBot(discord.Client):
                 env=env,
                 cwd=CLAW_DIR
             )
-            stdout, stderr = await process.communicate()
+            
+            try:
+                stdout, stderr = await asyncio.wait_for(process.communicate(), timeout=300) # 5 minute timeout
+            except asyncio.TimeoutError:
+                process.kill()
+                stdout, stderr = await process.communicate()
+                if channel:
+                    await channel.send("⚠️ **Execution Timeout:** The task took too long and was terminated.")
+                return
             
             out_str = stdout.decode()
             err_str = stderr.decode()
+            
+            # Parse JSON output
+            json_lines = out_str.splitlines()
+            captured_text = []
+            for line in json_lines:
+                try:
+                    data = json.loads(line)
+                    if data.get("type") == "text":
+                        text_part = data["part"].get("text", "")
+                        # Filter out tool execution indicators from JSON text parts
+                        filtered_lines = [
+                            l for l in text_part.splitlines() 
+                            if not l.strip().startswith("|")
+                        ]
+                        if filtered_lines:
+                            captured_text.append("\n".join(filtered_lines))
+                    elif data.get("type") == "step_finish":
+                        self.last_usage = data["part"].get("tokens")
+                except:
+                    continue
+            
+            output = "\n".join(captured_text).strip()
+            
+            # If JSON parsing failed to yield text, fallback to cleaned raw output
+            if not output:
+                output = self.clean_output(out_str + "\n" + err_str)
+
             combined_output = out_str + "\n" + err_str
 
-            # Error detection (401, API Errors)
-            error_detected = False
-            if any(indicator in combined_output for indicator in ["401", "Unauthorized", "Invalid API Key", "api_key_invalid"]):
-                error_detected = True
+            # Error detection
+            error_indicators = ["401", "Unauthorized", "Invalid API Key", "api_key_invalid", "403"]
+            if any(indicator in combined_output for indicator in error_indicators):
                 self.bot_config["api_error_paused"] = True
                 save_config(self.bot_config)
                 if channel:
-                    await channel.send("🛑 **API Authentication Error Detected (401)!**\nSystem has been paused. Use `!setkey <NAME> <VALUE>` to update your key, then `!resume`.")
+                    await channel.send("🛑 **API Authentication Error Detected!**\nSystem has been paused. Use `!setkey <NAME> <VALUE>` to update your key, then `!resume`.")
 
             if channel:
-                output = out_str.strip() or err_str.strip()
                 if output:
-                    if len(output) > 1900:
-                        output = output[:1900] + "..."
+                    discord_output = output
+                    if len(discord_output) > 1900:
+                        discord_output = discord_output[:1900] + "..."
                     
                     if is_chat:
-                        await channel.send(output)
+                        await channel.send(discord_output)
                     else:
-                        await channel.send(f"✅ **Clawd Response:**\n```\n{output}\n```")
-                elif not error_detected and not is_chat:
+                        title = "✅ Clawd Response"
+                        if reason: title = f"⚡ Pulse: {reason}"
+                        
+                        embed = discord.Embed(title=title, description=discord_output, color=0x2ecc71)
+                        if "\n" in discord_output or len(discord_output) > 100:
+                             embed.description = f"```\n{discord_output}\n```"
+                        await channel.send(embed=embed)
+                elif not is_chat:
                     await channel.send("✅ Pulse complete. No output reported.")
+
+            # WhatsApp Backup (only for pulses or important updates to avoid chat echo)
+            if output and (not is_chat or "ralph" in prompt.lower()):
+                whatsapp_msg = f"⚡ *Clawd Response*\n\n{output}"
+                if reason: whatsapp_msg = f"⚡ *Pulse: {reason}*\n\n{output}"
+                await self.send_whatsapp(whatsapp_msg)
             
         except Exception as e:
             if channel:
@@ -359,17 +558,97 @@ class RalphBot(discord.Client):
             if typing_ctx:
                 await typing_ctx.__aexit__(None, None, None)
             IS_PROCESSING = False
+            self.task_event.set()
+
+    async def send_usage(self, channel):
+        # Fetch global stats from opencode stats
+        try:
+            process = await asyncio.create_subprocess_exec(
+                OPENCODE_BIN, "stats",
+                stdout=asyncio.subprocess.PIPE,
+                stderr=asyncio.subprocess.PIPE
+            )
+            stdout, _ = await process.communicate()
+            stats_output = stdout.decode()
+            # Clean up ANSI escape codes
+            stats_output = re.sub(r'\x1b\[[0-9;]*m', '', stats_output)
+        except Exception as e:
+            stats_output = f"Error fetching stats: {e}"
+
+        embed = discord.Embed(title="📊 Model Usage Statistics", color=0x9b59b6)
+        
+        if self.last_usage:
+            u = self.last_usage
+            input_tokens = u.get('input', 0)
+            output_tokens = u.get('output', 0)
+            reasoning_tokens = u.get('reasoning', 0)
+            cache_read = u.get('cache', {}).get('read', 0)
+            cache_write = u.get('cache', {}).get('write', 0)
+            
+            val = (
+                f"• **Input:** {input_tokens:,} tokens\n"
+                f"• **Output:** {output_tokens:,} tokens\n"
+            )
+            if reasoning_tokens:
+                val += f"• **Reasoning:** {reasoning_tokens:,} tokens\n"
+            if cache_read or cache_write:
+                val += f"• **Cache:** {cache_read:,} read, {cache_write:,} write\n"
+            
+            embed.add_field(name="⏱️ Last Execution Context", value=val, inline=False)
+
+        if stats_output:
+            # Try to extract the COST & TOKENS section or just show the whole thing if it's short
+            if "COST & TOKENS" in stats_output:
+                # Basic extraction of the table
+                lines = stats_output.splitlines()
+                table = []
+                capture = False
+                for line in lines:
+                    if "COST & TOKENS" in line: capture = True
+                    if capture:
+                        table.append(line)
+                        if "└" in line: break
+                
+                if table:
+                    embed.add_field(name="📈 Global Lifetime Usage", value=f"```\n{chr(10).join(table)}\n```", inline=False)
+            else:
+                # Fallback to truncated output
+                if len(stats_output) > 1000: stats_output = stats_output[:997] + "..."
+                embed.add_field(name="📈 Global Lifetime Usage", value=f"```\n{stats_output}\n```", inline=False)
+
+        await channel.send(embed=embed)
+
+    def clean_output(self, text):
+        lines = text.splitlines()
+        cleaned = []
+        for line in lines:
+            # Remove ANSI escape codes first to handle colored output
+            line = re.sub(r'\x1b\[[0-9;]*m', '', line)
+            line_strip = line.strip()
+            
+            # Filter out noise
+            if not line_strip: continue
+            if line_strip.startswith("INFO "): continue
+            if "service=models.dev" in line_strip: continue
+            if line_strip == "refreshing": continue
+            if line_strip.startswith("|"): continue
+            
+            if "Failed to change directory to" in line_strip and "Heartbeat Triggered" in line_strip:
+                continue
+            
+            cleaned.append(line)
+        return "\n".join(cleaned).strip()
 
     async def trigger_heartbeat(self, reason):
         prompt = (
             f"Heartbeat Triggered: {reason}. "
             "Examine INBOX.md. Process the queue. Break down large projects into small actionable tasks. "
-            "Execute the top actionable task and mark as [x]. Provide a summary."
+            "Execute the top actionable task and mark as [x]. Provide a summary. "
+            "IMPORTANT: Stay within /Users/isakzvegelj/clawd and relevant project directories."
         )
         cid = self.bot_config.get("channel_id")
         channel = self.get_channel(int(cid)) if cid else None
-        await self.run_agent(channel, prompt, is_chat=False)
-
+        await self.run_agent(channel, prompt, is_chat=False, reason=reason)
 
     async def monitor_loop(self):
         await self.wait_until_ready()
@@ -379,13 +658,11 @@ class RalphBot(discord.Client):
             if self.check_drop_folder():
                 await self.trigger_heartbeat("New files detected in drop folder")
                 last_heartbeat = time.time()
-            
             if time.time() - last_heartbeat > 1800:
                 await self.trigger_heartbeat("Scheduled periodic check")
                 last_heartbeat = time.time()
-
             self.update_status_file("Monitoring")
-            await asyncio.sleep(60)
+            await asyncio.sleep(2)
 
     def update_status_file(self, last_event):
         uptime = str(datetime.now() - START_TIME).split('.')[0]
@@ -397,53 +674,40 @@ class RalphBot(discord.Client):
                     lines = f.readlines()
                     current_section = None
                     for line in lines:
-                        if "## 🚀 HIGH LEVEL GOALS" in line:
-                            current_section = "goals"
-                        elif "## 📝 CURRENT QUEUE" in line:
-                            current_section = "queue"
-                        
+                        if "## 🚀 HIGH LEVEL GOALS" in line: current_section = "goals"
+                        elif "## 📝 CURRENT QUEUE" in line: current_section = "queue"
                         if line.strip().startswith("- [ ]"):
                             task = line.strip().replace("- [ ] ", "").strip()
-                            if current_section == "goals":
-                                goals.append(task)
-                            elif current_section == "queue":
-                                active_tasks.append(task)
+                            if current_section == "goals": goals.append(task)
+                            elif current_section == "queue": active_tasks.append(task)
             except Exception as e:
                 print(f"Error reading inbox for status update: {e}")
         
         status = "Processing ⚙️" if IS_PROCESSING else "Idle 🟢"
-        
         content = f"""# RALPH STATUS REPORT
 Generated: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
+Version: {VERSION}
 
 - **Uptime:** {uptime}
 - **Status:** {status}
 - **Queue Depth:** {len(active_tasks)} tasks
-- **Current Top Tasks:**
+- **Command Queue:** {len(self.command_queue)} pending
 """
-        for t in active_tasks[:5]:
-            content += f"  - {t}\n"
-        
+        if self.active_task_info:
+            content += f"- **Active Command:** {self.active_task_info['prompt'][:50]}...\n"
+
+        content += "- **Current Top Tasks:**\n"
+        for t in active_tasks[:5]: content += f"  - {t}\n"
         if goals:
             content += "- **High Level Goals:**\n"
-            for g in goals[:3]:
-                content += f"  - {g}\n"
-                
-        content += f"""- **Last Event:** {last_event}
-- **System:** {get_sys_info()}
-
----
-*This file is updated automatically by the Ralph Daemon.*
-"""
+            for g in goals[:3]: content += f"  - {g}\n"
+        content += f"- **Last Event:** {last_event}\n- **System:** {get_sys_info()}\n\n---\n*This file is updated automatically by the Ralph Daemon.*\n"
         try:
-            with open(STATUS_PATH, "w") as f:
-                f.write(content)
-        except Exception as e:
-            print(f"Error writing status file: {e}")
+            with open(STATUS_PATH, "w") as f: f.write(content)
+        except Exception as e: print(f"Error writing status file: {e}")
 
     def check_drop_folder(self):
-        if not os.path.exists(DROP_DIR):
-            os.makedirs(DROP_DIR)
+        if not os.path.exists(DROP_DIR): os.makedirs(DROP_DIR)
         files = [f for f in os.listdir(DROP_DIR) if f != "processed" and not f.startswith(".")]
         if files:
             with open(INBOX_PATH, "a") as f:
@@ -456,6 +720,9 @@ Generated: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
         return False
 
 if __name__ == "__main__":
+    if len(sys.argv) > 1 and sys.argv[1] == "--version":
+        print(f"Ralph Daemon Version: {VERSION}")
+        sys.exit(0)
     current_config = load_config()
     if not current_config["discord_token"] or "HERE" in current_config["discord_token"]:
         print("CRITICAL: Update ralph_config.json with your new Discord token.")

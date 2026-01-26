@@ -1,6 +1,7 @@
-# RALPH.md - The Autonomous Engine
+# RALPH.md - The Autonomous Engine (v1.1.0)
 
-Ralph is the persistent, 24/7 background layer of Pi. While Pi is the personality and mind, Ralph is the hands and the clock.
+Ralph is the persistent, 24/7 background layer of Pi.
+ While Pi is the personality and mind, Ralph is the hands and the clock.
 
 ## Responsibilities
 
@@ -13,6 +14,12 @@ Ralph is the persistent, 24/7 background layer of Pi. While Pi is the personalit
 
 - **Trigger Command**: `/Users/isakzvegelj/.opencode/bin/opencode "Heartbeat: Check INBOX.md and HEARTBEAT.md. Execute pending tasks."`
 - **Output Channel**: Responses meant for the user are written to `TELEGRAM_OUT.md`. Ralph will pick these up and send them.
+
+## Version & Diagnostics
+
+- **Current Version:** v1.1.0
+- **Check Version (CLI):** `python ralph_daemon.py --version`
+- **Check Version (Discord):** `!version`
 
 ## Current Status
 - [ ] Daemon script implemented

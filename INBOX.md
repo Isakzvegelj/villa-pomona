@@ -15,6 +15,50 @@ These are large projects. Clawd will break these down into small tasks.
 
 ## 📝 CURRENT QUEUE
 Small, actionable steps go here. Ralph triggers Clawd for each one.
+
+### 📸 Google Photos Backup
+- [in_progress] **Finish Backup to Viper SSD** - Started rclone sync from `gphotos:media/all` to `/Volumes/PVP30 1TB/Google_Photos_Backup`. Monitoring logs...
+
+### 🌌 Google Ultra AI Server - Core Implementation
+- [x] **Create .env from .env.example** - Set up basic credentials (DISCORD_TOKEN, CLIENT_ID)
+- [x] **Implement Persistent Usage Tracking** - Created `usage_data.json` and `blacklist.json` with persistence logic
+- [x] **Add Admin Commands** - Implemented `!blacklist`, `!whitelist`, and `!reset-usage`
+- [x] **Refine AI Prompt Wrapper** - Added system instructions and safety guidelines
+- [x] **Implement !reset-usage** - Admin command to clear user quotas
+- [x] **Add Model Parameter Control** - Support `!model-params temperature 0.7`
+- [ ] **Image Generation Support** - Integrate Gemini Pro Vision or equivalent for image prompts
+- [ ] **Unit Tests for RequestQueue** - Create `tests/queue.test.js` and verify concurrency logic
+- [ ] **Discord Command Registration Script** - Move from message-based to Slash Commands (v14 standard)
+- [ ] **Error Handling Upgrade** - Detailed logging for rate limits and content filtering blocks
+
+### 🍳 Vila Adora Breakfast App - Backend Hardening
+- [x] **Implement Guest Validation** - Created `guestService.js` and integrated with `App.tsx` and `GuestDetails.jsx`
+- [x] **Menu Availability Logic** - Added logic to `MenuItem.jsx` to hide items when `stock < 1`
+- [ ] **Order Confirmation Emails** - Scaffold email templates for order receipts
+- [ ] **Database Migration** - Prepare schema for moving from JSON to SQLite/PostgreSQL
+
+### 🤖 Polymarket Bot - Performance & Speed
+- [x] **Latency Monitoring** - Added timing logs to `executeTrade` and `scanMarkets`
+- [x] **Axios Optimization** - Configured `axiosInstance` with `keepAlive` and `maxSockets`
+- [x] **Strategy Profiling** - (Handled via logs and dashboard)
+- [x] **Circuit Breaker** - Implemented automatic pause after 3 consecutive failures
+
+### 🎥 YouTube Engine - Automation Pipeline
+- [x] **Directory Watcher** - Created `scripts/watcher.py` to detect new files in `READY_FOR_REVIEW/`
+- [x] **Metadata Generator** - Created `scripts/metadata_generator.py` to extract title/tags
+- [ ] **YouTube API Scaffolding** - Set up OAuth2 flow for video uploads
+
+### 🧹 Nightly Maintenance & Continuity
+- [x] **Log Rotation** - Checked size (23K), rotation not needed (< 10MB)
+- [x] **Disk Space Check** - Verified Viper SSD health and remaining space (490GB)
+- [x] **Memory Sync** - Updated `MEMORY.md` with a summary of the 8-hour progress
+- [x] **Daily Report Generation** - Created `reports/2026-01-26.md` summarizing accomplishments
+- [x] **Bootstrap Cleanup** - Checked for `BOOTSTRAP.md` files; none needed deletion
+
+### Other Tasks
+  - [x] **Ralph version tracking** - Add version info to Ralph and implement version check command
+
+
 - [ ] **Design Discord server logo** - Generate or source a logo for the server
 - [ ] **Implement audio message processing** - Add Discord voice message transcription capability  
 - [x] **Multi-user access system** - Designed restricted access model (see MULTI_USER_ACCESS_DESIGN.md)
