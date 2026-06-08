@@ -72,6 +72,7 @@
         initBackToTop();
         initCounterAnimation();
         initFooterYear();
+        initChatTopics();
     });
 
     // ===== Header Scroll Effect =====
@@ -426,6 +427,19 @@
         }
     }
 
+    // ===== Chat Topics Init =====
+    function initChatTopics() {
+        // Override toggleChat to also show quick replies
+        var _origToggle = window.toggleChat;
+        window.toggleChat = function() {
+            _origToggle();
+            var widget = document.getElementById('chatWidget');
+            if (widget && widget.classList.contains('open')) {
+                setTimeout(function() { showChatTopics(); }, 350);
+            }
+        };
+    }
+
     // ===== Language Switching =====
     window.switchLanguage = function(lang) {
         currentLang = lang;
@@ -508,18 +522,53 @@
             message: document.getElementById('message').value
         };
         
-        // Simulate submission (replace with actual API call)
+        // Build email body
+        const roomTypeLabels = {
+            standard: currentLang === 'sl' ? 'Standard soba' : 'Standard Room',
+            deluxe: currentLang === 'sl' ? 'Deluxe soba' : 'Deluxe Room',
+            family: currentLang === 'sl' ? 'Družinska soba' : 'Family Room'
+        };
+        
+        const subject = encodeURIComponent(
+            (currentLang === 'sl' ? 'Rezervacija - ' : 'Reservation - ') + 
+            formData.firstName + ' ' + formData.lastName
+        );
+        
+        const body = encodeURIComponent(
+            (currentLang === 'sl' ? 'Pozdravljeni,' : 'Hello,') + '\n\n' +
+            (currentLang === 'sl' ? 'Želela bi rezervirati nastanitev v Villa Pomona.' : 'I would like to make a reservation at Villa Pomona.') + '\n\n' +
+            '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n' +
+            (currentLang === 'sl' ? 'PODATKI O REZERVACIJI' : 'RESERVATION DETAILS') + '\n' +
+            '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n' +
+            (currentLang === 'sl' ? 'Ime' : 'Name') + ': ' + formData.firstName + ' ' + formData.lastName + '\n' +
+            'Email: ' + formData.email + '\n' +
+            (currentLang === 'sl' ? 'Telefon' : 'Phone') + ': ' + (formData.phone || '-') + '\n' +
+            (currentLang === 'sl' ? 'Prihod' : 'Check-in') + ': ' + formData.checkIn + '\n' +
+            (currentLang === 'sl' ? 'Odhod' : 'Check-out') + ': ' + formData.checkOut + '\n' +
+            (currentLang === 'sl' ? 'Število oseb' : 'Guests') + ': ' + formData.adults + '\n' +
+            (currentLang === 'sl' ? 'Tip sobe' : 'Room Type') + ': ' + (roomTypeLabels[formData.roomType] || formData.roomType) + '\n' +
+            (formData.message ? '\n' + (currentLang === 'sl' ? 'Sporočilo' : 'Message') + ':\n' + formData.message + '\n' : '') +
+            '\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n' +
+            'Villa Pomona | Črtomirova ulica 2 | 4260 Bled, Slovenia\n' +
+            '📞 +386 51 603 858 | ✉️ evita.vilebled@gmail.com\n' +
+            '🌐 villapomona.si'
+        );
+        
+        // Simulate submission with mailto fallback
         setTimeout(function() {
             console.log('Reservation submitted:', formData);
             
-            btn.textContent = currentLang === 'sl' ? '✓ Poslano!' : '✓ Sent!';
+            // Open mailto link as fallback
+            window.location.href = 'mailto:evita.vilebled@gmail.com?subject=' + subject + '&body=' + body;
+            
+            btn.textContent = currentLang === 'sl' ? '✓ Odprto!' : '✓ Opened!';
             btn.style.background = '#2d8a4e';
             btn.style.borderColor = '#2d8a4e';
             
             showFormFeedback(feedback, 
                 currentLang === 'sl' 
-                    ? 'Hvala! Vaša rezervacija je bila poslana. Odgovorimo vam v 24 urah.' 
-                    : 'Thank you! Your reservation has been sent. We will respond within 24 hours.', 
+                    ? 'Hvala! Odprl se je vaš e-poštni program s podrobnostmi rezervacije. Pošljite e-pošto za dokončanje rezervacije. Če se e-poštni program ne odpre, nas kontaktirajte na +386 51 603 858.' 
+                    : 'Thank you! Your email program has been opened with the reservation details. Please send the email to complete your booking. If the email program did not open, please contact us at +386 51 603 858.', 
                 'success'
             );
             
@@ -536,8 +585,8 @@
                     feedback.className = 'form-feedback';
                     feedback.style.display = 'none';
                 }
-            }, 4000);
-        }, 1500);
+            }, 6000);
+        }, 1200);
     };
 
     function showFormFeedback(el, message, type) {
@@ -583,6 +632,56 @@
         }
     };
 
+    // Quick reply topics for the chat widget
+    window.sendQuickReply = function(topic) {
+        var input = document.getElementById('chatInput');
+        if (input) {
+            input.value = topic;
+            sendChatMessage();
+        }
+    };
+
+    window.showChatTopics = function() {
+        var messages = document.getElementById('chatMessages');
+        if (!messages) return;
+        
+        // Don't show topics if already shown
+        if (document.getElementById('quickReplies')) return;
+        
+        var topicsDiv = document.createElement('div');
+        topicsDiv.id = 'quickReplies';
+        topicsDiv.className = 'chat-quick-replies';
+        
+        var topics = currentLang === 'sl'
+            ? [
+                { key: 'booking', label: '📅 Rezervacija', text: 'Želela bi rezervirati sobo' },
+                { key: 'rooms', label: '🛏️ Sobe', text: 'Katere sobe imate?' },
+                { key: 'wellness', label: '🧖 Wellness', text: 'Povite mi o wellnessu' },
+                { key: 'location', label: '📍 Lokacija', text: 'Kje se nahajate?' },
+                { key: 'restaurants', label: '🍽️ Restavracije', text: 'Restavracije v bližini' },
+                { key: 'price', label: '💰 Cene', text: 'Katere so vaše cene?' }
+              ]
+            : [
+                { key: 'booking', label: '📅 Book a Room', text: 'I would like to make a reservation' },
+                { key: 'rooms', label: '🛏️ View Rooms', text: 'Tell me about your rooms' },
+                { key: 'wellness', label: '🧖 Wellness', text: 'Tell me about your wellness' },
+                { key: 'location', label: '📍 Location', text: 'Where are you located?' },
+                { key: 'restaurants', label: '🍽️ Dining', text: 'Restaurants nearby' },
+                { key: 'price', label: '💰 Pricing', text: 'What are your prices?' }
+              ];
+        
+        topics.forEach(function(topic) {
+            var btn = document.createElement('button');
+            btn.className = 'quick-reply-btn';
+            btn.textContent = topic.label;
+            btn.onclick = function() { sendQuickReply(topic.text); };
+            topicsDiv.appendChild(btn);
+        });
+        
+        messages.appendChild(topicsDiv);
+        messages.scrollTop = messages.scrollHeight;
+    };
+
     window.sendChatMessage = function() {
         var input = document.getElementById('chatInput');
         var messages = document.getElementById('chatMessages');
@@ -590,6 +689,10 @@
         
         var userMsg = input.value.trim();
         input.value = '';
+        
+        // Remove quick replies when user sends a message
+        var quickReplies = document.getElementById('quickReplies');
+        if (quickReplies) quickReplies.remove();
         
         // Add user message
         var userDiv = document.createElement('div');
@@ -609,6 +712,9 @@
         // Find response
         var response = getBotResponse(userMsg.toLowerCase());
         
+        // Simulate more natural typing delay based on response length
+        var typingDelay = Math.min(600 + response.length * 12, 2000);
+        
         // Replace typing with actual response
         setTimeout(function() {
             var indicator = document.getElementById('typingIndicator');
@@ -619,7 +725,12 @@
             botDiv.innerHTML = '<p>' + response + '</p>';
             messages.appendChild(botDiv);
             messages.scrollTop = messages.scrollHeight;
-        }, 800 + Math.random() * 400);
+            
+            // Show quick replies again after bot responds (except for default/fallback responses)
+            if (getBotResponse(userMsg.toLowerCase()) !== (chatResponses[currentLang] || chatResponses.en).default) {
+                setTimeout(function() { showChatTopics(); }, 400);
+            }
+        }, typingDelay);
     };
 
     window.handleChatKeypress = function(e) {
