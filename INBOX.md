@@ -17,7 +17,7 @@ These are large projects. Clawd will break these down into small tasks.
 Small, actionable steps go here. Ralph triggers Clawd for each one.
 
 ### 📸 Google Photos Backup
-- [in_progress] **Finish Backup to Viper SSD** - Started rclone sync from `gphotos:media/all` to `/Volumes/PVP30 1TB/Google_Photos_Backup`. Monitoring logs...
+- [in_progress] **Throttled Backup to Viper SSD** - Resumed sync with `--bwlimit 2M` to prevent load spikes. Monitoring `rclone_backup.log`.
 
 ### 🌌 Google Ultra AI Server - Core Implementation
 - [x] **Create .env from .env.example** - Set up basic credentials (DISCORD_TOKEN, CLIENT_ID)
@@ -26,7 +26,7 @@ Small, actionable steps go here. Ralph triggers Clawd for each one.
 - [x] **Refine AI Prompt Wrapper** - Added system instructions and safety guidelines
 - [x] **Implement !reset-usage** - Admin command to clear user quotas
 - [x] **Add Model Parameter Control** - Support `!model-params temperature 0.7`
-- [ ] **Image Generation Support** - Integrate Gemini Pro Vision or equivalent for image prompts
+- [x] **Image Generation Support** - Integrated Gemini Pro Vision for analysis and `!imagine` for generation.
 - [ ] **Unit Tests for RequestQueue** - Create `tests/queue.test.js` and verify concurrency logic
 - [ ] **Discord Command Registration Script** - Move from message-based to Slash Commands (v14 standard)
 - [ ] **Error Handling Upgrade** - Detailed logging for rate limits and content filtering blocks
@@ -86,3 +86,15 @@ Small, actionable steps go here. Ralph triggers Clawd for each one.
 
 - [x] **FIX: Discord heartbeat prompt concatenating into file path** - Investigated. Code is correct. Added debug logging.
 - [x] want to be able to see inbox.md (Requested via Discord: zisak) - Added !inbox command as alias to !queue
+
+
+- [ ] New incoming task from drop: test_trigger.txt
+- [ ] New incoming task from drop: test_trigger2.txt
+- [ ] New incoming task from drop: test_trigger3.txt
+- [ ] New incoming task from drop: test_trigger4.txt
+- [ ] New incoming task from drop: test_trigger5.txt
+- [ ] New incoming task from drop: test_trigger6.txt
+- [ ] New incoming task from drop: test_trigger7.txt
+- [ ] New incoming task from drop: test_trigger8.txt
+- [ ] New incoming task from drop: test_trigger9.txt
+- [ ] New incoming task from drop: test_trigger_final.txt

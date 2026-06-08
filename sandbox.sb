@@ -1,0 +1,26 @@
+(version 1)
+(deny default)
+
+(allow process-fork)
+(allow process-info*)
+(allow signal)
+(allow sysctl-read)
+(allow mach-lookup)
+(allow iokit-open)
+(allow process-exec*)
+(allow file-map-executable)
+
+(allow file-read*
+    (subpath "/")
+)
+
+(allow file-write*
+    (subpath "/Users/isakzvegelj/clawd")
+    (subpath "/Users/isakzvegelj/.opencode")
+    (subpath "/tmp")
+    (subpath "/private/tmp")
+    (subpath "/private/var")
+)
+
+(allow network-outbound)
+(allow network-inbound (local tcp "*:5000")) ;; for dashboard if needed

@@ -1,4 +1,4 @@
-# RALPH.md - The Autonomous Engine (v1.1.0)
+# RALPH.md - The Autonomous Engine (Dynamic Versioning)
 
 Ralph is the persistent, 24/7 background layer of Pi.
  While Pi is the personality and mind, Ralph is the hands and the clock.
@@ -17,11 +17,12 @@ Ralph is the persistent, 24/7 background layer of Pi.
 
 ## Version & Diagnostics
 
-- **Current Version:** v1.1.0
+- **Current Version:** Dynamic (v1.1.x)
 - **Check Version (CLI):** `python ralph_daemon.py --version`
 - **Check Version (Discord):** `!version`
 
 ## Current Status
-- [ ] Daemon script implemented
+- [x] Daemon script implemented
+- [x] Dynamic build numbering added (see `ralph_config.json`)
 - [ ] Telegram Bot connected
-- [ ] Auto-heartbeat enabled
+- [x] Auto-heartbeat enabled

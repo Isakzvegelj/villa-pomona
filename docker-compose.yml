@@ -1,0 +1,17 @@
+services:
+  ralph:
+    build: .
+    container_name: ralph-sandbox
+    restart: always
+    volumes:
+      # ONLY mount the clawd directory. 
+      # The container has NO hardware access to the rest of the host.
+      - .:/app
+      # Mount opencode bin if needed (though it might need linux version)
+      - /Users/isakzvegelj/.opencode:/home/ralph/.opencode
+    environment:
+      - PYTHONPATH=/app
+      - CLAW_DIR=/app
+      - OPENCODE_BIN=/home/ralph/.opencode/bin/opencode
+    # Network access is required for Discord
+    network_mode: bridge
