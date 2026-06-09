@@ -633,6 +633,7 @@
     };
 
     // Quick reply topics for the chat widget
+<<<<<<< HEAD
     window.sendQuickReply = function(topic) {
         var input = document.getElementById('chatInput');
         if (input) {
@@ -640,6 +641,15 @@
             sendChatMessage();
         }
     };
+=======
+window.sendQuickReply = async function(topic) {
+    var input = document.getElementById('chatInput');
+    if (input) {
+        input.value = topic;
+        await sendChatMessage();
+    }
+};
+>>>>>>> f994da3 (feat(website): upgrade chat to real bot API + add JSON-LD structured data)
 
     window.showChatTopics = function() {
         var messages = document.getElementById('chatMessages');
@@ -682,6 +692,7 @@
         messages.scrollTop = messages.scrollHeight;
     };
 
+<<<<<<< HEAD
     window.sendChatMessage = function() {
         var input = document.getElementById('chatInput');
         var messages = document.getElementById('chatMessages');
@@ -732,6 +743,65 @@
             }
         }, typingDelay);
     };
+=======
+    window.sendChatMessage = async function() {
+    var input = document.getElementById('chatInput');
+    var messages = document.getElementById('chatMessages');
+    if (!input || !messages || !input.value.trim()) return;
+    
+    var userMsg = input.value.trim();
+    input.value = '';
+    
+    // Remove quick replies
+    var quickReplies = document.getElementById('quickReplies');
+    if (quickReplies) quickReplies.remove();
+    
+    // Add user message
+    var userDiv = document.createElement('div');
+    userDiv.className = 'chat-message user';
+    userDiv.innerHTML = '<p>' + escapeHtml(userMsg) + '</p>';
+    messages.appendChild(userDiv);
+    messages.scrollTop = messages.scrollHeight;
+    
+    // Show typing indicator
+    var typingDiv = document.createElement('div');
+    typingDiv.className = 'chat-message bot typing';
+    typingDiv.id = 'typingIndicator';
+    typingDiv.innerHTML = '<p><span class="typing-dot">.</span><span class="typing-dot">.</span><span class="typing-dot">.</span></p>';
+    messages.appendChild(typingDiv);
+    messages.scrollTop = messages.scrollHeight;
+    
+    try {
+        var response = await fetch('https://villa-pomona-bot.onrender.com/api/chat', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ message: userMsg }),
+        });
+        var data = await response.json();
+        var botResponse = data.response || data.message;
+        var indicator = document.getElementById('typingIndicator');
+        if (indicator) indicator.remove();
+        if (botResponse) {
+            var botDiv = document.createElement('div');
+            botDiv.className = 'chat-message bot';
+            botDiv.innerHTML = '<p>' + escapeHtml(botResponse) + '</p>';
+            messages.appendChild(botDiv);
+        } else {
+            throw new Error('Empty response');
+        }
+    } catch (error) {
+        var indicator = document.getElementById('typingIndicator');
+        if (indicator) indicator.remove();
+        var fallbackResponse = getBotResponse(userMsg.toLowerCase());
+        var botDiv = document.createElement('div');
+        botDiv.className = 'chat-message bot';
+        botDiv.innerHTML = '<p>' + fallbackResponse + '</p>';
+        messages.appendChild(botDiv);
+    }
+    messages.scrollTop = messages.scrollHeight;
+};
+;
+>>>>>>> f994da3 (feat(website): upgrade chat to real bot API + add JSON-LD structured data)
 
     window.handleChatKeypress = function(e) {
         if (e.key === 'Enter') {
