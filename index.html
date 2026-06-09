@@ -161,6 +161,81 @@
         ]
     }
     </script>
+    <!-- FAQ Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "What are the check-in and check-out times at Villa Pomona?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Check-in is from 14:00 to 21:00. Check-out is by 11:00. Early check-in and late check-out are available upon request, subject to availability."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Is breakfast included at Villa Pomona?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Yes, a gourmet breakfast is included with every stay. We serve local, seasonal ingredients including homemade bread, fresh dairy, and organic produce."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Is Villa Pomona pet-friendly?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Yes, we welcome pets! Please let us know in advance if you're bringing a furry friend. A small additional cleaning fee may apply."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Does Villa Pomona offer free parking?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Yes, free private parking is available on-site for all guests."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "What is the cancellation policy?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Free cancellation is available up to 48 hours before check-in. Cancellations within 48 hours will be charged for the first night."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "How far is Villa Pomona from Lake Bled?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Villa Pomona is located just a 3-5 minute walk from Lake Bled and the town center."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Is the wellness area included in the room rate?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Yes, access to the Finnish sauna and relaxation room is included for all guests. Massage services are available at an additional charge."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Do you offer airport transfers?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Yes, we can arrange airport transfers from Ljubljana Jože Pučnik Airport (35 km) upon request. Please contact us in advance to arrange."
+                }
+            }
+        ]
+    }
+    </script>
+    <!-- Sitemap reference -->
+    <link rel="sitemap" type="application/xml" href="/sitemap.xml">
 </head>
 <body>
     <!-- Skip to content -->
@@ -457,6 +532,119 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </section>
+
+    <!-- Virtual Tour Section -->
+    <section id="virtual-tour" class="virtual-tour-section" aria-label="Virtual Tour">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-subtitle" data-lang-sl="Virtualni ogled" data-lang-en="Virtual Tour">Virtual Tour</span>
+                <h2 class="section-title" data-lang-sl="Obrnite vilo od doma" data-lang-en="Explore the Villa from Home">Explore the Villa from Home</h2>
+                <p class="section-lead" data-lang-sl="Oglejte si naše prostore z udobnosti svojega doma. Virtualni ogled vam omogoča, da raziskujete sobe, wellness in okolico vile." data-lang-en="Take a look at our spaces from the comfort of your home. The virtual tour lets you explore rooms, wellness, and the villa's surroundings.">Take a look at our spaces from the comfort of your home. The virtual tour lets you explore rooms, wellness, and the villa's surroundings.</p>
+            </div>
+            <div class="virtual-tour-wrapper">
+                <div class="tour-preview" onclick="openVirtualTour()">
+                    <img src="assets/images/hero-1.jpg" alt="Villa Pomona virtual tour preview" loading="lazy">
+                    <div class="tour-overlay">
+                        <div class="play-button">
+                            <i class="fas fa-play"></i>
+                        </div>
+                        <span class="tour-hint" data-lang-sl="Kliknite za virtualni ogled" data-lang-en="Click to start virtual tour">Click to start virtual tour</span>
+                    </div>
+                </div>
+                <div class="tour-features">
+                    <div class="tour-feature">
+                        <i class="fas fa-vr-cardboard"></i>
+                        <span data-lang-sl="360° ogledi" data-lang-en="360° views">360° views</span>
+                    </div>
+                    <div class="tour-feature">
+                        <i class="fas fa-bed"></i>
+                        <span data-lang-sl="Ogledi sob" data-lang-en="Room tours">Room tours</span>
+                    </div>
+                    <div class="tour-feature">
+                        <i class="fas fa-leaf"></i>
+                        <span data-lang-sl="Vrt in okolica" data-lang-en="Garden & grounds">Garden & grounds</span>
+                    </div>
+                    <div class="tour-feature">
+                        <i class="fas fa-spa"></i>
+                        <span data-lang-sl="Wellness prostori" data-lang-en="Wellness areas">Wellness areas</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="pricing" class="pricing-section" aria-label="Room Rates">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-subtitle" data-lang-sl="Cenik" data-lang-en="Our Rates">Our Rates</span>
+                <h2 class="section-title" data-lang-sl="Transparentne cene" data-lang-en="Transparent Pricing">Transparent Pricing</h2>
+                <p class="section-lead" data-lang-sl="Vse cene so končne — brez skritih stroškov. Zajtrk in wellness sta vključena." data-lang-en="All prices are final — no hidden fees. Breakfast and wellness are included.">All prices are final — no hidden fees. Breakfast and wellness are included.</p>
+            </div>
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <div class="pricing-header">
+                        <h3 data-lang-sl="Standard" data-lang-en="Standard">Standard</h3>
+                        <div class="pricing-amount">
+                            <span class="price">€120</span>
+                            <span class="period" data-lang-sl="nočitev" data-lang-en="per night">per night</span>
+                        </div>
+                    </div>
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check"></i> <span data-lang-sl="King size postelja" data-lang-en="King size bed">King size bed</span></li>
+                        <li><i class="fas fa-check"></i> <span>25 m²</span></li>
+                        <li><i class="fas fa-check"></i> <span data-lang-sl="Kopalnica" data-lang-en="En-suite bathroom">En-suite bathroom</span></li>
+                        <li><i class="fas fa-check"></i> <span data-lang-sl="Brezplačni WiFi" data-lang-en="Free WiFi">Free WiFi</span></li>
+                        <li><i class="fas fa-check"></i> <span data-lang-sl="Gurmanski zajtrk" data-lang-en="Gourmet breakfast">Gourmet breakfast</span></li>
+                        <li><i class="fas fa-check"></i> <span data-lang-sl="Wellness dostop" data-lang-en="Wellness access">Wellness access</span></li>
+                        <li><i class="fas fa-check"></i> <span data-lang-sl="Brezplačno parkirišče" data-lang-en="Free parking">Free parking</span></li>
+                    </ul>
+                    <a href="#reservation" class="btn btn-primary btn-full" data-lang-sl="Rezerviraj" data-lang-en="Book Now">Book Now</a>
+                </div>
+                <div class="pricing-card featured">
+                    <div class="pricing-badge" data-lang-sl="Najbolj priljubljena" data-lang-en="Most Popular">Most Popular</div>
+                    <div class="pricing-header">
+                        <h3 data-lang-sl="Deluxe" data-lang-en="Deluxe">Deluxe</h3>
+                        <div class="pricing-amount">
+                            <span class="price">€180</span>
+                            <span class="period" data-lang-sl="nočitev" data-lang-en="per night">per night</span>
+                        </div>
+                    </div>
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check"></i> <span data-lang-sl="King size postelja" data-lang-en="King size bed">King size bed</span></li>
+                        <li><i class="fas fa-check"></i> <span>35 m²</span></li>
+                        <li><i class="fas fa-check"></i> <span data-lang-sl="Kad in prha" data-lang-en="Bathtub & shower">Bathtub & shower</span></li>
+                        <li><i class="fas fa-check"></i> <span data-lang-sl="Pogled na vrt" data-lang-en="Garden view">Garden view</span></li>
+                        <li><i class="fas fa-check"></i> <span data-lang-sl="Gurmanski zajtrk" data-lang-en="Gourmet breakfast">Gourmet breakfast</span></li>
+                        <li><i class="fas fa-check"></i> <span data-lang-sl="Wellness dostop" data-lang-en="Wellness access">Wellness access</span></li>
+                        <li><i class="fas fa-check"></i> <span data-lang-sl="Brezplačno parkirišče" data-lang-en="Free parking">Free parking</span></li>
+                        <li><i class="fas fa-check"></i> <span data-lang-sl="Balkon" data-lang-en="Private balcony">Private balcony</span></li>
+                    </ul>
+                    <a href="#reservation" class="btn btn-primary btn-full" data-lang-sl="Rezerviraj" data-lang-en="Book Now">Book Now</a>
+                </div>
+                <div class="pricing-card">
+                    <div class="pricing-header">
+                        <h3 data-lang-sl="Družinska" data-lang-en="Family">Family</h3>
+                        <div class="pricing-amount">
+                            <span class="price">€220</span>
+                            <span class="period" data-lang-sl="nočitev" data-lang-en="per night">per night</span>
+                        </div>
+                    </div>
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check"></i> <span data-lang-sl="Dve postelji" data-lang-en="Twin beds">Twin beds</span></li>
+                        <li><i class="fas fa-check"></i> <span>45 m²</span></li>
+                        <li><i class="fas fa-check"></i> <span data-lang-sl="Do 4 gostov" data-lang-en="Up to 4 guests">Up to 4 guests</span></li>
+                        <li><i class="fas fa-check"></i> <span data-lang-sl="Dnevni del" data-lang-en="Living area">Living area</span></li>
+                        <li><i class="fas fa-check"></i> <span data-lang-sl="Gurmanski zajtrk" data-lang-en="Gourmet breakfast">Gourmet breakfast</span></li>
+                        <li><i class="fas fa-check"></i> <span data-lang-sl="Wellness dostop" data-lang-en="Wellness access">Wellness access</span></li>
+                        <li><i class="fas fa-check"></i> <span data-lang-sl="Brezplačno parkirišče" data-lang-en="Free parking">Free parking</span></li>
+                    </ul>
+                    <a href="#reservation" class="btn btn-primary btn-full" data-lang-sl="Rezerviraj" data-lang-en="Book Now">Book Now</a>
+                </div>
+            </div>
+            <p class="pricing-note" data-lang-sl="* Cene veljajo za dve odrasli osebi. Otroci do 6 let brezplačno. Oddaljene rezervacije: 10% popust pri bivanjih nad 5 nočitev." data-lang-en="* Prices are for two adults. Children under 6 stay free. Extended stays: 10% discount for bookings over 5 nights.">* Prices are for two adults. Children under 6 stay free. Extended stays: 10% discount for bookings over 5 nights.</p>
         </div>
     </section>
 

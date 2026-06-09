@@ -633,23 +633,13 @@
     };
 
     // Quick reply topics for the chat widget
-<<<<<<< HEAD
-    window.sendQuickReply = function(topic) {
+    window.sendQuickReply = async function(topic) {
         var input = document.getElementById('chatInput');
         if (input) {
             input.value = topic;
-            sendChatMessage();
+            await sendChatMessage();
         }
     };
-=======
-window.sendQuickReply = async function(topic) {
-    var input = document.getElementById('chatInput');
-    if (input) {
-        input.value = topic;
-        await sendChatMessage();
-    }
-};
->>>>>>> f994da3 (feat(website): upgrade chat to real bot API + add JSON-LD structured data)
 
     window.showChatTopics = function() {
         var messages = document.getElementById('chatMessages');
@@ -692,26 +682,25 @@ window.sendQuickReply = async function(topic) {
         messages.scrollTop = messages.scrollHeight;
     };
 
-<<<<<<< HEAD
-    window.sendChatMessage = function() {
+    window.sendChatMessage = async function() {
         var input = document.getElementById('chatInput');
         var messages = document.getElementById('chatMessages');
         if (!input || !messages || !input.value.trim()) return;
-        
+
         var userMsg = input.value.trim();
         input.value = '';
-        
-        // Remove quick replies when user sends a message
+
+        // Remove quick replies
         var quickReplies = document.getElementById('quickReplies');
         if (quickReplies) quickReplies.remove();
-        
+
         // Add user message
         var userDiv = document.createElement('div');
         userDiv.className = 'chat-message user';
         userDiv.innerHTML = '<p>' + escapeHtml(userMsg) + '</p>';
         messages.appendChild(userDiv);
         messages.scrollTop = messages.scrollHeight;
-        
+
         // Show typing indicator
         var typingDiv = document.createElement('div');
         typingDiv.className = 'chat-message bot typing';
@@ -719,89 +708,36 @@ window.sendQuickReply = async function(topic) {
         typingDiv.innerHTML = '<p><span class="typing-dot">.</span><span class="typing-dot">.</span><span class="typing-dot">.</span></p>';
         messages.appendChild(typingDiv);
         messages.scrollTop = messages.scrollHeight;
-        
-        // Find response
-        var response = getBotResponse(userMsg.toLowerCase());
-        
-        // Simulate more natural typing delay based on response length
-        var typingDelay = Math.min(600 + response.length * 12, 2000);
-        
-        // Replace typing with actual response
-        setTimeout(function() {
+
+        try {
+            var response = await fetch('https://villa-pomona-bot.onrender.com/api/chat', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ message: userMsg }),
+            });
+            var data = await response.json();
+            var botResponse = data.response || data.message;
             var indicator = document.getElementById('typingIndicator');
             if (indicator) indicator.remove();
-            
-            var botDiv = document.createElement('div');
-            botDiv.className = 'chat-message bot';
-            botDiv.innerHTML = '<p>' + response + '</p>';
-            messages.appendChild(botDiv);
-            messages.scrollTop = messages.scrollHeight;
-            
-            // Show quick replies again after bot responds (except for default/fallback responses)
-            if (getBotResponse(userMsg.toLowerCase()) !== (chatResponses[currentLang] || chatResponses.en).default) {
-                setTimeout(function() { showChatTopics(); }, 400);
+            if (botResponse) {
+                var botDiv = document.createElement('div');
+                botDiv.className = 'chat-message bot';
+                botDiv.innerHTML = '<p>' + escapeHtml(botResponse) + '</p>';
+                messages.appendChild(botDiv);
+            } else {
+                throw new Error('Empty response');
             }
-        }, typingDelay);
-    };
-=======
-    window.sendChatMessage = async function() {
-    var input = document.getElementById('chatInput');
-    var messages = document.getElementById('chatMessages');
-    if (!input || !messages || !input.value.trim()) return;
-    
-    var userMsg = input.value.trim();
-    input.value = '';
-    
-    // Remove quick replies
-    var quickReplies = document.getElementById('quickReplies');
-    if (quickReplies) quickReplies.remove();
-    
-    // Add user message
-    var userDiv = document.createElement('div');
-    userDiv.className = 'chat-message user';
-    userDiv.innerHTML = '<p>' + escapeHtml(userMsg) + '</p>';
-    messages.appendChild(userDiv);
-    messages.scrollTop = messages.scrollHeight;
-    
-    // Show typing indicator
-    var typingDiv = document.createElement('div');
-    typingDiv.className = 'chat-message bot typing';
-    typingDiv.id = 'typingIndicator';
-    typingDiv.innerHTML = '<p><span class="typing-dot">.</span><span class="typing-dot">.</span><span class="typing-dot">.</span></p>';
-    messages.appendChild(typingDiv);
-    messages.scrollTop = messages.scrollHeight;
-    
-    try {
-        var response = await fetch('https://villa-pomona-bot.onrender.com/api/chat', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ message: userMsg }),
-        });
-        var data = await response.json();
-        var botResponse = data.response || data.message;
-        var indicator = document.getElementById('typingIndicator');
-        if (indicator) indicator.remove();
-        if (botResponse) {
+        } catch (error) {
+            var indicator = document.getElementById('typingIndicator');
+            if (indicator) indicator.remove();
+            var fallbackResponse = getBotResponse(userMsg.toLowerCase());
             var botDiv = document.createElement('div');
             botDiv.className = 'chat-message bot';
-            botDiv.innerHTML = '<p>' + escapeHtml(botResponse) + '</p>';
+            botDiv.innerHTML = '<p>' + fallbackResponse + '</p>';
             messages.appendChild(botDiv);
-        } else {
-            throw new Error('Empty response');
         }
-    } catch (error) {
-        var indicator = document.getElementById('typingIndicator');
-        if (indicator) indicator.remove();
-        var fallbackResponse = getBotResponse(userMsg.toLowerCase());
-        var botDiv = document.createElement('div');
-        botDiv.className = 'chat-message bot';
-        botDiv.innerHTML = '<p>' + fallbackResponse + '</p>';
-        messages.appendChild(botDiv);
-    }
-    messages.scrollTop = messages.scrollHeight;
-};
-;
->>>>>>> f994da3 (feat(website): upgrade chat to real bot API + add JSON-LD structured data)
+        messages.scrollTop = messages.scrollHeight;
+    };
 
     window.handleChatKeypress = function(e) {
         if (e.key === 'Enter') {
@@ -907,4 +843,21 @@ window.sendQuickReply = async function(topic) {
         }
     });
 
+    // ===== Virtual Tour =====
+    window.openVirtualTour = function() {
+        // Placeholder: In production, this would open a 360° virtual tour
+        // (e.g., Matterport, Kuula, or custom WebGL tour)
+        var modal = document.createElement('div');
+        modal.id = 'virtualTourModal';
+        modal.style.cssText = 'position:fixed;inset:0;z-index:10000;background:rgba(0,0,0,0.9);display:flex;align-items:center;justify-content:center;';
+        modal.innerHTML = '<div style="background:white;padding:40px;border-radius:16px;max-width:500px;text-align:center;margin:20px;">' +
+            '<h3 style="font-family:Playfair Display,serif;font-size:24px;margin-bottom:12px;">' + (currentLang === 'sl' ? 'Virtualni ogled' : 'Virtual Tour') + '</h3>' +
+            '<p style="color:#666;margin-bottom:20px;">' + (currentLang === 'sl' ? 'Virtualni ogled bo kmalu na voljo. Medtem si lahko ogledate naše fotografije v galeriji.' : 'The virtual tour will be available soon. In the meantime, explore our photo gallery above.') + '</p>' +
+            '<button onclick="document.getElementById(\'virtualTourModal\').remove()" style="background:#2d5016;color:white;border:none;padding:12px 32px;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;">' + (currentLang === 'sl' ? 'Zapri' : 'Close') + '</button>' +
+            '</div>';
+        document.body.appendChild(modal);
+        modal.addEventListener('click', function(e) {
+            if (e.target === modal) modal.remove();
+        });
+    };
 })();
