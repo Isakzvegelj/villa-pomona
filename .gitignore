@@ -1,0 +1,6 @@
+# Images (managed separately)
+assets/images/*
+assets/images/rooms/*
+*.bak
+.DS_Store
+node_modules/
