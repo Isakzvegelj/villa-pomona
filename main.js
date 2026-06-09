@@ -448,28 +448,50 @@
     window.switchLanguage = function(lang) {
         currentLang = lang;
         
-        // Update buttons
+        // Persist language preference
+        try { localStorage.setItem('villa-pomona-lang', lang); } catch(e) {}
+        
+        // Update HTML lang attribute for accessibility
+        document.documentElement.lang = lang;
+        
+        // Update buttons using data-lang attribute matching
         document.querySelectorAll('.lang-btn').forEach(function(btn) {
-            btn.classList.remove('active');
+            btn.classList.toggle('active', btn.getAttribute('onclick').indexOf("'" + lang + "'") !== -1);
         });
         
-        var langBtns = document.querySelectorAll('.lang-btn');
-        langBtns.forEach(function(btn) {
-            if (btn.getAttribute('onclick').indexOf("'" + lang + "'") !== -1) {
-                btn.classList.add('active');
-            }
-        });
-        
-        // Update text content
+        // Update text content — handle elements with children by translating only the direct text node
         document.querySelectorAll('[data-lang-' + lang + ']').forEach(function(el) {
+            var newText = el.getAttribute('data-lang-' + lang);
             if (el.children.length === 0) {
-                el.textContent = el.getAttribute('data-lang-' + lang);
+                el.textContent = newText;
+            } else {
+                // For elements with children (e.g., <p> with <br>), replace innerHTML safely with text
+                // Only do this for specific known-safe elements
+                if (el.tagName === 'P' || el.tagName === 'SPAN' || el.tagName === 'H4') {
+                    el.innerHTML = newText;
+                }
             }
         });
         
         // Update placeholders
         applyPlaceholders(lang);
+        
+        // Update chat greeting and status
+        updateChatTranslations(lang);
     };
+    
+    // Load persisted language or detect from browser
+    (function initLanguage() {
+        var saved = null;
+        try { saved = localStorage.getItem('villa-pomona-lang'); } catch(e) {}
+        if (saved === 'sl' || saved === 'en') {
+            window.switchLanguage(saved);
+        } else {
+            // Try to detect from browser
+            var browserLang = (navigator.language || navigator.userLanguage || 'en').substring(0, 2);
+            if (browserLang === 'sl') window.switchLanguage('sl');
+        }
+    })();
 
     // ===== Reservation Form =====
     window.handleReservationSubmit = function(e) {
@@ -620,6 +642,50 @@
         }
     }
 
+    // ===== Seasonal Highlights (fetches from bot API) =====
+    function loadSeasonalHighlights() {
+        var container = document.querySelector('#seasonal-highlights .seasonal-grid');
+        if (!container) return;
+        
+        // Show loading state
+        container.innerHTML = '<div class="seasonal-loading"><div class="seasonal-spinner"></div><p>' + (currentLang === 'sl' ? 'Nalagam...' : 'Loading...') + '</p></div>';
+        
+        fetch('https://villa-pomona-bot.onrender.com/api/weather', { mode: 'cors' })
+            .then(function(res) { return res.json(); })
+            .then(function(data) {
+                var activities = data.activities || [];
+                var tips = data.tips || [];
+                var title = data.title || (currentLang === 'sl' ? 'Sezonski nasveti' : 'Seasonal Tips');
+                var emoji = data.emoji || '🌿';
+                
+                // Update section title
+                var titleEl = document.querySelector('#seasonal-highlights .seasonal-title-text');
+                if (titleEl) titleEl.textContent = emoji + ' ' + title;
+                
+                var html = '';
+                activities.slice(0, 4).forEach(function(act) {
+                    html += '<div class="seasonal-card"><span class="seasonal-icon">🌿</span><p>' + escapeHtml(act) + '</p></div>';
+                });
+                if (tips.length > 0) {
+                    html += '<div class="seasonal-tip"><strong>' + (currentLang === 'sl' ? '💡 Nasvet:' : '💡 Tip:') + '</strong> ' + escapeHtml(tips[0]) + '</div>';
+                }
+                container.innerHTML = html;
+            })
+            .catch(function() {
+                // Fallback content
+                var fallback = currentLang === 'sl'
+                    ? '<div class="seasonal-card"><span class="seasonal-icon">🌿</span><p>Raziskajte jezero Bled s tradicionalnim čolnom "pletna"</p></div>'
+                    + '<div class="seasonal-card"><span class="seasonal-icon">🥾</span><p>Spravite se na sprehod po vintgarski soteski</p></div>'
+                    + '<div class="seasonal-card"><span class="seasonal-icon">🏰</span><p>Obiščite blejski grad in uživajte v razgledu</p></div>'
+                    + '<div class="seasonal-card"><span class="seasonal-icon">☕</span><p>Poizkusite blejsko kremšnito - sladico z zgodovino</p></div>'
+                    : '<div class="seasonal-card"><span class="seasonal-icon">🌿</span><p>Explore Lake Bled by traditional "pletna" boat</p></div>'
+                    + '<div class="seasonal-card"><span class="seasonal-icon">🥾</span><p>Hike through the stunning Vintgar Gorge</p></div>'
+                    + '<div class="seasonal-card"><span class="seasonal-icon">🏰</span><p>Visit Bled Castle for panoramic views</p></div>'
+                    + '<div class="seasonal-card"><span class="seasonal-icon">☕</span><p>Try the famous Bled cream cake - a dessert with history</p></div>';
+                container.innerHTML = fallback;
+            });
+    }
+
     // ===== Chat Widget =====
     window.toggleChat = function() {
         const widget = document.getElementById('chatWidget');
@@ -637,6 +703,22 @@
             widget.classList.remove('open');
         }
     };
+    
+    // Update chat widget translations based on language
+    function updateChatTranslations(lang) {
+        var statusEl = document.getElementById('chatConnectionText');
+        var greetingEl = document.querySelector('.chat-message.bot p');
+        var inputEl = document.getElementById('chatInput');
+        if (statusEl) {
+            statusEl.textContent = lang === 'sl' ? 'Preverjam...' : 'Checking...';
+        }
+        if (greetingEl && greetingEl.hasAttribute('data-lang-' + lang)) {
+            greetingEl.textContent = greetingEl.getAttribute('data-lang-' + lang);
+        }
+        if (inputEl && inputEl.hasAttribute('data-placeholder-' + lang)) {
+            inputEl.placeholder = inputEl.getAttribute('data-placeholder-' + lang);
+        }
+    }
 
     // Quick reply topics for the chat widget
     window.sendQuickReply = async function(topic) {
@@ -998,5 +1080,15 @@
         modal.addEventListener('click', function(e) {
             if (e.target === modal) modal.remove();
         });
+    };
+    
+    // ===== Initialize Seasonal Highlights =====
+    loadSeasonalHighlights();
+    
+    // Re-load seasonal highlights when language changes
+    var _origSwitchLang = window.switchLanguage;
+    window.switchLanguage = function(lang) {
+        _origSwitchLang(lang);
+        loadSeasonalHighlights();
     };
 })();
