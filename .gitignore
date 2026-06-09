@@ -1,5 +1,6 @@
+# Images (managed separately)
+assets/images/*
+assets/images/rooms/*
+*.bak
 .DS_Store
-*.log
 node_modules/
-.env
-Thumbs.db

@@ -33,13 +33,16 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     
-    <!-- JSON-LD Structured Data -->
+    <!-- JSON-LD Structured Data (Consolidated) -->
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
         "@type": "LodgingBusiness",
         "name": "Villa Pomona",
-        "description": "Historic boutique villa in Bled, Slovenia with elegant rooms, wellness, and gourmet breakfast.",
+        "description": "Historic boutique villa in Bled, Slovenia. Elegant rooms, wellness, gourmet breakfast, and stunning views of Lake Bled and the Julian Alps.",
+        "url": "https://villapomona.si",
+        "telephone": "+386 51 603 858",
+        "email": "info@villapomona.si",
         "address": {
             "@type": "PostalAddress",
             "streetAddress": "Črtomirova ulica 2",
@@ -47,20 +50,32 @@
             "postalCode": "4260",
             "addressCountry": "SI"
         },
-        "telephone": "+386****3858",
-        "email": "evita.vilebled@gmail.com",
-        "url": "https://villapomona.si",
-        "priceRange": "€€",
+        "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": 46.3683,
+            "longitude": 14.1145
+        },
+        "priceRange": "€120 - €220",
         "starRating": {
             "@type": "Rating",
-            "ratingValue": "4.5"
+            "ratingValue": 4.5,
+            "bestRating": 5
         },
+        "amenityFeature": [
+            {"@type": "LocationFeatureSpecification", "name": "Free Wi-Fi"},
+            {"@type": "LocationFeatureSpecification", "name": "Private Swimming Pool"},
+            {"@type": "LocationFeatureSpecification", "name": "Sauna & Wellness"},
+            {"@type": "LocationFeatureSpecification", "name": "Free Private Parking"},
+            {"@type": "LocationFeatureSpecification", "name": "Gourmet Breakfast"},
+            {"@type": "LocationFeatureSpecification", "name": "Lake View"},
+            {"@type": "LocationFeatureSpecification", "name": "Garden"}
+        ],
+        "image": "https://villapomona.si/assets/images/hero-1.jpg",
         "aggregateRating": {
             "@type": "AggregateRating",
-            "ratingValue": "4.9",
-            "reviewCount": "127",
-            "bestRating": "5",
-            "worstRating": "1"
+            "ratingValue": 4.9,
+            "reviewCount": 127,
+            "bestRating": 5
         },
         "review": [
             {
@@ -84,67 +99,7 @@
                 "reviewRating": { "@type": "Rating", "ratingValue": "5" },
                 "reviewBody": "Perfect location, beautiful villa, and exceptional hospitality. The sauna and massage were a top-notch experience."
             }
-        ],
-        "amenityFeature": [
-            {"@type": "LocationFeatureSpecification", "name": "Free WiFi", "value": true},
-            {"@type": "LocationFeatureSpecification", "name": "Wellness & Spa", "value": true},
-            {"@type": "LocationFeatureSpecification", "name": "Gourmet Breakfast", "value": true},
-            {"@type": "LocationFeatureSpecification", "name": "Lake View", "value": true},
-            {"@type": "LocationFeatureSpecification", "name": "Garden", "value": true},
-            {"@type": "LocationFeatureSpecification", "name": "Free Parking", "value": true}
-        ],
-        "geo": {
-            "@type": "GeoCoordinates",
-            "latitude": 46.3683,
-            "longitude": 14.1145
-        }
-    }
-    </script>
-
-    <!-- JSON-LD Structured Data (Enhanced) -->
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "LodgingBusiness",
-        "name": "Villa Pomona",
-        "description": "Historic boutique villa in Bled, Slovenia. Elegant rooms, wellness, gourmet breakfast, and stunning views of Lake Bled and the Julian Alps.",
-        "url": "https://villapomona.si",
-        "telephone": "+386 51 603 858",
-        "email": "info@villapomona-bled.com",
-        "address": {
-            "@type": "PostalAddress",
-            "streetAddress": "Cesta svobode 22",
-            "addressLocality": "Bled",
-            "postalCode": "4260",
-            "addressCountry": "SI"
-        },
-        "geo": {
-            "@type": "GeoCoordinates",
-            "latitude": 46.3683,
-            "longitude": 14.1144
-        },
-        "priceRange": "€280 - €550",
-        "starRating": {
-            "@type": "Rating",
-            "ratingValue": 4.5,
-            "bestRating": 5
-        },
-        "amenityFeature": [
-            {"@type": "LocationFeatureSpecification", "name": "Free Wi-Fi"},
-            {"@type": "LocationFeatureSpecification", "name": "Private Swimming Pool"},
-            {"@type": "LocationFeatureSpecification", "name": "Sauna & Wellness"},
-            {"@type": "LocationFeatureSpecification", "name": "Free Private Parking"},
-            {"@type": "LocationFeatureSpecification", "name": "Gourmet Breakfast"},
-            {"@type": "LocationFeatureSpecification", "name": "Private Chef Available"},
-            {"@type": "LocationFeatureSpecification", "name": "Lake View"}
-        ],
-        "image": "https://villapomona.si/assets/images/hero-1.jpg",
-        "aggregateRating": {
-            "@type": "AggregateRating",
-            "ratingValue": 4.8,
-            "reviewCount": 87,
-            "bestRating": 5
-        }
+        ]
     }
     </script>
     <script type="application/ld+json">
@@ -868,14 +823,14 @@
                         <i class="fas fa-phone"></i>
                         <div>
                             <h4 data-lang-sl="Telefon" data-lang-en="Phone">Phone</h4>
-                            <p><a href="tel:+386****3858">+386 51 603 858</a></p>
+                            <p><a href="tel:+38651603858">+386 51 603 858</a></p>
                         </div>
                     </div>
                     <div class="contact-card">
                         <i class="fas fa-envelope"></i>
                         <div>
                             <h4 data-lang-sl="E-pošta" data-lang-en="Email">Email</h4>
-                            <p><a href="mailto:evita.vilebled@gmail.com">evita.vilebled@gmail.com</a></p>
+                            <p><a href="mailto:info@villapomona.si">info@villapomona.si</a></p>
                         </div>
                     </div>
                     <div class="contact-card">
@@ -921,7 +876,7 @@
                 </div>
                 <div class="footer-section">
                     <h4 data-lang-sl="Kontaktni podatki" data-lang-en="Contact Info">Contact Info</h4>
-                    <p>Črtomirova ulica 2<br>4260 Bled, Slovenia<br><a href="tel:+386****3858">+386 51 603 858</a><br><a href="mailto:evita.vilebled@gmail.com">evita.vilebled@gmail.com</a></p>
+                    <p>Črtomirova ulica 2<br>4260 Bled, Slovenia<br><a href="tel:+38651603858">+386 51 603 858</a><br><a href="mailto:info@villapomona.si">info@villapomona.si</a></p>
                 </div>
                 <div class="footer-section">
                     <h4 data-lang-sl="Sledite nam" data-lang-en="Follow Us">Follow Us</h4>
@@ -933,7 +888,7 @@
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; <span id="footerYear">2025</span> Villa Pomona. <span data-lang-sl="Vse pravice pridržane." data-lang-en="All rights reserved.">All rights reserved.</span></p>
+                <p>&copy; <span id="footerYear">2026</span> Villa Pomona. <span data-lang-sl="Vse pravice pridržane." data-lang-en="All rights reserved.">All rights reserved.</span></p>
             </div>
         </div>
     </footer>
@@ -957,7 +912,7 @@
             <i class="fas fa-calendar-check"></i>
             <span data-lang-sl="Rezerviraj" data-lang-en="Book Now">Book Now</span>
         </a>
-        <a href="tel:+386****3858" class="floating-cta-btn floating-cta-call">
+        <a href="tel:+38651603858" class="floating-cta-btn floating-cta-call">
             <i class="fas fa-phone"></i>
             <span data-lang-sl="Pokliči" data-lang-en="Call">Call</span>
         </a>

@@ -24,7 +24,7 @@
 
     const chatResponses = {
         en: {
-            booking: "To make a reservation, please fill out the reservation form below or call us at +386 51 603 858. You can also email evita.vilebled@gmail.com.",
+            booking: "To make a reservation, please fill out the reservation form below or call us at +386 51 603 858. You can also email info@villapomona.si.",
             rooms: "We offer 7 elegant rooms across three categories: Standard (€120/night), Deluxe (€180/night), and Family (€220/night). Each room features unique historic charm with modern amenities.",
             wellness: "Our wellness area includes a Finnish sauna, massage services, and a relaxation room with garden views. Wellness access is included for all guests.",
             location: "We're located at Črtomirova ulica 2, 4260 Bled, Slovenia — just a 5-minute walk from Lake Bled and the town center.",
@@ -38,10 +38,10 @@
             pets: "We love pets! Please let us know in advance if you're bringing a furry friend. There's a small additional cleaning fee. The garden and lakeside paths are perfect for walks with your dog.",
             children: "Children are very welcome! We can provide extra beds, high chairs, and baby cots on request. The garden is safe for kids to play, and the lake is just a short walk away.",
             transport: "The nearest airport is Ljubljana Jože Pučnik (35 km). Bled has a train station on the Ljubljana-Jesenice line. Buses run regularly to Ljubljana (45 min). We can arrange airport transfers on request.",
-            default: "Thank you for your message! For immediate assistance, please call +386 51 603 858 or email evita.vilebled@gmail.com. Is there anything specific I can help you with?"
+            default: "Thank you for your message! For immediate assistance, please call +386 51 603 858 or email info@villapomona.si. Is there anything specific I can help you with?"
         },
         sl: {
-            booking: "Za rezervacijo izpolnite obrazec za rezervacijo spodaj ali nas pokličite na +386 51 603 858. Pišite tudi na evita.vilebled@gmail.com.",
+            booking: "Za rezervacijo izpolnite obrazec za rezervacijo spodaj ali nas pokličite na +386 51 603 858. Pišite tudi na info@villapomona.si.",
             rooms: "Ponujamo 7 elegantnih sob v treh kategorijah: Standard (€120/noč), Deluxe (€180/noč) in Družinska (€220/noč). Vsaka soba ima edinstven zgodovinski šarm s sodobnim udobjem.",
             wellness: "Naš wellness center vključuje finsko savno, masažne storitve in sprostitveni prostor z razgledom na vrt. Dostop do wellnessa je vključen za vse goste.",
             location: "Nahajamo se na Črtomirovavi ulici 2, 4260 Bled — le 5 min hoje od Blejskega jega in centra mesta.",
@@ -55,7 +55,7 @@
             pets: "Imamo radi živali! Prosimo, obvestite nas vnaprej, če bostes psa. Obstaja majhna dodatna pristojbina za čiščenje. Vrt in obalne poti so popolni za sprehode s psom.",
             children: "Otroci so dobrodošli! Na zahtevo lahko zagotovimo dodatne postelje, visoke stole in otroške posteljice. Vrt je varen za igro, jezero pa je le kratka hoja stran.",
             transport: "Najbližje letališče je Ljubljana Jože Pučnik (35 km). Bled ima železniško postajo na progi Ljubljana-Jesenice. Avtobusi vozijo redno do Ljubljane (45 min). Prevoz od letališča lahko uredimo na zahtevo.",
-            default: "Hvala za vaše sporočilo! Za takojšnjo pomoč pokličite +386 51 603 858 ali pišite na evita.vilebled@gmail.com. Vam lahko pomagam s čim?"
+            default: "Hvala za vaše sporočilo! Za takojšnjo pomoč pokličite +386 51 603 858 ali pišite na info@villapomona.si. Vam lahko pomagam s čim?"
         }
     };
 
@@ -550,7 +550,7 @@
             (formData.message ? '\n' + (currentLang === 'sl' ? 'Sporočilo' : 'Message') + ':\n' + formData.message + '\n' : '') +
             '\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n' +
             'Villa Pomona | Črtomirova ulica 2 | 4260 Bled, Slovenia\n' +
-            '📞 +386 51 603 858 | ✉️ evita.vilebled@gmail.com\n' +
+            '📞 +386 51 603 858 | ✉️ info@villapomona.si\n' +
             '🌐 villapomona.si'
         );
         
@@ -559,7 +559,7 @@
             console.log('Reservation submitted:', formData);
             
             // Open mailto link as fallback
-            window.location.href = 'mailto:evita.vilebled@gmail.com?subject=' + subject + '&body=' + body;
+            window.location.href = 'mailto:info@villapomona.si?subject=' + subject + '&body=' + body;
             
             btn.textContent = currentLang === 'sl' ? '✓ Odprto!' : '✓ Opened!';
             btn.style.background = '#2d8a4e';
