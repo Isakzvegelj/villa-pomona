@@ -1,0 +1,1002 @@
+/* ============================================
+   Villa Pomona — Enhanced JavaScript v2.0
+   ============================================ */
+
+(function() {
+    'use strict';
+
+    // ===== State =====
+    let currentLang = 'en';
+    let currentSlide = 0;
+    let currentTestimonial = 0;
+    let currentLightboxIndex = 0;
+    let isChatOpen = false;
+    let isSubmitting = false;
+
+    const galleryImages = [
+        'assets/images/gallery-1.jpg',
+        'assets/images/gallery-2.jpg',
+        'assets/images/gallery-3.jpg',
+        'assets/images/gallery-4.jpg',
+        'assets/images/gallery-5.jpg',
+        'assets/images/gallery-6.jpg',
+    ];
+
+    const chatResponses = {
+        en: {
+            booking: "To make a reservation, please fill out the reservation form below or call us at +386 51 603 858. You can also email info@villapomona.si.",
+            rooms: "We offer 7 elegant rooms across three categories: Standard (€120/night), Deluxe (€180/night), and Family (€220/night). Each room features unique historic charm with modern amenities.",
+            wellness: "Our wellness area includes a Finnish sauna, massage services, and a relaxation room with garden views. Wellness access is included for all guests.",
+            location: "We're located at Črtomirova ulica 2, 4260 Bled, Slovenia — just a 5-minute walk from Lake Bled and the town center.",
+            breakfast: "A gourmet breakfast is included with every stay. We serve local, seasonal ingredients including homemade bread, fresh dairy, and organic produce.",
+            parking: "Free private parking is available on-site for all guests.",
+            wifi: "Free high-speed WiFi is available throughout the villa.",
+            cancellation: "Free cancellation is available up to 48 hours before check-in. Late check-out is available upon request.",
+            hiking: "Bled is a hiker's paradise! Popular trails include the 6 km lakeside path, the trail to Ojstrica viewpoint (30 min), and the Vintgar Gorge walk (25 min drive). The Julian Alps offer world-class trekking for all levels.",
+            restaurants: "Bled has excellent dining options nearby. Try the famous Bled cream cake at Park Hotel, fresh fish at Ribca, or fine dining at Grad. The town center is just a 3-minute walk from the villa.",
+            weather: "Bled has a mild continental climate. Summers (Jun-Aug) are warm (20-28°C) with occasional rain. Winters (Dec-Feb) are cold (-2 to 5°C) with snow. Spring and autumn are mild and beautiful for hiking.",
+            pets: "We love pets! Please let us know in advance if you're bringing a furry friend. There's a small additional cleaning fee. The garden and lakeside paths are perfect for walks with your dog.",
+            children: "Children are very welcome! We can provide extra beds, high chairs, and baby cots on request. The garden is safe for kids to play, and the lake is just a short walk away.",
+            transport: "The nearest airport is Ljubljana Jože Pučnik (35 km). Bled has a train station on the Ljubljana-Jesenice line. Buses run regularly to Ljubljana (45 min). We can arrange airport transfers on request.",
+            default: "Thank you for your message! For immediate assistance, please call +386 51 603 858 or email info@villapomona.si. Is there anything specific I can help you with?"
+        },
+        sl: {
+            booking: "Za rezervacijo izpolnite obrazec za rezervacijo spodaj ali nas pokličite na +386 51 603 858. Pišite tudi na info@villapomona.si.",
+            rooms: "Ponujamo 7 elegantnih sob v treh kategorijah: Standard (€120/noč), Deluxe (€180/noč) in Družinska (€220/noč). Vsaka soba ima edinstven zgodovinski šarm s sodobnim udobjem.",
+            wellness: "Naš wellness center vključuje finsko savno, masažne storitve in sprostitveni prostor z razgledom na vrt. Dostop do wellnessa je vključen za vse goste.",
+            location: "Nahajamo se na Črtomirovavi ulici 2, 4260 Bled — le 5 min hoje od Blejskega jega in centra mesta.",
+            breakfast: "Gurmanski zajtrk je vključen pri vsakem bivanju. Serviramo lokalne, sezenske sestavine, vključno s domačim kruhom, svežo mlečno produkcijo in organskimi pridelki.",
+            parking: "Brezplačno parkirišče je na voljo na lokaciji za vse goste.",
+            wifi: "Brezplačen hitri WiFi je na voljo po celotni vili.",
+            cancellation: "Brezplačna odpoved je možna do 48 ur pred prihodom. Pozen odhod je na voljo na zahtevo.",
+            hiking: "Bled je raj za pohodnike! Priljubljene poti vključujejo 6 km ob jezeru, pot do razgledne točke Ojstrica (30 min) in sprehod po soteski Vintgar (25 min vožnje). Julijske Alpe ponujajo vrhunske pohodniške možnosti.",
+            restaurants: "Bled ima odlične restavracije v bližini. Poskusite sladico Blejska kremšnita v Park Hotelu, sveže ribe v Ribci ali fino kuhinjo v Gradu. Center mesta je le 3 min hoje od vile.",
+            weather: "Bled ima zmerno celinsko podnebje. Poletja (jun-avg) so topla (20-28°C) z občasnimi deževji. Zime (dec-feb) so hladne (-2 do 5°C) s snegom. Pomlad in jesen sta mirna in lepa za pohodništvo.",
+            pets: "Imamo radi živali! Prosimo, obvestite nas vnaprej, če bostes psa. Obstaja majhna dodatna pristojbina za čiščenje. Vrt in obalne poti so popolni za sprehode s psom.",
+            children: "Otroci so dobrodošli! Na zahtevo lahko zagotovimo dodatne postelje, visoke stole in otroške posteljice. Vrt je varen za igro, jezero pa je le kratka hoja stran.",
+            transport: "Najbližje letališče je Ljubljana Jože Pučnik (35 km). Bled ima železniško postajo na progi Ljubljana-Jesenice. Avtobusi vozijo redno do Ljubljane (45 min). Prevoz od letališča lahko uredimo na zahtevo.",
+            default: "Hvala za vaše sporočilo! Za takojšnjo pomoč pokličite +386 51 603 858 ali pišite na info@villapomona.si. Vam lahko pomagam s čim?"
+        }
+    };
+
+    // ===== Document Ready =====
+    document.addEventListener('DOMContentLoaded', function() {
+        initHeader();
+        initHeroSlider();
+        initTestimonials();
+        initGallery();
+        initScrollReveal();
+        initDateInputs();
+        initPlaceholders();
+        initScrollSpy();
+        initBackToTop();
+        initCounterAnimation();
+        initFooterYear();
+        initChatTopics();
+        initCookieConsent();
+        initSocialProof();
+        initImageSkeleton();
+        checkChatConnection();
+    });
+
+    // ===== Header Scroll Effect =====
+    function initHeader() {
+        const header = document.getElementById('header');
+        if (!header) return;
+        
+        let lastScroll = 0;
+        
+        window.addEventListener('scroll', function() {
+            const scrollY = window.scrollY;
+            
+            if (scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+            
+            lastScroll = scrollY;
+        }, { passive: true });
+    }
+
+    // ===== Mobile Menu =====
+    window.toggleMobileMenu = function() {
+        const menu = document.getElementById('navMenu');
+        const btn = document.querySelector('.mobile-menu-btn');
+        if (!menu || !btn) return;
+        
+        menu.classList.toggle('open');
+        btn.classList.toggle('active');
+        btn.setAttribute('aria-expanded', btn.classList.contains('active'));
+    };
+
+    // Close mobile menu on link click
+    document.addEventListener('click', function(e) {
+        const navLink = e.target.closest('.nav-menu a');
+        if (navLink) {
+            const menu = document.getElementById('navMenu');
+            const btn = document.querySelector('.mobile-menu-btn');
+            if (menu) menu.classList.remove('open');
+            if (btn) {
+                btn.classList.remove('active');
+                btn.setAttribute('aria-expanded', 'false');
+            }
+        }
+    });
+
+    // ===== Scroll Spy =====
+    function initScrollSpy() {
+        const sections = document.querySelectorAll('section[id]');
+        const navLinks = document.querySelectorAll('.nav-menu a[data-section]');
+        
+        if (sections.length === 0 || navLinks.length === 0) return;
+        
+        function updateActiveSection() {
+            const scrollY = window.scrollY + 100;
+            
+            let currentSection = '';
+            sections.forEach(function(section) {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.offsetHeight;
+                if (scrollY >= sectionTop && scrollY < sectionTop + sectionHeight) {
+                    currentSection = section.getAttribute('id');
+                }
+            });
+            
+            // Special case: at the very top, highlight home
+            if (window.scrollY < 100) {
+                currentSection = 'home';
+            }
+            
+            navLinks.forEach(function(link) {
+                link.classList.remove('active');
+                if (link.getAttribute('data-section') === currentSection) {
+                    link.classList.add('active');
+                }
+            });
+        }
+        
+        window.addEventListener('scroll', updateActiveSection, { passive: true });
+        // Run once on load
+        updateActiveSection();
+    }
+
+    // ===== Back to Top Button =====
+    function initBackToTop() {
+        const btn = document.getElementById('backToTop');
+        if (!btn) return;
+        
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > 500) {
+                btn.classList.add('visible');
+            } else {
+                btn.classList.remove('visible');
+            }
+        }, { passive: true });
+    }
+
+    window.scrollToTop = function() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+
+    // ===== Counter Animation =====
+    function initCounterAnimation() {
+        const statNumbers = document.querySelectorAll('.stat-number');
+        if (statNumbers.length === 0) return;
+        
+        if ('IntersectionObserver' in window) {
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(function(entry) {
+                    if (entry.isIntersecting) {
+                        animateCounter(entry.target);
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.5 });
+            
+            statNumbers.forEach(function(el) {
+                observer.observe(el);
+            });
+        } else {
+            statNumbers.forEach(function(el) {
+                animateCounter(el);
+            });
+        }
+    }
+
+    function animateCounter(el) {
+        const target = parseFloat(el.textContent);
+        const isFloat = el.textContent.includes('.');
+        const suffix = el.textContent.replace(/[0-9.]/g, '');
+        const duration = 2000;
+        const start = performance.now();
+        
+        function update(now) {
+            const elapsed = now - start;
+            const progress = Math.min(elapsed / duration, 1);
+            // Ease out cubic
+            const eased = 1 - Math.pow(1 - progress, 3);
+            const current = target * eased;
+            
+            if (isFloat) {
+                el.textContent = current.toFixed(1) + suffix;
+            } else {
+                el.textContent = Math.floor(current) + suffix;
+            }
+            
+            if (progress < 1) {
+                requestAnimationFrame(update);
+            } else {
+                el.textContent = target + suffix;
+            }
+        }
+        
+        requestAnimationFrame(update);
+    }
+
+    // ===== Hero Slider =====
+    function initHeroSlider() {
+        const slides = document.querySelectorAll('.hero-slide');
+        if (slides.length === 0) return;
+        
+        // Create dots
+        const dotsContainer = document.getElementById('sliderDots');
+        if (dotsContainer) {
+            slides.forEach((_, i) => {
+                const dot = document.createElement('button');
+                dot.className = 'slider-dot' + (i === 0 ? ' active' : '');
+                dot.setAttribute('aria-label', 'Go to slide ' + (i + 1));
+                dot.addEventListener('click', function() { goToSlide(i); });
+                dotsContainer.appendChild(dot);
+            });
+        }
+        
+        // Auto-advance
+        setInterval(function() {
+            changeSlide(1);
+        }, 6000);
+    }
+
+    window.changeSlide = function(dir) {
+        const slides = document.querySelectorAll('.hero-slide');
+        const dots = document.querySelectorAll('.slider-dot');
+        if (slides.length === 0) return;
+        
+        slides[currentSlide].classList.remove('active');
+        if (dots[currentSlide]) dots[currentSlide].classList.remove('active');
+        
+        currentSlide = (currentSlide + dir + slides.length) % slides.length;
+        
+        slides[currentSlide].classList.add('active');
+        if (dots[currentSlide]) dots[currentSlide].classList.add('active');
+    };
+
+    function goToSlide(index) {
+        const slides = document.querySelectorAll('.hero-slide');
+        const dots = document.querySelectorAll('.slider-dot');
+        if (slides.length === 0 || index === currentSlide) return;
+        
+        slides[currentSlide].classList.remove('active');
+        if (dots[currentSlide]) dots[currentSlide].classList.remove('active');
+        
+        currentSlide = index;
+        
+        slides[currentSlide].classList.add('active');
+        if (dots[currentSlide]) dots[currentSlide].classList.add('active');
+    }
+
+    // ===== Testimonials =====
+    function initTestimonials() {
+        const cards = document.querySelectorAll('.testimonial-card');
+        if (cards.length === 0) return;
+        
+        const dotsContainer = document.getElementById('testimonialDots');
+        if (dotsContainer) {
+            cards.forEach((_, i) => {
+                const dot = document.createElement('button');
+                dot.className = 't-dot' + (i === 0 ? ' active' : '');
+                dot.setAttribute('aria-label', 'Testimonial ' + (i + 1));
+                dot.addEventListener('click', function() { goToTestimonial(i); });
+                dotsContainer.appendChild(dot);
+            });
+        }
+        
+        setInterval(function() {
+            goToTestimonial((currentTestimonial + 1) % cards.length);
+        }, 5000);
+    }
+
+    function goToTestimonial(index) {
+        const cards = document.querySelectorAll('.testimonial-card');
+        const dots = document.querySelectorAll('.t-dot');
+        if (cards.length === 0 || index === currentTestimonial) return;
+        
+        cards[currentTestimonial].classList.remove('active');
+        if (dots[currentTestimonial]) dots[currentTestimonial].classList.remove('active');
+        
+        currentTestimonial = index;
+        
+        cards[currentTestimonial].classList.add('active');
+        if (dots[currentTestimonial]) dots[currentTestimonial].classList.add('active');
+    }
+
+    // ===== Gallery & Lightbox =====
+    function initGallery() {
+        // Keyboard navigation for lightbox
+        document.addEventListener('keydown', function(e) {
+            const lightbox = document.getElementById('lightbox');
+            if (!lightbox || !lightbox.classList.contains('active')) return;
+            
+            if (e.key === 'Escape') closeLightbox();
+            if (e.key === 'ArrowLeft') changeLightbox(-1);
+            if (e.key === 'ArrowRight') changeLightbox(1);
+        });
+    }
+
+    window.openLightbox = function(index) {
+        currentLightboxIndex = index;
+        const lightbox = document.getElementById('lightbox');
+        const img = document.getElementById('lightboxImg');
+        if (!lightbox || !img) return;
+        
+        img.src = galleryImages[index];
+        img.alt = 'Gallery image ' + (index + 1);
+        lightbox.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    };
+
+    window.closeLightbox = function() {
+        const lightbox = document.getElementById('lightbox');
+        if (!lightbox) return;
+        
+        lightbox.classList.remove('active');
+        document.body.style.overflow = '';
+    };
+
+    window.changeLightbox = function(dir) {
+        currentLightboxIndex = (currentLightboxIndex + dir + galleryImages.length) % galleryImages.length;
+        const img = document.getElementById('lightboxImg');
+        if (img) {
+            img.src = galleryImages[currentLightboxIndex];
+            img.alt = 'Gallery image ' + (currentLightboxIndex + 1);
+        }
+    };
+
+    // ===== Scroll Reveal =====
+    function initScrollReveal() {
+        const elements = document.querySelectorAll('.room-card, .contact-card, .feature-item, .wellness-item, .reservation-form, .attraction-card, .testimonial-card');
+        
+        if ('IntersectionObserver' in window) {
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(function(entry) {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0.1,
+                rootMargin: '0px 0px -30px 0px'
+            });
+            
+            elements.forEach(function(el) {
+                el.classList.add('reveal');
+                observer.observe(el);
+            });
+        } else {
+            elements.forEach(function(el) {
+                el.classList.add('visible');
+            });
+        }
+    }
+
+    // ===== Date Inputs =====
+    function initDateInputs() {
+        const checkIn = document.getElementById('checkIn');
+        const checkOut = document.getElementById('checkOut');
+        if (!checkIn || !checkOut) return;
+        
+        const today = new Date().toISOString().split('T')[0];
+        checkIn.min = today;
+        
+        checkIn.addEventListener('change', function() {
+            if (this.value) {
+                const nextDay = new Date(this.value);
+                nextDay.setDate(nextDay.getDate() + 1);
+                checkOut.min = nextDay.toISOString().split('T')[0];
+                
+                if (checkOut.value && checkOut.value <= this.value) {
+                    checkOut.value = checkOut.min;
+                }
+            }
+        });
+    }
+
+    // ===== Placeholders =====
+    function initPlaceholders() {
+        applyPlaceholders(currentLang);
+    }
+
+    function applyPlaceholders(lang) {
+        document.querySelectorAll('[data-placeholder-' + lang + ']').forEach(function(el) {
+            el.placeholder = el.getAttribute('data-placeholder-' + lang);
+        });
+    }
+
+    // ===== Footer Year =====
+    function initFooterYear() {
+        const yearEl = document.getElementById('footerYear');
+        if (yearEl) {
+            yearEl.textContent = new Date().getFullYear();
+        }
+    }
+
+    // ===== Chat Topics Init =====
+    function initChatTopics() {
+        // Override toggleChat to also show quick replies
+        var _origToggle = window.toggleChat;
+        window.toggleChat = function() {
+            _origToggle();
+            var widget = document.getElementById('chatWidget');
+            if (widget && widget.classList.contains('open')) {
+                setTimeout(function() { showChatTopics(); }, 350);
+            }
+        };
+    }
+
+    // ===== Language Switching =====
+    window.switchLanguage = function(lang) {
+        currentLang = lang;
+        
+        // Update buttons
+        document.querySelectorAll('.lang-btn').forEach(function(btn) {
+            btn.classList.remove('active');
+        });
+        
+        var langBtns = document.querySelectorAll('.lang-btn');
+        langBtns.forEach(function(btn) {
+            if (btn.getAttribute('onclick').indexOf("'" + lang + "'") !== -1) {
+                btn.classList.add('active');
+            }
+        });
+        
+        // Update text content
+        document.querySelectorAll('[data-lang-' + lang + ']').forEach(function(el) {
+            if (el.children.length === 0) {
+                el.textContent = el.getAttribute('data-lang-' + lang);
+            }
+        });
+        
+        // Update placeholders
+        applyPlaceholders(lang);
+    };
+
+    // ===== Reservation Form =====
+    window.handleReservationSubmit = function(e) {
+        e.preventDefault();
+        
+        if (isSubmitting) return;
+        
+        const form = document.getElementById('reservationForm');
+        const btn = document.getElementById('submitBtn');
+        const feedback = document.getElementById('formFeedback');
+        if (!form || !btn) return;
+        
+        // Validate
+        const checkIn = document.getElementById('checkIn').value;
+        const checkOut = document.getElementById('checkOut').value;
+        const email = document.getElementById('email').value;
+        const firstName = document.getElementById('firstName').value;
+        const lastName = document.getElementById('lastName').value;
+        
+        if (!firstName || !lastName || !email || !checkIn || !checkOut) {
+            showFormFeedback(feedback, currentLang === 'sl' ? 'Prosimo izpolnite vsa obvezna polja.' : 'Please fill in all required fields.', 'error');
+            return;
+        }
+        
+        if (checkIn >= checkOut) {
+            showFormFeedback(feedback, currentLang === 'sl' ? 'Datum odhoda mora biti po datumu prihoda.' : 'Check-out must be after check-in.', 'error');
+            return;
+        }
+        
+        // Email validation
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            showFormFeedback(feedback, currentLang === 'sl' ? 'Prosimo vnesite veljaven e-poštni naslov.' : 'Please enter a valid email address.', 'error');
+            return;
+        }
+        
+        // Show loading
+        isSubmitting = true;
+        const originalText = btn.textContent;
+        btn.textContent = currentLang === 'sl' ? 'Pošiljanje...' : 'Sending...';
+        btn.disabled = true;
+        btn.style.opacity = '0.7';
+        
+        // Collect form data
+        const formData = {
+            firstName: firstName,
+            lastName: lastName,
+            email: email,
+            phone: document.getElementById('phone').value,
+            checkIn: checkIn,
+            checkOut: checkOut,
+            adults: document.getElementById('adults').value,
+            roomType: document.getElementById('roomType').value,
+            message: document.getElementById('message').value
+        };
+        
+        // Build email body
+        const roomTypeLabels = {
+            orchard: currentLang === 'sl' ? 'Orchard Room (€200)' : 'Orchard Room (€200)',
+            garden: currentLang === 'sl' ? 'Garden Suite (€230)' : 'Garden Suite (€230)',
+            lakeview: currentLang === 'sl' ? 'Lakeview Deluxe (€250)' : 'Lakeview Deluxe (€250)',
+            heritage: currentLang === 'sl' ? 'Pomona Heritage Suite (€280)' : 'Pomona Heritage Suite (€280)',
+            tower: currentLang === 'sl' ? 'Tower Suite (€350)' : 'Tower Suite (€350)'
+        };
+        
+        const subject = encodeURIComponent(
+            (currentLang === 'sl' ? 'Rezervacija - ' : 'Reservation - ') + 
+            formData.firstName + ' ' + formData.lastName
+        );
+        
+        const body = encodeURIComponent(
+            (currentLang === 'sl' ? 'Pozdravljeni,' : 'Hello,') + '\n\n' +
+            (currentLang === 'sl' ? 'Želela bi rezervirati nastanitev v Villa Pomona.' : 'I would like to make a reservation at Villa Pomona.') + '\n\n' +
+            '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n' +
+            (currentLang === 'sl' ? 'PODATKI O REZERVACIJI' : 'RESERVATION DETAILS') + '\n' +
+            '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n' +
+            (currentLang === 'sl' ? 'Ime' : 'Name') + ': ' + formData.firstName + ' ' + formData.lastName + '\n' +
+            'Email: ' + formData.email + '\n' +
+            (currentLang === 'sl' ? 'Telefon' : 'Phone') + ': ' + (formData.phone || '-') + '\n' +
+            (currentLang === 'sl' ? 'Prihod' : 'Check-in') + ': ' + formData.checkIn + '\n' +
+            (currentLang === 'sl' ? 'Odhod' : 'Check-out') + ': ' + formData.checkOut + '\n' +
+            (currentLang === 'sl' ? 'Število oseb' : 'Guests') + ': ' + formData.adults + '\n' +
+            (currentLang === 'sl' ? 'Tip sobe' : 'Room Type') + ': ' + (roomTypeLabels[formData.roomType] || formData.roomType) + '\n' +
+            (formData.message ? '\n' + (currentLang === 'sl' ? 'Sporočilo' : 'Message') + ':\n' + formData.message + '\n' : '') +
+            '\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n' +
+            'Villa Pomona | Črtomirova ulica 2 | 4260 Bled, Slovenia\n' +
+            '📞 +386 51 603 858 | ✉️ info@villapomona.si\n' +
+            '🌐 villapomona.si'
+        );
+        
+        // Simulate submission with mailto fallback
+        setTimeout(function() {
+            console.log('Reservation submitted:', formData);
+            
+            // Open mailto link as fallback
+            window.location.href = 'mailto:info@villapomona.si?subject=' + subject + '&body=' + body;
+            
+            btn.textContent = currentLang === 'sl' ? '✓ Odprto!' : '✓ Opened!';
+            btn.style.background = '#2d8a4e';
+            btn.style.borderColor = '#2d8a4e';
+            
+            showFormFeedback(feedback, 
+                currentLang === 'sl' 
+                    ? 'Hvala! Odprl se je vaš e-poštni program s podrobnostmi rezervacije. Pošljite e-pošto za dokončanje rezervacije. Če se e-poštni program ne odpre, nas kontaktirajte na +386 51 603 858.' 
+                    : 'Thank you! Your email program has been opened with the reservation details. Please send the email to complete your booking. If the email program did not open, please contact us at +386 51 603 858.', 
+                'success'
+            );
+            
+            setTimeout(function() {
+                btn.textContent = originalText;
+                btn.disabled = false;
+                btn.style.opacity = '1';
+                btn.style.background = '';
+                btn.style.borderColor = '';
+                form.reset();
+                isSubmitting = false;
+                
+                if (feedback) {
+                    feedback.className = 'form-feedback';
+                    feedback.style.display = 'none';
+                }
+            }, 6000);
+        }, 1200);
+    };
+
+    function showFormFeedback(el, message, type) {
+        if (!el) {
+            // Create feedback element if it doesn't exist
+            const form = document.getElementById('reservationForm');
+            if (!form) return;
+            const newEl = document.createElement('div');
+            newEl.id = 'formFeedback';
+            newEl.className = 'form-feedback';
+            form.appendChild(newEl);
+            showFormFeedback(newEl, message, type);
+            return;
+        }
+        
+        el.textContent = message;
+        el.className = 'form-feedback ' + type;
+        el.style.display = 'block';
+        
+        // Auto-hide error messages after 5 seconds
+        if (type === 'error') {
+            setTimeout(function() {
+                el.style.display = 'none';
+            }, 5000);
+        }
+    }
+
+    // ===== Chat Widget =====
+    window.toggleChat = function() {
+        const widget = document.getElementById('chatWidget');
+        if (!widget) return;
+        
+        isChatOpen = !isChatOpen;
+        
+        if (isChatOpen) {
+            widget.classList.add('open');
+            setTimeout(function() {
+                var input = document.getElementById('chatInput');
+                if (input) input.focus();
+            }, 300);
+        } else {
+            widget.classList.remove('open');
+        }
+    };
+
+    // Quick reply topics for the chat widget
+    window.sendQuickReply = async function(topic) {
+        var input = document.getElementById('chatInput');
+        if (input) {
+            input.value = topic;
+            await sendChatMessage();
+        }
+    };
+
+    window.showChatTopics = function() {
+        var messages = document.getElementById('chatMessages');
+        if (!messages) return;
+        
+        // Don't show topics if already shown
+        if (document.getElementById('quickReplies')) return;
+        
+        var topicsDiv = document.createElement('div');
+        topicsDiv.id = 'quickReplies';
+        topicsDiv.className = 'chat-quick-replies';
+        
+        var topics = currentLang === 'sl'
+            ? [
+                { key: 'booking', label: '📅 Rezervacija', text: 'Želela bi rezervirati sobo' },
+                { key: 'rooms', label: '🛏️ Sobe', text: 'Katere sobe imate?' },
+                { key: 'wellness', label: '🧖 Wellness', text: 'Povite mi o wellnessu' },
+                { key: 'location', label: '📍 Lokacija', text: 'Kje se nahajate?' },
+                { key: 'restaurants', label: '🍽️ Restavracije', text: 'Restavracije v bližini' },
+                { key: 'price', label: '💰 Cene', text: 'Katere so vaše cene?' }
+              ]
+            : [
+                { key: 'booking', label: '📅 Book a Room', text: 'I would like to make a reservation' },
+                { key: 'rooms', label: '🛏️ View Rooms', text: 'Tell me about your rooms' },
+                { key: 'wellness', label: '🧖 Wellness', text: 'Tell me about your wellness' },
+                { key: 'location', label: '📍 Location', text: 'Where are you located?' },
+                { key: 'restaurants', label: '🍽️ Dining', text: 'Restaurants nearby' },
+                { key: 'price', label: '💰 Pricing', text: 'What are your prices?' }
+              ];
+        
+        topics.forEach(function(topic) {
+            var btn = document.createElement('button');
+            btn.className = 'quick-reply-btn';
+            btn.textContent = topic.label;
+            btn.onclick = function() { sendQuickReply(topic.text); };
+            topicsDiv.appendChild(btn);
+        });
+        
+        messages.appendChild(topicsDiv);
+        messages.scrollTop = messages.scrollHeight;
+    };
+
+    window.sendChatMessage = async function() {
+        var input = document.getElementById('chatInput');
+        var messages = document.getElementById('chatMessages');
+        if (!input || !messages || !input.value.trim()) return;
+
+        var userMsg = input.value.trim();
+        input.value = '';
+
+        // Remove quick replies
+        var quickReplies = document.getElementById('quickReplies');
+        if (quickReplies) quickReplies.remove();
+
+        // Add user message
+        var userDiv = document.createElement('div');
+        userDiv.className = 'chat-message user';
+        userDiv.innerHTML = '<p>' + escapeHtml(userMsg) + '</p>';
+        messages.appendChild(userDiv);
+        messages.scrollTop = messages.scrollHeight;
+
+        // Show typing indicator
+        var typingDiv = document.createElement('div');
+        typingDiv.className = 'chat-message bot typing';
+        typingDiv.id = 'typingIndicator';
+        typingDiv.innerHTML = '<p><span class="typing-dot">.</span><span class="typing-dot">.</span><span class="typing-dot">.</span></p>';
+        messages.appendChild(typingDiv);
+        messages.scrollTop = messages.scrollHeight;
+
+        try {
+            var response = await fetch('https://villa-pomona-bot.onrender.com/api/chat', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ message: userMsg }),
+            });
+            var data = await response.json();
+            var botResponse = data.response || data.message;
+            var indicator = document.getElementById('typingIndicator');
+            if (indicator) indicator.remove();
+            if (botResponse) {
+                var botDiv = document.createElement('div');
+                botDiv.className = 'chat-message bot';
+                botDiv.innerHTML = '<p>' + escapeHtml(botResponse) + '</p>';
+                messages.appendChild(botDiv);
+            } else {
+                throw new Error('Empty response');
+            }
+        } catch (error) {
+            var indicator = document.getElementById('typingIndicator');
+            if (indicator) indicator.remove();
+            var fallbackResponse = getBotResponse(userMsg.toLowerCase());
+            var botDiv = document.createElement('div');
+            botDiv.className = 'chat-message bot';
+            botDiv.innerHTML = '<p>' + fallbackResponse + '</p>';
+            messages.appendChild(botDiv);
+        }
+        messages.scrollTop = messages.scrollHeight;
+    };
+
+    window.handleChatKeypress = function(e) {
+        if (e.key === 'Enter') {
+            sendChatMessage();
+        }
+    };
+
+    function escapeHtml(text) {
+        var div = document.createElement('div');
+        div.appendChild(document.createTextNode(text));
+        return div.innerHTML;
+    }
+
+    function getBotResponse(message) {
+        var responses = chatResponses[currentLang] || chatResponses.en;
+        var msg = message.toLowerCase();
+        
+        if (msg.indexOf('book') !== -1 || msg.indexOf('reserve') !== -1 || msg.indexOf('rezerv') !== -1 || msg.indexOf('cena') !== -1 || msg.indexOf('price') !== -1 || msg.indexOf('cost') !== -1) {
+            return responses.booking;
+        }
+        if (msg.indexOf('room') !== -1 || msg.indexOf('sob') !== -1 || msg.indexOf('suite') !== -1 || msg.indexOf('apart') !== -1) {
+            return responses.rooms;
+        }
+        if (msg.indexOf('wellness') !== -1 || msg.indexOf('sauna') !== -1 || msg.indexOf('spa') !== -1 || msg.indexOf('savn') !== -1 || msg.indexOf('masa') !== -1 || msg.indexOf('massage') !== -1) {
+            return responses.wellness;
+        }
+        if (msg.indexOf('where') !== -1 || msg.indexOf('location') !== -1 || msg.indexOf('address') !== -1 || msg.indexOf('kje') !== -1 || msg.indexOf('naslov') !== -1 || msg.indexOf('lokac') !== -1) {
+            return responses.location;
+        }
+        if (msg.indexOf('breakfast') !== -1 || msg.indexOf('food') !== -1 || msg.indexOf('zajtrk') !== -1 || msg.indexOf('hrana') !== -1 || msg.indexOf('jed') !== -1) {
+            return responses.breakfast;
+        }
+        if (msg.indexOf('parking') !== -1 || msg.indexOf('park') !== -1 || msg.indexOf('parkir') !== -1 || msg.indexOf('car') !== -1 || msg.indexOf('auto') !== -1) {
+            return responses.parking;
+        }
+        if (msg.indexOf('wifi') !== -1 || msg.indexOf('internet') !== -1) {
+            return responses.wifi;
+        }
+        if (msg.indexOf('cancel') !== -1 || msg.indexOf('odpov') !== -1 || msg.indexOf('refund') !== -1) {
+            return responses.cancellation;
+        }
+        if (msg.indexOf('hiking') !== -1 || msg.indexOf('walk') !== -1 || msg.indexOf('trail') !== -1 || msg.indexOf('pohod') !== -1 || msg.indexOf('pot') !== -1 || msg.indexOf('gore') !== -1 || msg.indexOf('mountain') !== -1) {
+            return responses.hiking;
+        }
+        if (msg.indexOf('restaurant') !== -1 || msg.indexOf('eat') !== -1 || msg.indexOf('dinner') !== -1 || msg.indexOf('lunch') !== -1 || msg.indexOf('restavrac') !== -1 || msg.indexOf('jest') !== -1 || msg.indexOf('večerja') !== -1) {
+            return responses.restaurants;
+        }
+        if (msg.indexOf('weather') !== -1 || msg.indexOf('temperature') !== -1 || msg.indexOf('climate') !== -1 || msg.indexOf('vreme') !== -1) {
+            return responses.weather;
+        }
+        if (msg.indexOf('dog') !== -1 || msg.indexOf('pet') !== -1 || msg.indexOf('pes') !== -1 || msg.indexOf('pesek') !== -1) {
+            return responses.pets;
+        }
+        if (msg.indexOf('child') !== -1 || msg.indexOf('kid') !== -1 || msg.indexOf('baby') !== -1 || msg.indexOf('otro') !== -1 || msg.indexOf('družin') !== -1) {
+            return responses.children;
+        }
+        if (msg.indexOf('transport') !== -1 || msg.indexOf('bus') !== -1 || msg.indexOf('train') !== -1 || msg.indexOf('airport') !== -1 || msg.indexOf('prevoz') !== -1 || msg.indexOf('letali') !== -1) {
+            return responses.transport;
+        }
+        
+        return responses.default;
+    }
+
+    // ===== Newsletter Form =====
+    window.handleNewsletterSubmit = function(e) {
+        e.preventDefault();
+        const email = document.getElementById('newsletterEmail').value;
+        if (!email) return;
+
+        const btn = e.target.querySelector('button');
+        const originalText = btn.textContent;
+        btn.textContent = currentLang === 'sl' ? '✓ Prijavljeni!' : '✓ Subscribed!';
+        btn.style.background = '#2d8a4e';
+        btn.style.borderColor = '#2d8a4e';
+
+        setTimeout(function() {
+            btn.textContent = originalText;
+            btn.style.background = '';
+            btn.style.borderColor = '';
+            document.getElementById('newsletterEmail').value = '';
+        }, 3000);
+    };
+
+    // ===== Cookie Consent =====
+    function initCookieConsent() {
+        var banner = document.getElementById('cookieConsent');
+        if (!banner) return;
+        if (localStorage.getItem('cookieConsent')) return;
+        setTimeout(function() { banner.classList.add('visible'); }, 1500);
+    }
+
+    window.acceptCookies = function() {
+        localStorage.setItem('cookieConsent', 'accepted');
+        var banner = document.getElementById('cookieConsent');
+        if (banner) banner.classList.remove('visible');
+    };
+
+    window.declineCookies = function() {
+        localStorage.setItem('cookieConsent', 'declined');
+        var banner = document.getElementById('cookieConsent');
+        if (banner) banner.classList.remove('visible');
+    };
+
+    // ===== Social Proof Toasts =====
+    function initSocialProof() {
+        var messages = currentLang === 'sl'
+            ? [
+                { text: '<strong>Marko iz Ljubljane</strong> je ravnokar rezerviral bivanje', icon: '🌿' },
+                { text: '<strong>Anna iz Avstrije</strong> je dodala Villa Pomona med priljubljene', icon: '❤️' },
+                { text: '<strong>Peter in Maja</strong> sta rezervirala Tower Suite', icon: '🏰' },
+                { text: '<strong>Sarah iz Londona</strong> je ravnokar rezervirala Garden Suite', icon: '🌸' },
+                { text: '<strong>Thomas iz Nemčije</strong> je pozitivno ocenil našo nastanitev', icon: '⭐' },
+              ]
+            : [
+                { text: '<strong>Marko from Ljubljana</strong> just booked a stay', icon: '🌿' },
+                { text: '<strong>Anna from Austria</strong> added Villa Pomona to favorites', icon: '❤️' },
+                { text: '<strong>Peter & Maja</strong> just booked the Tower Suite', icon: '🏰' },
+                { text: '<strong>Sarah from London</strong> just booked the Garden Suite', icon: '🌸' },
+                { text: '<strong>Thomas from Germany</strong> left a 5-star review', icon: '⭐' },
+              ];
+
+        var index = 0;
+        function showNextToast() {
+            if (localStorage.getItem('cookieConsent') === 'declined') return;
+            var toast = document.getElementById('socialProofToast');
+            var text = document.getElementById('socialProofText');
+            if (!toast || !text) return;
+
+            var msg = messages[index % messages.length];
+            toast.querySelector('.toast-icon').textContent = msg.icon;
+            text.innerHTML = msg.text;
+            toast.classList.add('visible');
+
+            setTimeout(function() { toast.classList.remove('visible'); }, 5000);
+            index++;
+        }
+
+        // Show first toast after 8s, then every 25-35s
+        setTimeout(function() {
+            showNextToast();
+            setInterval(showNextToast, 30000);
+        }, 8000);
+    }
+
+    // ===== Image Skeleton Loading =====
+    function initImageSkeleton() {
+        document.querySelectorAll('img[loading="lazy"]').forEach(function(img) {
+            img.classList.add('img-skeleton');
+            img.addEventListener('load', function() {
+                img.classList.remove('img-skeleton');
+                img.classList.add('loaded');
+            });
+            // If already loaded (cached)
+            if (img.complete) {
+                img.classList.remove('img-skeleton');
+                img.classList.add('loaded');
+            }
+        });
+    }
+
+    // ===== Chat Connection Check =====
+    function checkChatConnection() {
+        var dot = document.getElementById('chatConnectionDot');
+        var text = document.getElementById('chatConnectionText');
+        if (!dot || !text) return;
+
+        fetch('https://villa-pomona-bot.onrender.com/api/health', {
+            method: 'GET',
+            signal: AbortSignal.timeout(5000)
+        })
+        .then(function(res) {
+            if (res.ok) {
+                dot.classList.remove('offline');
+                text.textContent = currentLang === 'sl' ? 'Povezan' : 'Connected';
+            } else {
+                throw new Error('Not OK');
+            }
+        })
+        .catch(function() {
+            dot.classList.add('offline');
+            text.textContent = currentLang === 'sl' ? 'Lokalni način' : 'Offline mode';
+        });
+    }
+
+    // ===== Virtual Tour =====
+    window.openVirtualTour = function(room) {
+        var roomNames = {
+            heritage: currentLang === 'sl' ? 'Pomona Heritage Suite' : 'Pomona Heritage Suite',
+            garden: currentLang === 'sl' ? 'Garden Suite' : 'Garden Suite',
+            lakeview: currentLang === 'sl' ? 'Lakeview Deluxe' : 'Lakeview Deluxe',
+            tower: currentLang === 'sl' ? 'Tower Suite' : 'Tower Suite'
+        };
+        var roomName = roomNames[room] || (currentLang === 'sl' ? 'Virtualni ogled' : 'Virtual Tour');
+
+        var modal = document.createElement('div');
+        modal.id = 'virtualTourModal';
+        modal.style.cssText = 'position:fixed;inset:0;z-index:10000;background:rgba(0,0,0,0.92);display:flex;align-items:center;justify-content:center;';
+        modal.innerHTML = '<div style="background:white;padding:40px;border-radius:16px;max-width:520px;text-align:center;margin:20px;width:100%;">' +
+            '<div style="font-size:48px;margin-bottom:16px;">🏠</div>' +
+            '<h3 style="font-family:Playfair Display,serif;font-size:24px;margin-bottom:8px;">' + roomName + '</h3>' +
+            '<p style="color:#666;margin-bottom:20px;">' + (currentLang === 'sl' ? 'Virtualni ogled bo kmalu na voljo. Medtem si lahko ogledate naše fotografije v galeriji.' : 'The virtual tour will be available soon. In the meantime, explore our photo gallery above.') + '</p>' +
+            '<div style="background:#f3f1ec;border-radius:12px;padding:16px;margin-bottom:20px;text-align:left;font-size:13px;color:#555;">' +
+            '<strong>' + (currentLang === 'sl' ? 'Prihajajoče funkcije:' : 'Coming features:') + '</strong><br>' +
+            '• 360° panoramic views<br>' +
+            '• Room-by-room walkthrough<br>' +
+            '• Interactive floor plans<br>' +
+            '• VR headset support' +
+            '</div>' +
+            '<button onclick="document.getElementById(\'virtualTourModal\').remove()" style="background:#2d5016;color:white;border:none;padding:12px 32px;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;">' + (currentLang === 'sl' ? 'Zapri' : 'Close') + '</button>' +
+            '</div>';
+        document.body.appendChild(modal);
+        modal.addEventListener('click', function(e) {
+            if (e.target === modal) modal.remove();
+        });
+    };
+
+    // ===== Smooth Scroll for Anchor Links =====
+    document.addEventListener('click', function(e) {
+        var anchor = e.target.closest('a[href^="#"]');
+        if (!anchor) return;
+        
+        var targetId = anchor.getAttribute('href');
+        if (targetId === '#') return;
+        
+        var target = document.querySelector(targetId);
+        if (target) {
+            e.preventDefault();
+            
+            var headerHeight = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--header-height')) || 70;
+            var targetPosition = target.getBoundingClientRect().top + window.scrollY - headerHeight;
+            
+            window.scrollTo({
+                top: targetPosition,
+                behavior: 'smooth'
+            });
+        }
+    });
+
+    // ===== Virtual Tour =====
+    window.openVirtualTour = function() {
+        // Placeholder: In production, this would open a 360° virtual tour
+        // (e.g., Matterport, Kuula, or custom WebGL tour)
+        var modal = document.createElement('div');
+        modal.id = 'virtualTourModal';
+        modal.style.cssText = 'position:fixed;inset:0;z-index:10000;background:rgba(0,0,0,0.9);display:flex;align-items:center;justify-content:center;';
+        modal.innerHTML = '<div style="background:white;padding:40px;border-radius:16px;max-width:500px;text-align:center;margin:20px;">' +
+            '<h3 style="font-family:Playfair Display,serif;font-size:24px;margin-bottom:12px;">' + (currentLang === 'sl' ? 'Virtualni ogled' : 'Virtual Tour') + '</h3>' +
+            '<p style="color:#666;margin-bottom:20px;">' + (currentLang === 'sl' ? 'Virtualni ogled bo kmalu na voljo. Medtem si lahko ogledate naše fotografije v galeriji.' : 'The virtual tour will be available soon. In the meantime, explore our photo gallery above.') + '</p>' +
+            '<button onclick="document.getElementById(\'virtualTourModal\').remove()" style="background:#2d5016;color:white;border:none;padding:12px 32px;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;">' + (currentLang === 'sl' ? 'Zapri' : 'Close') + '</button>' +
+            '</div>';
+        document.body.appendChild(modal);
+        modal.addEventListener('click', function(e) {
+            if (e.target === modal) modal.remove();
+        });
+    };
+})();
