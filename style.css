@@ -2,6 +2,19 @@
    Villa Pomona — Enhanced Styles
    ============================================ */
 
+/* ===== Scroll Progress Bar ===== */
+.scroll-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 0%;
+    height: 3px;
+    background: linear-gradient(90deg, var(--color-primary), var(--color-accent));
+    z-index: 10001;
+    transition: width 0.1s linear;
+    pointer-events: none;
+}
+
 /* ===== CSS Variables ===== */
 :root {
     --color-primary: #2d5016;
@@ -2048,6 +2061,60 @@ footer {
 @keyframes skeletonPulse {
     0% { background-position: 200% 0; }
     100% { background-position: -200% 0; }
+}
+
+/* ===== Seasonal Cards ===== */
+.seasonal-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 24px;
+    margin-top: 16px;
+}
+
+.seasonal-card {
+    background: var(--color-white);
+    border-radius: var(--radius-lg);
+    padding: 32px 24px;
+    text-align: center;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid rgba(0,0,0,0.06);
+    transition: all var(--transition-normal);
+    position: relative;
+    overflow: hidden;
+}
+
+.seasonal-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: var(--seasonal-accent, var(--color-primary));
+}
+
+.seasonal-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
+}
+
+.seasonal-icon {
+    font-size: 2.5rem;
+    display: block;
+    margin-bottom: 16px;
+}
+
+.seasonal-card h4 {
+    font-family: var(--font-heading);
+    font-size: 1.1rem;
+    color: var(--color-primary-dark);
+    margin-bottom: 8px;
+}
+
+.seasonal-card p {
+    font-size: 0.9rem;
+    color: var(--color-text-light);
+    line-height: 1.5;
 }
 
 /* ===== Scroll Reveal Animation ===== */

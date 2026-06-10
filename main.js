@@ -77,7 +77,85 @@
         initSocialProof();
         initImageSkeleton();
         checkChatConnection();
+        initScrollProgress();
+        initSeasonalContent();
     });
+
+    // ===== Scroll Progress Bar =====
+    function initScrollProgress() {
+        const bar = document.getElementById('scrollProgress');
+        if (!bar) return;
+        window.addEventListener('scroll', function() {
+            const scrollY = window.scrollY;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const progress = docHeight > 0 ? (scrollY / docHeight) * 100 : 0;
+            bar.style.width = progress + '%';
+        }, { passive: true });
+    }
+
+    // ===== Seasonal Content Loader =====
+    function initSeasonalContent() {
+        const container = document.querySelector('.seasonal-grid');
+        if (!container) return;
+        const month = new Date().getMonth();
+        let season, seasonColor;
+        if (month >= 2 && month <= 4) { season = 'spring'; seasonColor = '#e8b4b8'; }
+        else if (month >= 5 && month <= 7) { season = 'summer'; seasonColor = '#f4c430'; }
+        else if (month >= 8 && month <= 10) { season = 'autumn'; seasonColor = '#d4845a'; }
+        else { season = 'winter'; seasonColor = '#a8c8e8'; }
+        const seasonalData = {
+            spring: {
+                title: { en: 'Spring in Bled', sl: 'Pomlad v Bledu' },
+                tips: [
+                    { icon: '🌸', title: { en: 'Cherry Blossoms', sl: 'Češnje v cvetu' }, desc: { en: 'The lake shore bursts with pink cherry blossoms. Perfect for photography.', sl: 'Obala jezera razkriva rožnate češnje. Popolno za fotografiranje.' } },
+                    { icon: '🥾', title: { en: 'Vintgar Gorge Opens', sl: 'Soteska Vintgar odprta' }, desc: { en: 'The gorge walkways reopen after winter. Go early to avoid crowds.', sl: 'Sprehodne poti se odprejo po zimi. Pojdite zgodaj.' } },
+                    { icon: '🚴', title: { en: 'Cycling Season', sl: 'Kolesarska sezona' }, desc: { en: 'Rent bikes and explore the 6 km lakeside path.', sl: 'Najemite kolesa in raziskujte 6 km obalne poti.' } },
+                    { icon: '🐣', title: { en: 'Easter in Bled', sl: 'Velika noč v Bledu' }, desc: { en: 'Traditional Easter markets and local festivities in town.', sl: 'Tradicionalni velikonočni trgi in lokalne slovesnosti.' } }
+                ]
+            },
+            summer: {
+                title: { en: 'Summer in Bled', sl: 'Poletje v Bledu' },
+                tips: [
+                    { icon: '🏊', title: { en: 'Lake Swimming', sl: 'Kopanje v jezeru' }, desc: { en: 'Water temperature reaches 24°C. Swimming is permitted and free!', sl: 'Temperatura vode doseže 24°C. Kopanje je dovoljeno in brezplačno!' } },
+                    { icon: '🚣', title: { en: 'Pletna Boat Rides', sl: 'Vožnje s pletno' }, desc: { en: 'Traditional wooden boats to Bled Island run daily until 9 PM.', sl: 'Tradicionalni leseni čolni na Bledski otok vozijo dnevno do 21h.' } },
+                    { icon: '🎵', title: { en: 'Bled Festival Weeks', sl: 'Bledski festivalni tedni' }, desc: { en: 'Classical music concerts in the castle courtyard every evening.', sl: 'Koncerti klasične glasbe na grajskem dvorišču vsak večer.' } },
+                    { icon: '🌅', title: { en: 'Sunset Terrace', sl: 'Sončni zahod na terasi' }, desc: { en: 'Watch the sunset from our garden terrace with a glass of local wine.', sl: 'Oprajte sončni zahod z naše vrtne terase s kozlom lokalnega vina.' } }
+                ]
+            },
+            autumn: {
+                title: { en: 'Autumn in Bled', sl: 'Jesen v Bledu' },
+                tips: [
+                    { icon: '🍁', title: { en: 'Fall Foliage', sl: 'Jesensko listje' }, desc: { en: 'The lake is surrounded by stunning gold and red foliage.', sl: 'Jezero obkrožajo osupljivo zlato in rdeče listje.' } },
+                    { icon: '🍷', title: { en: "St. Martin's Day", sl: 'Martinovanje' }, desc: { en: 'November 11 — New wine celebration with tastings and feasts.', sl: '11. november — Praznik novega vina z degustacijami in pojedini.' } },
+                    { icon: '🏔️', title: { en: 'Hiking Weather', sl: 'Vreme za pohodništvo' }, desc: { en: 'Cool, crisp days are perfect for hiking in Triglav National Park.', sl: 'Hladni, sveži dnevi so popolni za pohodništvo v Triglavskem narodnem parku.' } },
+                    { icon: '📸', title: { en: 'Photography Season', sl: 'Fotografska sezona' }, desc: { en: 'Misty mornings and golden light make for stunning photos.', sl: 'Megleno jutro in zlata svetloba ustvarjata osupljive fotografije.' } }
+                ]
+            },
+            winter: {
+                title: { en: 'Winter in Bled', sl: 'Zima v Bledu' },
+                tips: [
+                    { icon: '⛷️', title: { en: 'Skiing at Vogel', sl: 'Smučanje na Voglu' }, desc: { en: 'Vogel Ski Resort is just 30 minutes away with stunning lake views.', sl: 'Smučišče Vogel je le 30 min stran z osupljivim pogledom na jezero.' } },
+                    { icon: '🎄', title: { en: 'Christmas Market', sl: 'Božični trg' }, desc: { en: "Bled's charming Christmas market runs through December.", sl: 'Očarljiv božični trg v Bledu poteka skozi december.' } },
+                    { icon: '🧖', title: { en: 'Wellness Season', sl: 'Wellness sezona' }, desc: { en: 'Our Finnish sauna is perfect after a day in the snow.', sl: 'Naša finska savna je popolna po dnevu v snegu.' } },
+                    { icon: '☕', title: { en: 'Cozy Evenings', sl: 'Prijetni večeri' }, desc: { en: 'Warm up with herbal teas and a good book in the library.', sl: 'Ogrejte se z zeliščnimi čaji in dobro knjigo v knjižnici.' } }
+                ]
+            }
+        };
+        const data = seasonalData[season];
+        const lang = currentLang;
+        let html = '<div class="seasonal-cards">';
+        data.tips.forEach(function(tip) {
+            const tipDesc = lang === 'sl' ? (tip.desc.sl || tip.desc.en) : tip.desc.en;
+            const tipTitle = lang === 'sl' ? (tip.title.sl || tip.title.en) : tip.title.en;
+            html += '<div class="seasonal-card" style="--seasonal-accent:' + seasonColor + '">' +
+                '<span class="seasonal-icon">' + tip.icon + '</span>' +
+                '<h4>' + tipTitle + '</h4>' +
+                '<p>' + tipDesc + '</p>' +
+                '</div>';
+        });
+        html += '</div>';
+        container.innerHTML = html;
+    }
 
     // ===== Header Scroll Effect =====
     function initHeader() {
