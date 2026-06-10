@@ -25,7 +25,7 @@
     const chatResponses = {
         en: {
             booking: "To make a reservation, please fill out the reservation form below or call us at +386 51 603 858. You can also email info@villapomona.si.",
-            rooms: "We offer 7 elegant rooms across three categories: Standard (€120/night), Deluxe (€180/night), and Family (€220/night). Each room features unique historic charm with modern amenities.",
+            rooms: "We offer 5 beautifully designed suites at Villa Pomona:\n\n🌿 Pomona Heritage Suite (55 m²) — from €280/night\nFlagship suite with original heritage details, lake views, private balcony, fireplace, and marble bathroom.\n\n🌿 Garden Suite (45 m²) — from €230/night\nTranquil suite surrounded by the botanical garden with a private terrace.\n\n🌿 Lakeview Deluxe (40 m²) — from €250/night\nPanoramic lake views from every window, with a lake-view bathtub.\n\n🌿 Orchard Room (35 m²) — from €200/night\nCozy and charming, named for the villa's historic apple orchard.\n\n🌿 Tower Suite (60 m²) — from €350/night\nTwo-level suite in the historic tower with 360° views. Sleeps up to 4.\n\nAll suites include gourmet breakfast, wellness access, and free WiFi.",
             wellness: "Our wellness area includes a Finnish sauna, massage services, and a relaxation room with garden views. Wellness access is included for all guests.",
             location: "We're located at Črtomirova ulica 2, 4260 Bled, Slovenia — just a 5-minute walk from Lake Bled and the town center.",
             breakfast: "A gourmet breakfast is included with every stay. We serve local, seasonal ingredients including homemade bread, fresh dairy, and organic produce.",
@@ -35,14 +35,14 @@
             hiking: "Bled is a hiker's paradise! Popular trails include the 6 km lakeside path, the trail to Ojstrica viewpoint (30 min), and the Vintgar Gorge walk (25 min drive). The Julian Alps offer world-class trekking for all levels.",
             restaurants: "Bled has excellent dining options nearby. Try the famous Bled cream cake at Park Hotel, fresh fish at Ribca, or fine dining at Grad. The town center is just a 3-minute walk from the villa.",
             weather: "Bled has a mild continental climate. Summers (Jun-Aug) are warm (20-28°C) with occasional rain. Winters (Dec-Feb) are cold (-2 to 5°C) with snow. Spring and autumn are mild and beautiful for hiking.",
-            pets: "We love pets! Please let us know in advance if you're bringing a furry friend. There's a small additional cleaning fee. The garden and lakeside paths are perfect for walks with your dog.",
-            children: "Children are very welcome! We can provide extra beds, high chairs, and baby cots on request. The garden is safe for kids to play, and the lake is just a short walk away.",
+            pets: "We love pets! Please let us know in advance if you're bringing a furry friend. There's a small additional cleaning fee (€30/night). The garden and lakeside paths are perfect for walks with your dog.",
+            children: "Children are very welcome! We can provide baby cots (free), extra beds (€40/night), high chairs, and baby cots on request. The Tower Suite sleeps up to 4 — ideal for families. The garden is safe for kids to play, and the lake is just a short walk away.",
             transport: "The nearest airport is Ljubljana Jože Pučnik (35 km). Bled has a train station on the Ljubljana-Jesenice line. Buses run regularly to Ljubljana (45 min). We can arrange airport transfers on request.",
             default: "Thank you for your message! For immediate assistance, please call +386 51 603 858 or email info@villapomona.si. Is there anything specific I can help you with?"
         },
         sl: {
             booking: "Za rezervacijo izpolnite obrazec za rezervacijo spodaj ali nas pokličite na +386 51 603 858. Pišite tudi na info@villapomona.si.",
-            rooms: "Ponujamo 7 elegantnih sob v treh kategorijah: Standard (€120/noč), Deluxe (€180/noč) in Družinska (€220/noč). Vsaka soba ima edinstven zgodovinski šarm s sodobnim udobjem.",
+            rooms: "V Villa Pomoni ponujamo 5 elegantno oblikovanih sob:\n\n🌿 Pomona Heritage Suite (55 m²) — od €280/noč\nVodilna soba z originalnimi zgodovinskimi detajli, pogledom na jezero, zasebnim balkonom, kaminom in mramorno kopalnico.\n\n🌿 Garden Suite (45 m²) — od €230/noč\nMirna soba obdana z botaničnim vrtom z zasebno teraso.\n\n🌿 Lakeview Deluxe (40 m²) — od €250/noč\nPanoramski pogled na jezero iz vsakega okna, s kadjo z razgledom.\n\n🌿 Orchard Room (35 m²) — od €200/noč\nPrijetna in očarljiva, poimenovana po zgodovinskem jablanovem sadovnjaku.\n\n🌿 Tower Suite (60 m²) — od €350/noč\nDvonivojska soba v zgodovinskem stolpu s 360° pogledom. Spita do 4 osebi.\n\nVse sobe vključujejogurmanski zajtrk, dostop do wellnessa in brezplačen WiFi.",
             wellness: "Naš wellness center vključuje finsko savno, masažne storitve in sprostitveni prostor z razgledom na vrt. Dostop do wellnessa je vključen za vse goste.",
             location: "Nahajamo se na Črtomirovavi ulici 2, 4260 Bled — le 5 min hoje od Blejskega jega in centra mesta.",
             breakfast: "Gurmanski zajtrk je vključen pri vsakem bivanju. Serviramo lokalne, sezenske sestavine, vključno s domačim kruhom, svežo mlečno produkcijo in organskimi pridelki.",
@@ -52,8 +52,8 @@
             hiking: "Bled je raj za pohodnike! Priljubljene poti vključujejo 6 km ob jezeru, pot do razgledne točke Ojstrica (30 min) in sprehod po soteski Vintgar (25 min vožnje). Julijske Alpe ponujajo vrhunske pohodniške možnosti.",
             restaurants: "Bled ima odlične restavracije v bližini. Poskusite sladico Blejska kremšnita v Park Hotelu, sveže ribe v Ribci ali fino kuhinjo v Gradu. Center mesta je le 3 min hoje od vile.",
             weather: "Bled ima zmerno celinsko podnebje. Poletja (jun-avg) so topla (20-28°C) z občasnimi deževji. Zime (dec-feb) so hladne (-2 do 5°C) s snegom. Pomlad in jesen sta mirna in lepa za pohodništvo.",
-            pets: "Imamo radi živali! Prosimo, obvestite nas vnaprej, če bostes psa. Obstaja majhna dodatna pristojbina za čiščenje. Vrt in obalne poti so popolni za sprehode s psom.",
-            children: "Otroci so dobrodošli! Na zahtevo lahko zagotovimo dodatne postelje, visoke stole in otroške posteljice. Vrt je varen za igro, jezero pa je le kratka hoja stran.",
+            pets: "Imamo radi živali! Prosimo, obvestite nas vnaprej, če boste imeli psa. Obstaja majhna dodatna pristojbina za čiščenje (€30/noč). Vrt in obalne poti so popolni za sprehode s psom.",
+            children: "Otroci so dobrodošli! Na zahtevo lahko zagotovimo otroške posteljice (brezplačno), dodatne postelje (€40/noč), visoke stole. Tower Suite spita do 4 oseb — idealno za družine. Vrt je varen za igro, jezero pa je le kratka hoja stran.",
             transport: "Najbližje letališče je Ljubljana Jože Pučnik (35 km). Bled ima železniško postajo na progi Ljubljana-Jesenice. Avtobusi vozijo redno do Ljubljane (45 min). Prevoz od letališča lahko uredimo na zahtevo.",
             default: "Hvala za vaše sporočilo! Za takojšnjo pomoč pokličite +386 51 603 858 ali pišite na info@villapomona.si. Vam lahko pomagam s čim?"
         }
@@ -695,6 +695,8 @@
         
         if (isChatOpen) {
             widget.classList.add('open');
+            // Load conversation history from localStorage
+            loadChatHistory();
             setTimeout(function() {
                 var input = document.getElementById('chatInput');
                 if (input) input.focus();
@@ -702,6 +704,66 @@
         } else {
             widget.classList.remove('open');
         }
+    };
+    
+    // Load chat history from localStorage
+    function loadChatHistory() {
+        var messages = document.getElementById('chatMessages');
+        if (!messages) return;
+        
+        // Don't reload if we already have messages (beyond the greeting)
+        var existingUserMessages = messages.querySelectorAll('.chat-message.user');
+        if (existingUserMessages.length > 0) return;
+        
+        try {
+            var stored = localStorage.getItem('villa-pomona-chat-history');
+            if (!stored) return;
+            
+            var history = JSON.parse(stored);
+            if (!Array.isArray(history) || history.length === 0) return;
+            
+            // Remove the default greeting if we have history
+            var greeting = messages.querySelector('.chat-message.bot');
+            if (greeting) greeting.remove();
+            
+            // Replay history (limit to last 20 messages)
+            var recentHistory = history.slice(-20);
+            recentHistory.forEach(function(msg) {
+                var div = document.createElement('div');
+                div.className = 'chat-message ' + (msg.role === 'user' ? 'user' : 'bot');
+                div.innerHTML = '<p>' + escapeHtml(msg.text) + '</p>';
+                messages.appendChild(div);
+            });
+            messages.scrollTop = messages.scrollHeight;
+        } catch(e) {
+            // Silently fail
+        }
+    }
+    
+    // Save chat message to localStorage
+    function saveChatMessage(role, text) {
+        try {
+            var stored = localStorage.getItem('villa-pomona-chat-history');
+            var history = stored ? JSON.parse(stored) : [];
+            if (!Array.isArray(history)) history = [];
+            
+            history.push({ role: role, text: text, timestamp: Date.now() });
+            
+            // Keep only last 50 messages
+            if (history.length > 50) history = history.slice(-50);
+            
+            localStorage.setItem('villa-pomona-chat-history', JSON.stringify(history));
+        } catch(e) {
+            // Silently fail
+        }
+    }
+    
+    // Clear chat history
+    window.clearChatHistory = function() {
+        try { localStorage.removeItem('villa-pomona-chat-history'); } catch(e) {}
+        var messages = document.getElementById('chatMessages');
+        if (!messages) return;
+        messages.innerHTML = '<div class="chat-message bot"><p>' + (currentLang === 'sl' ? 'Živjo! Sem virtualni pomočnik Villa Pomona. Vam lahko pomagam z rezervacijami, informacijami o sobah ali karkoli drugega?' : 'Hello! I\'m the Villa Pomona virtual assistant. Can I help you with bookings, room information, or anything else?') + '</p></div>';
     };
     
     // Update chat widget translations based on language
@@ -787,6 +849,10 @@
         userDiv.className = 'chat-message user';
         userDiv.innerHTML = '<p>' + escapeHtml(userMsg) + '</p>';
         messages.appendChild(userDiv);
+        
+        // Save user message to history
+        saveChatMessage('user', userMsg);
+        
         messages.scrollTop = messages.scrollHeight;
 
         // Show typing indicator
@@ -812,6 +878,9 @@
                 botDiv.className = 'chat-message bot';
                 botDiv.innerHTML = '<p>' + escapeHtml(botResponse) + '</p>';
                 messages.appendChild(botDiv);
+                
+                // Save bot response to history
+                saveChatMessage('bot', botResponse);
             } else {
                 throw new Error('Empty response');
             }
@@ -823,6 +892,9 @@
             botDiv.className = 'chat-message bot';
             botDiv.innerHTML = '<p>' + fallbackResponse + '</p>';
             messages.appendChild(botDiv);
+            
+            // Save fallback response to history
+            saveChatMessage('bot', fallbackResponse);
         }
         messages.scrollTop = messages.scrollHeight;
     };

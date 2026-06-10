@@ -1026,7 +1026,10 @@
                         </div>
                     </div>
                 </div>
-                <button class="chat-close" onclick="toggleChat()" aria-label="Close chat">&times;</button>
+                <div class="chat-header-actions">
+                    <button class="chat-clear" onclick="clearChatHistory()" aria-label="Clear chat" title="Clear chat"><i class="fas fa-trash-alt"></i></button>
+                    <button class="chat-close" onclick="toggleChat()" aria-label="Close chat">&times;</button>
+                </div>
             </div>
             <div class="chat-messages" id="chatMessages">
                 <div class="chat-message bot">
