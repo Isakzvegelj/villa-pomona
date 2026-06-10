@@ -32,6 +32,7 @@
                 <li><a href="#dining">Dining</a></li>
                 <li><a href="#wellness">Wellness</a></li>
                 <li><a href="#experiences">Experiences</a></li>
+                <li><a href="#packages">Packages</a></li>
                 <li><a href="#contact" class="nav-cta">Book Now</a></li>
             </ul>
         </div>
@@ -258,6 +259,62 @@
         </div>
     </section>
 
+    <section class="section packages" id="packages">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Curated</span>
+                <h2 class="section-title">Special <em>Packages</em></h2>
+                <p class="section-desc">Thoughtfully curated stays for every occasion — from romantic escapes to wellness retreats and family gatherings.</p>
+            </div>
+            <div class="packages-grid">
+                <div class="package-card reveal">
+                    <div class="package-badge">Romantic</div>
+                    <h3>Romantic Escape</h3>
+                    <p class="package-nights">2 nights · Lakeview Deluxe</p>
+                    <p class="package-desc">Candlelit dinner for two, couples massage, welcome wine, and breakfast on the terrace with lake views.</p>
+                    <ul class="package-includes">
+                        <li>2 nights in Lakeview Deluxe</li>
+                        <li>Private candlelit dinner</li>
+                        <li>60-min couples massage</li>
+                        <li>Welcome bottle of Slovenian wine</li>
+                    </ul>
+                    <div class="package-price"><span class="pp-from">from</span><span class="pp-amount">€980</span><span class="pp-period">total</span></div>
+                    <a href="#contact" class="btn btn-primary btn-full">Book Package</a>
+                </div>
+                <div class="package-card reveal featured-package">
+                    <div class="package-badge">Most Popular</div>
+                    <h3>Wellness Retreat</h3>
+                    <p class="package-nights">3 nights · Garden Suite</p>
+                    <p class="package-desc">Unlimited sauna access, 90-min spa massage, daily yoga in the garden, and gourmet wellness breakfasts.</p>
+                    <ul class="package-includes">
+                        <li>3 nights in Garden Suite</li>
+                        <li>Unlimited sauna & pool</li>
+                        <li>90-min spa massage</li>
+                        <li>3 private yoga sessions</li>
+                        <li>Herbal tea selection</li>
+                    </ul>
+                    <div class="package-price"><span class="pp-from">from</span><span class="pp-amount">€1,350</span><span class="pp-period">total</span></div>
+                    <a href="#contact" class="btn btn-primary btn-full">Book Package</a>
+                </div>
+                <div class="package-card reveal">
+                    <div class="package-badge">Family</div>
+                    <h3>Family Gathering</h3>
+                    <p class="package-nights">3 nights · Orchard Suite</p>
+                    <p class="package-desc">Two-bedroom suite for up to 4, BBQ evening with private chef, children's welcome pack, and cream cake tasting.</p>
+                    <ul class="package-includes">
+                        <li>3 nights in Orchard Suite</li>
+                        <li>BBQ dinner with private chef</li>
+                        <li>Children's welcome pack</li>
+                        <li>Bled cream cake tasting</li>
+                        <li>Bicycle rental included</li>
+                    </ul>
+                    <div class="package-price"><span class="pp-from">from</span><span class="pp-amount">€1,680</span><span class="pp-period">total</span></div>
+                    <a href="#contact" class="btn btn-primary btn-full">Book Package</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <section class="section testimonials">
         <div class="container">
             <div class="section-header">
@@ -279,6 +336,16 @@
                     <div class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
                     <p class="testimonial-text">"Perfect for our family reunion. The Orchard Suite gave us space to spread out, and the kids loved the pool and garden. We'll be back!"</p>
                     <div class="testimonial-author"><strong>The Novak Family</strong><span>Slovenia</span></div>
+                </div>
+                <div class="testimonial-card reveal">
+                    <div class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+                    <p class="testimonial-text">"The botanical garden alone is worth the visit. We spent hours just wandering among the roses and lavender. The villa itself is a masterpiece of restoration."</p>
+                    <div class="testimonial-author"><strong>Isabelle & Thomas</strong><span>France</span></div>
+                </div>
+                <div class="testimonial-card reveal">
+                    <div class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+                    <p class="testimonial-text">"From the moment we arrived, we felt like royalty. The attention to detail in every room, the quality of the breakfast, and the warmth of the hosts made this our best vacation ever."</p>
+                    <div class="testimonial-author"><strong>David & Yuki</strong><span>Japan</span></div>
                 </div>
             </div>
         </div>
@@ -310,9 +377,10 @@
                             <div class="form-group"><label for="checkout">Check-out *</label><input type="date" id="checkout" name="checkout" required></div>
                         </div>
                         <div class="form-row">
-                            <div class="form-group"><label for="suite">Preferred Suite</label><select id="suite" name="suite"><option value="">Select a suite</option><option value="heritage">Heritage Suite — €380/night</option><option value="garden">Garden Suite — €320/night</option><option value="lakeview">Lakeview Deluxe — €420/night</option><option value="orchard">Orchard Suite — €520/night</option><option value="tower">Tower Suite — €460/night</option></select></div>
                             <div class="form-group"><label for="guests">Guests</label><select id="guests" name="guests"><option value="1">1 guest</option><option value="2" selected>2 guests</option><option value="3">3 guests</option><option value="4">4 guests</option></select></div>
+                            <div class="form-group"><label for="children">Children (under 12)</label><select id="children" name="children"><option value="0" selected>0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select></div>
                         </div>
+                        <div class="form-group"><label for="transfer">Airport Transfer</label><select id="transfer" name="transfer"><option value="none">Not needed</option><option value="lju">Ljubljana (LJU) — €60</option><option value="klu">Klagenfurt (KLU) — €90</option></select></div>
                         <div class="form-group full-width"><label for="message">Special Requests</label><textarea id="message" name="message" rows="4" placeholder="Dietary needs, celebration details, wellness preferences..."></textarea></div>
                         <button type="submit" class="btn btn-primary btn-full">Send Reservation Request</button>
                         <p class="form-note">We'll respond within 24 hours. No payment required to inquire.</p>

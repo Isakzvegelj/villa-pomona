@@ -42,7 +42,7 @@ function initMobileNav() {
 }
 
 function initScrollAnimations() {
-    var selectors = ['.about-text', '.about-image', '.suite-card', '.garden-text', '.garden-image', '.dining-card', '.wellness-text', '.wellness-image', '.exp-card', '.testimonial-card', '.contact-info', '.contact-form-wrapper', '.section-header'];
+    var selectors = ['.about-text', '.about-image', '.suite-card', '.garden-text', '.garden-image', '.dining-card', '.wellness-text', '.wellness-image', '.exp-card', '.package-card', '.testimonial-card', '.contact-info', '.contact-form-wrapper', '.section-header'];
     for (var s = 0; s < selectors.length; s++) {
         var elements = document.querySelectorAll(selectors[s]);
         for (var i = 0; i < elements.length; i++) {
