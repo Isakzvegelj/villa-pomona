@@ -728,7 +728,7 @@
         // Show loading state
         container.innerHTML = '<div class="seasonal-loading"><div class="seasonal-spinner"></div><p>' + (currentLang === 'sl' ? 'Nalagam...' : 'Loading...') + '</p></div>';
         
-        fetch('https://villa-pomona-bot.onrender.com/api/weather', { mode: 'cors' })
+        fetch('https://villa-pomona-bot.onrender.com/api/seasonal', { mode: 'cors' })
             .then(function(res) { return res.json(); })
             .then(function(data) {
                 var activities = data.activities || [];
@@ -742,7 +742,11 @@
                 
                 var html = '';
                 activities.slice(0, 4).forEach(function(act) {
-                    html += '<div class="seasonal-card"><span class="seasonal-icon">🌿</span><p>' + escapeHtml(act) + '</p></div>';
+                    // Extract emoji and text from activity string
+                    var match = act.match(/^(\p{Emoji_Presentation}|\p{Emoji}\uFE0F?)\s+(.+)$/u);
+                    var actEmoji = match ? match[1] : '🌿';
+                    var actText = match ? match[2] : act;
+                    html += '<div class="seasonal-card"><span class="seasonal-icon">' + actEmoji + '</span><p>' + escapeHtml(actText) + '</p></div>';
                 });
                 if (tips.length > 0) {
                     html += '<div class="seasonal-tip"><strong>' + (currentLang === 'sl' ? '💡 Nasvet:' : '💡 Tip:') + '</strong> ' + escapeHtml(tips[0]) + '</div>';
@@ -1285,6 +1289,18 @@ function addBotMessage(text, role) {
     messagesEl.scrollTop = messagesEl.scrollHeight;
 }
 
+function addBotMessageHTML(html, role) {
+    var messagesEl = document.getElementById('botMessages');
+    var div = document.createElement('div');
+    div.className = 'bot-message ' + role;
+    var content = document.createElement('div');
+    content.className = 'bot-message-content';
+    content.innerHTML = html;
+    div.appendChild(content);
+    messagesEl.appendChild(div);
+    messagesEl.scrollTop = messagesEl.scrollHeight;
+}
+
 function showBotTyping() {
     var messagesEl = document.getElementById('botMessages');
     var div = document.createElement('div');
@@ -1329,48 +1345,102 @@ async function sendBotMessage() {
         });
         var data = await res.json();
         hideBotTyping();
-        if (data.replies) {
+        if (data.replies && data.replies.length > 0) {
             data.replies.forEach(function(reply) {
-                addBotMessage(reply.content, 'bot');
+                var content = reply.content || '';
+                // Convert newlines to <br> for display
+                content = content.replace(/\n/g, '<br>');
+                addBotMessageHTML(content, 'bot');
             });
         } else if (data.response) {
-            addBotMessage(data.response, 'bot');
+            addBotMessageHTML(data.response.replace(/\n/g, '<br>'), 'bot');
+        } else {
+            throw new Error('Empty response');
+        }
+        // Update session ID if returned
+        if (data.conversation_id) {
+            botSessionId = data.conversation_id;
         }
     } catch (e) {
         hideBotTyping();
         // Fallback response
         var fallback = getBotFallback(text);
-        addBotMessage(fallback, 'bot');
+        addBotMessageHTML(fallback.replace(/\n/g, '<br>'), 'bot');
     }
 }
 
 function getBotFallback(query) {
-    var q = query.toLowerCase();
+    var q = query.toLowerCase().trim();
     var lang = (typeof currentLang !== 'undefined' && currentLang === 'sl') ? 'sl' : 'en';
 
-    if (q.indexOf('suite') > -1 || q.indexOf('sob') > -1 || q.indexOf('zimmer') > -1) {
+    // Booking confirmation responses
+    if (q === 'yes' || q === 'yeah' || q === 'yep' || q === 'sure' || q === 'confirm' || q === 'da' || q === 'ja' || q === 'si') {
         return lang === 'sl'
-            ? 'Imamo 5 izjemnih sob: Heritage Suite (od 280 EUR), Garden Suite (od 230 EUR), Lakeview Deluxe (od 250 EUR), Orchard Room (od 200 EUR) in Tower Suite (od 350 EUR). Vse vključujejo zajtrk in WiFi.'
-            : 'We have 5 exceptional suites: Heritage Suite (from EUR 280), Garden Suite (from EUR 230), Lakeview Deluxe (from EUR 250), Orchard Room (from EUR 200), and Tower Suite (from EUR 350). All include breakfast & WiFi.';
+            ? 'Hvala za potrditev! Prosimo, pošljite nam podrobnosti (ime, datum, soba) na info@villapomona.si ali pokličite +386 4 572 7880.'
+            : 'Thank you for confirming! Please send us your details (name, dates, suite) at info@villapomona.si or call +386 4 572 7880.';
     }
-    if (q.indexOf('price') > -1 || q.indexOf('cost') > -1 || q.indexOf('rate') > -1 || q.indexOf('cena') > -1 || q.indexOf('koliko') > -1) {
+    if (q === 'no' || q === 'nope' || q === 'cancel' || q === 'ne' || q === 'nein') {
         return lang === 'sl'
-            ? 'Cene se gibljejo od 200 do 350 EUR na noč, odvisno od sezone in izbrane sobe. V ceno je vključen zajtrk in WiFi.'
-            : 'Rates range from EUR 200–350 per night depending on season and suite. All include breakfast & WiFi.';
+            ? 'Razumemo. Če bi si kasneje premislili, smo tu za vas! 😊'
+            : 'Understood. If you change your mind later, we are here for you! 😊';
     }
-    if (q.indexOf('book') > -1 || q.indexOf('rezerv') > -1 || q.indexOf('prenot') > -1) {
+    
+    if (q.indexOf('suite') > -1 || q.indexOf('sob') > -1 || q.indexOf('zimmer') > -1 || q.indexOf('camera') > -1) {
         return lang === 'sl'
-            ? 'Za rezervacijo nas pokličite na +386 4 572 7880 ali nam pišite na info@villapomona.si. Z veseljam vam pomagam!'
-            : 'To book, call us at +386 4 572 7880 or email info@villapomona.si. I would be happy to help!';
+            ? 'Imamo 5 izjemnih sob:<br><br>🌿 Heritage Suite (55 m²) — od 280 EUR<br>🌿 Garden Suite (45 m²) — od 230 EUR<br>🌿 Lakeview Deluxe (40 m²) — od 250 EUR<br>🌿 Orchard Room (35 m²) — od 200 EUR<br>🌿 Tower Suite (60 m²) — od 350 EUR<br><br>Vse vključujejo zajtrk in WiFi.'
+            : 'We have 5 exceptional suites:<br><br>🌿 Heritage Suite (55 m²) — from EUR 280<br>🌿 Garden Suite (45 m²) — from EUR 230<br>🌿 Lakeview Deluxe (40 m²) — from EUR 250<br>🌿 Orchard Room (35 m²) — from EUR 200<br>🌿 Tower Suite (60 m²) — from EUR 350<br><br>All include breakfast & WiFi.';
     }
-    if (q.indexOf('activity') > -1 || q.indexOf('do') > -1 || q.indexOf('aktivnost') > -1 || q.indexOf('počet') > -1) {
+    if (q.indexOf('price') > -1 || q.indexOf('cost') > -1 || q.indexOf('rate') > -1 || q.indexOf('cena') > -1 || q.indexOf('koliko') > -1 || q.indexOf('preis') > -1) {
         return lang === 'sl'
-            ? 'V Bledu je velikoaktivnosti: kajak na jezeru, obiski Blejskega gradu in otoka, soteska Vintgar, kopališče Terme Bled, golf in pohodništvo v Julijskih Alpah!'
-            : 'Bled offers many activities: kayaking on the lake, visiting Bled Castle and Island, Vintgar Gorge, Terme Bled thermal springs, golf, and hiking in the Julian Alps!';
+            ? 'Cene se gibljejo od 200 do 350 EUR na noč, odvisno od sezone in izbrane sobe. V ceno je vključen zajtrk, WiFi in dostop do wellnessa.'
+            : 'Rates range from EUR 200–350 per night depending on season and suite. All include breakfast, WiFi, and wellness access.';
+    }
+    if (q.indexOf('book') > -1 || q.indexOf('rezerv') > -1 || q.indexOf('prenot') > -1 || q.indexOf('buch') > -1) {
+        return lang === 'sl'
+            ? 'Za rezervacijo nas pokličite na +386 4 572 7880 ali nam pišite na info@villapomona.si. Z veseljem vam pomagam!'
+            : 'To book, call us at +386 4 572 7880 or email info@villapomona.si. We would be happy to help!';
+    }
+    if (q.indexOf('activity') > -1 || q.indexOf('do') > -1 || q.indexOf('aktivnost') > -1 || q.indexOf('počet') > -1 || q.indexOf('attività') > -1) {
+        return lang === 'sl'
+            ? 'V Bledu je veliko aktivnosti:<br>🚣 Kajak na jezeru<br>🏰 Obiski Blejskega gradu in otoka<br>🥾 Soteska Vintgar<br>🧖 Terme Bled<br>⛳ Golf<br>🏔️ Pohodništvo v Julijskih Alpah!'
+            : 'Bled offers many activities:<br>🚣 Kayaking on the lake<br>🏰 Bled Castle and Island visits<br>🥾 Vintgar Gorge<br>🧖 Terme Bled thermal springs<br>⛳ Golf<br>🏔️ Hiking in the Julian Alps!';
+    }
+    if (q.indexOf('restaurant') > -1 || q.indexOf('food') > -1 || q.indexOf('eat') > -1 || q.indexOf('restavrac') > -1 || q.indexOf('jest') > -1) {
+        return lang === 'sl'
+            ? 'Priporočene restavracije:<br>🍽️ Restavracija 1906 (3 min) — Fina kuhinja<br>🍽️ Rožata (3 min) — Tradicionalna slovenska<br>🍽️ Sova Bled (4 min) — Vinska klet<br>🍽️ Grand Hotel Toplice (5 min) — Fina kuhinja z razgledom'
+            : 'Recommended restaurants:<br>🍽️ Restavracija 1906 (3 min) — Fine dining<br>🍽️ Rožata (3 min) — Traditional Slovenian<br>🍽️ Sova Bled (4 min) — Wine bar<br>🍽️ Grand Hotel Toplice (5 min) — Lakeside fine dining';
+    }
+    if (q.indexOf('wellness') > -1 || q.indexOf('spa') > -1 || q.indexOf('massage') > -1 || q.indexOf('masaža') > -1 || q.indexOf('savn') > -1) {
+        return lang === 'sl'
+            ? 'Naš wellness center vključuje:<br>🧖 Finsko savno (brezplačno)<br>💆 Masaže (od 85 EUR)<br>🧘 Jogo na vrtu<br>🌿 Meditacijski kotek<br><br>Terme Bled je le 5 min vožnje.'
+            : 'Our wellness center includes:<br>🧖 Finnish sauna (complimentary)<br>💆 Massages (from EUR 85)<br>🧘 Garden yoga<br>🌿 Meditation corner<br><br>Terme Bled is just 5 min drive away.';
+    }
+    if (q.indexOf('direction') > -1 || q.indexOf('how to get') > -1 || q.indexOf('pot') > -1 || q.indexOf('kje') > -1 || q.indexOf('lokac') > -1 || q.indexOf('naslov') > -1) {
+        return lang === 'sl'
+            ? '📍 Cesta svobode 22, 4260 Bled, Slovenija<br><br>🚗 Od Ljubljane: avtocesta A2, izvoz Bled (~45 min)<br>🚂 Železniška postaja Lesce-Bled: 4 km<br>✈️ Letališče Ljubljana: 35 km'
+            : '📍 Cesta svobode 22, 4260 Bled, Slovenia<br><br>🚗 From Ljubljana: A2 motorway, exit Bled (~45 min)<br>🚂 Lesce-Bled train station: 4 km<br>✈️ Ljubljana Airport: 35 km';
+    }
+    if (q.indexOf('breakfast') > -1 || q.indexOf('zajtrk') > -1) {
+        return lang === 'sl'
+            ? 'Gurmanski zajtrk je vključen v ceno! Serviramo lokalne sestavine, domač kruh, sveže sadje in lokalne posebnosti. 7:30–10:30.'
+            : 'Gourmet breakfast is included! We serve local ingredients, homemade bread, fresh fruit, and local specialties. 7:30–10:30.';
+    }
+    if (q.indexOf('park') > -1 || q.indexOf('parkir') > -1) {
+        return lang === 'sl' ? 'Brezplačno parkirišče je na voljo za vse goste.' : 'Free parking available for all guests.';
+    }
+    if (q.indexOf('pet') > -1 || q.indexOf('dog') > -1 || q.indexOf('pes') > -1) {
+        return lang === 'sl'
+            ? 'Male živali so dobrodošle! Obvestite nas vnaprej. Pristojbina za čiščenje: 30 EUR/noč.'
+            : 'Small pets welcome! Please inform us in advance. Cleaning fee: EUR 30/night.';
+    }
+    if (q.indexOf('child') > -1 || q.indexOf('kid') > -1 || q.indexOf('family') > -1 || q.indexOf('otro') > -1 || q.indexOf('družin') > -1) {
+        return lang === 'sl'
+            ? 'Otroci so dobrodošli! Dodatne postelje: 40 EUR/noč. Otroške posteljice: brezplačno. Tower Suite spita do 4 oseb.'
+            : 'Children welcome! Extra beds: EUR 40/night. Baby cots: free. Tower Suite sleeps up to 4.';
     }
     return lang === 'sl'
-        ? 'Hvala za vprašanje! Za podrobnosti nas pokličite na +386 4 572 7880 ali pišite na info@villapomona.si.'
-        : 'Thank you for your question! For details, call us at +386 4 572 7880 or email info@villapomona.si.';
+        ? 'Hvala za vprašanje! Za podrobnosti nas pokličite na +386 4 572 7880 ali pišite na info@villapomona.si. 🌿'
+        : 'Thank you for your question! For details, call us at +386 4 572 7880 or email info@villapomona.si. 🌿';
 }
 
 // Auto-open bot hint after 30 seconds
