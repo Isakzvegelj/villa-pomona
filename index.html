@@ -315,6 +315,24 @@
         </div>
     </section>
 
+    <section class="section sustainability" id="sustainability">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Our Commitment</span>
+                <h2 class="section-title">Sustainability <em>&amp; Nature</em></h2>
+                <p class="section-desc">Villa Pomona is committed to preserving the natural beauty of Bled for future generations. Our sustainability practices are woven into every aspect of your stay.</p>
+            </div>
+            <div class="sustain-grid">
+                <div class="sustain-card reveal"><span class="sustain-icon">&#x26A1;</span><h4>Solar Energy</h4><p>Solar water heating system reduces our carbon footprint while keeping the pool and suites warm.</p></div>
+                <div class="sustain-card reveal"><span class="sustain-icon">&#x1F331;</span><h4>Local Sourcing</h4><p>Organic, locally sourced breakfast products and seasonal ingredients from nearby farms and producers.</p></div>
+                <div class="sustain-card reveal"><span class="sustain-icon">&#x1F6B4;</span><h4>E-Bike Rental</h4><p>Complimentary bicycle and e-bike rental for eco-friendly exploration of Bled and its surroundings.</p></div>
+                <div class="sustain-card reveal"><span class="sustain-icon">&#x1F4A1;</span><h4>LED Lighting</h4><p>Energy-efficient LED lighting throughout the villa and grounds reduces electricity consumption.</p></div>
+                <div class="sustain-card reveal"><span class="sustain-icon">&#x1F33F;</span><h4>Garden Composting</h4><p>Our botanical garden uses composting to enrich the soil naturally, supporting over 200 plant species.</p></div>
+                <div class="sustain-card reveal"><span class="sustain-icon">&#x1F697;</span><h4>EV Charging</h4><p>Electric vehicle charging station available for guests with electric or hybrid vehicles.</p></div>
+            </div>
+        </div>
+    </section>
+
     <section class="section testimonials">
         <div class="container">
             <div class="section-header">
@@ -380,6 +398,7 @@
                             <div class="form-group"><label for="guests">Guests</label><select id="guests" name="guests"><option value="1">1 guest</option><option value="2" selected>2 guests</option><option value="3">3 guests</option><option value="4">4 guests</option></select></div>
                             <div class="form-group"><label for="children">Children (under 12)</label><select id="children" name="children"><option value="0" selected>0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select></div>
                         </div>
+                        <div class="form-group"><label for="suite">Preferred Suite</label><select id="suite" name="suite"><option value="">No preference — recommend for me</option><option value="Pomona Heritage Suite">Pomona Heritage Suite — 55 m², from €280/night</option><option value="Garden Suite">Garden Suite — 45 m², from €230/night</option><option value="Lakeview Deluxe">Lakeview Deluxe — 40 m², from €250/night</option><option value="Orchard Room">Orchard Room — 35 m², from €200/night</option><option value="Tower Suite">Tower Suite — 60 m², from €350/night</option></select></div>
                         <div class="form-group"><label for="transfer">Airport Transfer</label><select id="transfer" name="transfer"><option value="none">Not needed</option><option value="lju">Ljubljana (LJU) — €60</option><option value="klu">Klagenfurt (KLU) — €90</option></select></div>
                         <div class="form-group full-width"><label for="message">Special Requests</label><textarea id="message" name="message" rows="4" placeholder="Dietary needs, celebration details, wellness preferences..."></textarea></div>
                         <button type="submit" class="btn btn-primary btn-full">Send Reservation Request</button>
@@ -407,6 +426,44 @@
             </div>
         </div>
     </footer>
+
+    <!-- Aria Concierge Chat Widget -->
+    <button class="chat-widget-button" id="chatWidgetBtn" aria-label="Open chat">
+        <span class="chat-widget-icon" id="chatWidgetIcon">&#x1F4AC;</span>
+        <span class="chat-widget-close" id="chatWidgetClose">&#x2715;</span>
+        <span class="chat-widget-pulse"></span>
+    </button>
+    <div class="chat-widget" id="chatWidget">
+        <div class="chat-widget-header">
+            <div class="chat-widget-header-info">
+                <span class="chat-widget-avatar">&#x1F33F;</span>
+                <div>
+                    <h4>Aria — Villa Pomona Concierge</h4>
+                    <span class="chat-widget-status"><span class="status-dot"></span> Online</span>
+                </div>
+            </div>
+            <button class="chat-widget-minimize" id="chatWidgetMinimize" aria-label="Minimize chat">&#x2212;</button>
+        </div>
+        <div class="chat-widget-messages" id="chatWidgetMessages">
+            <div class="chat-message bot">
+                <span class="chat-msg-avatar">&#x1F33F;</span>
+                <div class="chat-msg-content">Hello! I'm Aria, your digital concierge at Villa Pomona. How can I help you today? &#x1F33F;</div>
+            </div>
+        </div>
+        <div class="chat-widget-quick" id="chatWidgetQuick">
+            <span class="quick-chip" onclick="sendChatQuick('What suites do you have?')">&#x1F3E8; Suites</span>
+            <span class="quick-chip" onclick="sendChatQuick('Tell me about activities')">&#x1F3D4; Activities</span>
+            <span class="quick-chip" onclick="sendChatQuick('I want to book')">&#x1F4C5; Book</span>
+            <span class="quick-chip" onclick="sendChatQuick('Restaurants nearby')">&#x1F37D; Dining</span>
+            <span class="quick-chip" onclick="sendChatQuick('Spa &amp; wellness')">&#x1F3D6; Spa</span>
+        </div>
+        <div class="chat-widget-input">
+            <input type="text" id="chatWidgetInput" placeholder="Ask me anything..." onkeypress="if(event.key==='Enter')sendChatMessage()" />
+            <button onclick="sendChatMessage()" id="chatWidgetSend" aria-label="Send message">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+            </button>
+        </div>
+    </div>
 
     <script src="script.js"></script>
 </body>

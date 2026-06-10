@@ -141,3 +141,204 @@ window.addEventListener('load', function() {
         }
     }
 });
+
+/* ============================================
+   ARIA CONCIERGE CHAT WIDGET
+   ============================================ */
+(function() {
+    var chatBtn = document.getElementById('chatWidgetBtn');
+    var chatPanel = document.getElementById('chatWidget');
+    var chatMinimize = document.getElementById('chatWidgetMinimize');
+    var chatMessages = document.getElementById('chatWidgetMessages');
+    var chatInput = document.getElementById('chatWidgetInput');
+    var chatSend = document.getElementById('chatWidgetSend');
+    var chatQuick = document.getElementById('chatWidgetQuick');
+    var convId = 'web_' + Math.random().toString(36).substr(2, 9) + '_' + Date.now();
+    var isOpen = false;
+    var isTyping = false;
+
+    // Bot API endpoint — change this to the deployed Render URL
+    var BOT_API = 'https://villa-pomona-bot.onrender.com/api/chat';
+
+    function toggleChat() {
+        isOpen = !isOpen;
+        chatBtn.classList.toggle('open', isOpen);
+        chatPanel.classList.toggle('open', isOpen);
+        if (isOpen) {
+            chatInput.focus();
+            // Track open event
+            trackEvent('chat_open');
+        }
+    }
+
+    chatBtn.addEventListener('click', toggleChat);
+    if (chatMinimize) {
+        chatMinimize.addEventListener('click', function() {
+            isOpen = false;
+            chatBtn.classList.remove('open');
+            chatPanel.classList.remove('open');
+        });
+    }
+
+    function addMsg(text, role) {
+        var div = document.createElement('div');
+        div.className = 'chat-message ' + role;
+        var avatar = document.createElement('span');
+        avatar.className = 'chat-msg-avatar';
+        avatar.textContent = role === 'bot' ? '\uD83C\uDF3F' : 'You';
+        var content = document.createElement('div');
+        content.className = 'chat-msg-content';
+        content.textContent = text;
+        div.appendChild(avatar);
+        div.appendChild(content);
+        chatMessages.appendChild(div);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    function showTyping() {
+        if (isTyping) return;
+        isTyping = true;
+        var div = document.createElement('div');
+        div.className = 'chat-message bot';
+        div.id = 'chatTyping';
+        var avatar = document.createElement('span');
+        avatar.className = 'chat-msg-avatar';
+        avatar.textContent = '\uD83C\uDF3F';
+        var dots = document.createElement('div');
+        dots.className = 'chat-msg-typing';
+        dots.innerHTML = '<span></span><span></span><span></span>';
+        div.appendChild(avatar);
+        div.appendChild(dots);
+        chatMessages.appendChild(div);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    function hideTyping() {
+        isTyping = false;
+        var el = document.getElementById('chatTyping');
+        if (el) el.remove();
+    }
+
+    function sendMessage() {
+        var text = chatInput.value.trim();
+        if (!text || isTyping) return;
+        addMsg(text, 'user');
+        chatInput.value = '';
+        chatSend.disabled = true;
+        showTyping();
+
+        // Try API first, fallback to local response
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', BOT_API, true);
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.timeout = 15000;
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4) {
+                hideTyping();
+                chatSend.disabled = false;
+                if (xhr.status === 200) {
+                    try {
+                        var data = JSON.parse(xhr.responseText);
+                        if (data.replies) {
+                            data.replies.forEach(function(reply) {
+                                addMsg(reply.content, 'bot');
+                            });
+                        } else if (data.response) {
+                            addMsg(data.response, 'bot');
+                        } else {
+                            addMsg("I'm here to help! Could you try rephrasing that?", 'bot');
+                        }
+                    } catch(e) {
+                        addMsg(getLocalResponse(text), 'bot');
+                    }
+                } else {
+                    // API unavailable — use local fallback
+                    addMsg(getLocalResponse(text), 'bot');
+                }
+                chatInput.focus();
+            }
+        };
+        xhr.ontimeout = function() {
+            hideTyping();
+            chatSend.disabled = false;
+            addMsg(getLocalResponse(text), 'bot');
+            chatInput.focus();
+        };
+        xhr.onerror = function() {
+            hideTyping();
+            chatSend.disabled = false;
+            addMsg(getLocalResponse(text), 'bot');
+            chatInput.focus();
+        };
+        xhr.send(JSON.stringify({conversation_id: convId, message: text}));
+    }
+
+    // Local fallback responses when bot API is unavailable
+    function getLocalResponse(q) {
+        var ql = q.toLowerCase();
+        if (/suite|room|stay|sleep|bed/i.test(ql)) {
+            return "Villa Pomona has 5 distinctive suites: Heritage Suite (55m², from €280), Garden Suite (45m², from €230), Lakeview Deluxe (40m², from €250), Orchard Room (35m², from €200), and Tower Suite (60m², from €350). All include breakfast & WiFi. Which interests you?";
+        }
+        if (/book|reserve|reservation/i.test(ql)) {
+            return "I'd love to help you book! You can reach us at info@villapomona.si or call +386 4 572 7880. You can also fill out the booking form on this page. What dates are you considering?";
+        }
+        if (/activ|do|see|visit|explore|thing/i.test(ql)) {
+            return "Bled has so much to offer! Popular activities include: Bled Island & church, Bled Castle, Vintgar Gorge, lake cycling (6km loop), kayaking, paragliding, and day trips to Bohinj & Ljubljana. What sounds appealing?";
+        }
+        if (/restaur|food|eat|dine|dinner|lunch/i.test(ql)) {
+            return "Great restaurants near Villa Pomona include: Restavracija 1906 (fine dining), Rožata (traditional Slovenian), Pizzeria Rustika, Sova Bled (wine bar), and Grand Hotel Toplice. All within 5 minutes!";
+        }
+        if (/spa|massage|wellness|relax|yoga/i.test(ql)) {
+            return "Villa Pomona offers in-villa spa services: Classic Massage (€85), Deep Tissue (€95), Aromatherapy (€105), Hot Stone Therapy (€110), and Couples Massage (€180). We also have a traditional sauna and yoga sessions in the garden.";
+        }
+        if (/breakfast/i.test(ql)) {
+            return "Breakfast is included! Served 7:30–10:30 in the dining room or on the terrace with garden views. Fresh pastries, local products, and options for dietary requirements.";
+        }
+        if (/parking|car|drive|transport/i.test(ql)) {
+            return "Free private parking is available on-site. We're located at Cesta svobode 22, 4260 Bled. Airport transfer from Ljubljana (LJU) is available for €60 one way.";
+        }
+        if (/price|cost|how much|rate/i.test(ql)) {
+            return "Our suites range from €200–€350/night depending on the suite and season. All include breakfast, WiFi, and parking. The Heritage Suite starts at €280/night and the Tower Suite at €350/night.";
+        }
+        if (/cancel|refund|deposit|payment/i.test(ql)) {
+            return "Free cancellation up to 7 days before arrival. A 30% deposit secures your booking. We accept Visa, Mastercard, Amex, bank transfer, and cash.";
+        }
+        if (/pet|dog|cat|animal/i.test(ql)) {
+            return "Small pets are welcome upon prior arrangement. A cleaning fee of €30/night applies. Please let us know at the time of booking!";
+        }
+        if (/family|child|kid|baby/i.test(ql)) {
+            return "Children of all ages are welcome! The Heritage Suite (max 3 guests) and Tower Suite (max 4 guests) are ideal for families. Extra beds €40/night, baby crib complimentary.";
+        }
+        if (/contact|phone|email|call|address/i.test(ql)) {
+            return "Reach us at: info@villapomona.si | +386 4 572 7880 | Cesta svobode 22, 4260 Bled, Slovenia.";
+        }
+        if (/hello|hi|hey|good|dobro jutro|guten|ciao|bonjour/i.test(ql)) {
+            return "Hello! \uD83C\uDF3F Welcome to Villa Pomona. I'm Aria, your digital concierge. How can I help you today? Ask me about suites, booking, activities, dining, spa, or anything else!";
+        }
+        return "Thanks for your message! I can help with suites, booking, activities, dining, spa, transport, and more. What would you like to know about Villa Pomona?";
+    }
+
+    // Expose for onclick handlers
+    window.sendChatMessage = sendMessage;
+    window.sendChatQuick = function(text) {
+        chatInput.value = text;
+        sendMessage();
+    };
+
+    // Auto-open chat hint after 8 seconds if not opened
+    var hintShown = false;
+    setTimeout(function() {
+        if (!isOpen && !hintShown && chatBtn) {
+            hintShown = true;
+            chatBtn.classList.add('chat-hint');
+            // Could add a tooltip here
+        }
+    }, 8000);
+
+    // Simple analytics stub
+    function trackEvent(action) {
+        try {
+            if (window.gtag) gtag('event', action, {event_category: 'chat_widget'});
+        } catch(e) {}
+    }
+})();
