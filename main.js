@@ -670,6 +670,9 @@
                     html += '<div class="seasonal-tip"><strong>' + (currentLang === 'sl' ? '💡 Nasvet:' : '💡 Tip:') + '</strong> ' + escapeHtml(tips[0]) + '</div>';
                 }
                 container.innerHTML = html;
+                
+                // After loading seasonal, also update chat connection status
+                updateChatConnectionStatus(true);
             })
             .catch(function() {
                 // Fallback content
@@ -683,7 +686,23 @@
                     + '<div class="seasonal-card"><span class="seasonal-icon">🏰</span><p>Visit Bled Castle for panoramic views</p></div>'
                     + '<div class="seasonal-card"><span class="seasonal-icon">☕</span><p>Try the famous Bled cream cake - a dessert with history</p></div>';
                 container.innerHTML = fallback;
+                updateChatConnectionStatus(false);
             });
+    }
+    
+    // Update chat connection status indicator
+    function updateChatConnectionStatus(online) {
+        var dot = document.getElementById('chatConnectionDot');
+        var text = document.getElementById('chatConnectionText');
+        if (!dot || !text) return;
+        
+        if (online) {
+            dot.classList.remove('offline');
+            text.textContent = currentLang === 'sl' ? 'Povezan' : 'Connected';
+        } else {
+            dot.classList.add('offline');
+            text.textContent = currentLang === 'sl' ? 'Lokalni način' : 'Offline mode';
+        }
     }
 
     // ===== Chat Widget =====
@@ -1059,27 +1078,20 @@
     }
 
     // ===== Chat Connection Check =====
+    // Note: Connection status is now updated via loadSeasonalHighlights
+    // This fallback runs if seasonal section doesn't exist
     function checkChatConnection() {
-        var dot = document.getElementById('chatConnectionDot');
-        var text = document.getElementById('chatConnectionText');
-        if (!dot || !text) return;
-
-        fetch('https://villa-pomona-bot.onrender.com/api/health', {
-            method: 'GET',
-            signal: AbortSignal.timeout(5000)
-        })
-        .then(function(res) {
-            if (res.ok) {
-                dot.classList.remove('offline');
-                text.textContent = currentLang === 'sl' ? 'Povezan' : 'Connected';
-            } else {
-                throw new Error('Not OK');
-            }
-        })
-        .catch(function() {
-            dot.classList.add('offline');
-            text.textContent = currentLang === 'sl' ? 'Lokalni način' : 'Offline mode';
-        });
+        // Small delay to let loadSeasonalHighlights check first
+        setTimeout(function() {
+            var dot = document.getElementById('chatConnectionDot');
+            var text = document.getElementById('chatConnectionText');
+            if (!dot || !text) return;
+            
+            // If already updated by seasonal loader, skip
+            if (dot.classList.contains('offline') || text.textContent === 'Connected' || text.textContent === 'Povezan') return;
+            
+            updateChatConnectionStatus(false);
+        }, 7000);
     }
 
     // ===== Virtual Tour =====

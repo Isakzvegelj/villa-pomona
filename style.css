@@ -877,6 +877,104 @@ ul { list-style: none; }
     font-size: 1.1rem;
 }
 
+/* ===== Restaurants & Dining Section ===== */
+.dining-section {
+    padding: 100px 0;
+    background: var(--color-white);
+}
+
+.dining-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+}
+
+.dining-card {
+    background: var(--color-bg);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    transition: all var(--transition-fast);
+    border: 1px solid rgba(0,0,0,0.04);
+}
+
+.dining-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+}
+
+.dining-image {
+    position: relative;
+    height: 200px;
+    overflow: hidden;
+}
+
+.dining-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform var(--transition-slow);
+}
+
+.dining-card:hover .dining-image img {
+    transform: scale(1.05);
+}
+
+.dining-content {
+    padding: 24px;
+}
+
+.dining-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+}
+
+.dining-cuisine {
+    display: inline-block;
+    background: rgba(45,80,22,0.1);
+    color: var(--color-primary);
+    padding: 4px 12px;
+    border-radius: var(--radius-full);
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.dining-distance {
+    font-size: 13px;
+    color: var(--color-text-light);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.dining-content h3 {
+    font-family: var(--font-heading);
+    font-size: 1.25rem;
+    margin-bottom: 8px;
+    color: var(--color-heading);
+}
+
+.dining-content p {
+    font-size: 0.9rem;
+    color: var(--color-text-light);
+    line-height: 1.6;
+    margin: 0;
+}
+
+@media (max-width: 968px) {
+    .dining-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 600px) {
+    .dining-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
 /* ===== Lightbox ===== */
 .lightbox {
     display: none;
