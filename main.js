@@ -1092,3 +1092,129 @@
         loadSeasonalHighlights();
     };
 })();
+
+/* ===== CONCIERGE BOT WIDGET ===== */
+var botPanelOpen = false;
+var botSessionId = 'pomona_web_' + Math.random().toString(36).substr(2, 9);
+
+function toggleBot() {
+    var panel = document.getElementById('botPanel');
+    var icon = document.getElementById('botToggleIcon');
+    botPanelOpen = !botPanelOpen;
+    if (botPanelOpen) {
+        panel.classList.add('open');
+        if (icon) icon.innerHTML = '&times;';
+        document.getElementById('botInput').focus();
+    } else {
+        panel.classList.remove('open');
+        if (icon) icon.innerHTML = '&#x1f33f;';
+    }
+}
+
+function addBotMessage(text, role) {
+    var messagesEl = document.getElementById('botMessages');
+    var div = document.createElement('div');
+    div.className = 'bot-message ' + role;
+    var content = document.createElement('div');
+    content.className = 'bot-message-content';
+    content.textContent = text;
+    div.appendChild(content);
+    messagesEl.appendChild(div);
+    messagesEl.scrollTop = messagesEl.scrollHeight;
+}
+
+function showBotTyping() {
+    var messagesEl = document.getElementById('botMessages');
+    var div = document.createElement('div');
+    div.className = 'bot-message typing';
+    div.id = 'botTyping';
+    div.innerHTML = '<div class="bot-typing-dots"><span></span><span></span><span></span></div>';
+    messagesEl.appendChild(div);
+    messagesEl.scrollTop = messagesEl.scrollHeight;
+}
+
+function hideBotTyping() {
+    var el = document.getElementById('botTyping');
+    if (el) el.remove();
+}
+
+function sendBotQuick(btn) {
+    var msg = btn.getAttribute('data-msg');
+    if (msg) {
+        document.getElementById('botInput').value = msg;
+        sendBotMessage();
+    }
+}
+
+async function sendBotMessage() {
+    var input = document.getElementById('botInput');
+    var text = input.value.trim();
+    if (!text) return;
+
+    addBotMessage(text, 'user');
+    input.value = '';
+    showBotTyping();
+
+    // Try to connect to the Pomona bot API
+    try {
+        var res = await fetch('https://villa-pomona-bot.onrender.com/api/chat', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                conversation_id: botSessionId,
+                message: text
+            })
+        });
+        var data = await res.json();
+        hideBotTyping();
+        if (data.replies) {
+            data.replies.forEach(function(reply) {
+                addBotMessage(reply.content, 'bot');
+            });
+        } else if (data.response) {
+            addBotMessage(data.response, 'bot');
+        }
+    } catch (e) {
+        hideBotTyping();
+        // Fallback response
+        var fallback = getBotFallback(text);
+        addBotMessage(fallback, 'bot');
+    }
+}
+
+function getBotFallback(query) {
+    var q = query.toLowerCase();
+    var lang = (typeof currentLang !== 'undefined' && currentLang === 'sl') ? 'sl' : 'en';
+
+    if (q.indexOf('suite') > -1 || q.indexOf('sob') > -1 || q.indexOf('zimmer') > -1) {
+        return lang === 'sl'
+            ? 'Imamo 5 izjemnih sob: Heritage Suite (od 280 EUR), Garden Suite (od 230 EUR), Lakeview Deluxe (od 250 EUR), Orchard Room (od 200 EUR) in Tower Suite (od 350 EUR). Vse vključujejo zajtrk in WiFi.'
+            : 'We have 5 exceptional suites: Heritage Suite (from EUR 280), Garden Suite (from EUR 230), Lakeview Deluxe (from EUR 250), Orchard Room (from EUR 200), and Tower Suite (from EUR 350). All include breakfast & WiFi.';
+    }
+    if (q.indexOf('price') > -1 || q.indexOf('cost') > -1 || q.indexOf('rate') > -1 || q.indexOf('cena') > -1 || q.indexOf('koliko') > -1) {
+        return lang === 'sl'
+            ? 'Cene se gibljejo od 200 do 350 EUR na noč, odvisno od sezone in izbrane sobe. V ceno je vključen zajtrk in WiFi.'
+            : 'Rates range from EUR 200–350 per night depending on season and suite. All include breakfast & WiFi.';
+    }
+    if (q.indexOf('book') > -1 || q.indexOf('rezerv') > -1 || q.indexOf('prenot') > -1) {
+        return lang === 'sl'
+            ? 'Za rezervacijo nas pokličite na +386 4 572 7880 ali nam pišite na info@villapomona.si. Z veseljam vam pomagam!'
+            : 'To book, call us at +386 4 572 7880 or email info@villapomona.si. I would be happy to help!';
+    }
+    if (q.indexOf('activity') > -1 || q.indexOf('do') > -1 || q.indexOf('aktivnost') > -1 || q.indexOf('počet') > -1) {
+        return lang === 'sl'
+            ? 'V Bledu je velikoaktivnosti: kajak na jezeru, obiski Blejskega gradu in otoka, soteska Vintgar, kopališče Terme Bled, golf in pohodništvo v Julijskih Alpah!'
+            : 'Bled offers many activities: kayaking on the lake, visiting Bled Castle and Island, Vintgar Gorge, Terme Bled thermal springs, golf, and hiking in the Julian Alps!';
+    }
+    return lang === 'sl'
+        ? 'Hvala za vprašanje! Za podrobnosti nas pokličite na +386 4 572 7880 ali pišite na info@villapomona.si.'
+        : 'Thank you for your question! For details, call us at +386 4 572 7880 or email info@villapomona.si.';
+}
+
+// Auto-open bot hint after 30 seconds
+setTimeout(function() {
+    var dot = document.getElementById('botNotificationDot');
+    if (dot && !botPanelOpen) {
+        dot.classList.add('show');
+    }
+}, 30000);

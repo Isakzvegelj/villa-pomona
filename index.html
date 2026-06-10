@@ -1060,6 +1060,44 @@
         <div class="toast-text" id="socialProofText"></div>
     </div>
 
+    <!-- Concierge Bot Widget -->
+    <div id="pomona-bot-widget">
+        <!-- Bot Toggle Button -->
+        <button class="bot-toggle" id="botToggle" onclick="toggleBot()" aria-label="Open concierge chat">
+            <span class="bot-toggle-icon" id="botToggleIcon">&#x1f33f;</span>
+            <span class="bot-toggle-label" data-lang-sl="Vprašaj nas" data-lang-en="Ask us">Ask us</span>
+            <span class="bot-notification-dot" id="botNotificationDot"></span>
+        </button>
+        <!-- Bot Chat Panel -->
+        <div class="bot-panel" id="botPanel">
+            <div class="bot-panel-header">
+                <div class="bot-header-info">
+                    <span class="bot-header-icon">&#x1f33f;</span>
+                    <div>
+                        <div class="bot-header-title">Villa Pomona</div>
+                        <div class="bot-header-status" data-lang-sl="Digitalni concierge" data-lang-en="Digital Concierge">Digital Concierge</div>
+                    </div>
+                </div>
+                <button class="bot-close-btn" onclick="toggleBot()" aria-label="Close chat">&times;</button>
+            </div>
+            <div class="bot-messages" id="botMessages">
+                <div class="bot-message bot">
+                    <div class="bot-message-content" data-lang-sl="Dobrodošli v Villa Pomona! Kako vam lahko pomagam?" data-lang-en="Welcome to Villa Pomona! How can I help you today?">Welcome to Villa Pomona! How can I help you today?</div>
+                </div>
+            </div>
+            <div class="bot-quick-replies">
+                <button class="bot-quick-btn" onclick="sendBotQuick(this)" data-msg="What suites do you have?" data-lang-sl="&#x1f3e8; Sobe" data-lang-en="&#x1f3e8; Suites">&#x1f3e8; Suites</button>
+                <button class="bot-quick-btn" onclick="sendBotQuick(this)" data-msg="What are your rates?" data-lang-sl="&#x1f4b0; Cene" data-lang-en="&#x1f4b0; Rates">&#x1f4b0; Rates</button>
+                <button class="bot-quick-btn" onclick="sendBotQuick(this)" data-msg="How do I get there?" data-lang-sl="&#x1f695; Pot" data-lang-en="&#x1f695; Directions">&#x1f695; Directions</button>
+                <button class="bot-quick-btn" onclick="sendBotQuick(this)" data-msg="What is there to do in Bled?" data-lang-sl="&#x1f3d4; Aktivnosti" data-lang-en="&#x1f3d4; Activities">&#x1f3d4; Activities</button>
+            </div>
+            <div class="bot-input-area">
+                <input type="text" class="bot-input" id="botInput" placeholder="Type your question..." data-lang-sl-placeholder="Vpišite vprašanje..." data-lang-en-placeholder="Type your question..." onkeypress="if(event.key==='Enter')sendBotMessage()">
+                <button class="bot-send-btn" onclick="sendBotMessage()" aria-label="Send">&#x27a4;</button>
+            </div>
+        </div>
+    </div>
+
     <script src="main.js"></script>
 </body>
 </html>
