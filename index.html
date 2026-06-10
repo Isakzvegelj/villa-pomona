@@ -33,6 +33,7 @@
                 <li><a href="#wellness">Wellness</a></li>
                 <li><a href="#experiences">Experiences</a></li>
                 <li><a href="#packages">Packages</a></li>
+                <li><a href="#gallery">Gallery</a></li>
                 <li><a href="#contact" class="nav-cta">Book Now</a></li>
             </ul>
         </div>
@@ -368,6 +369,80 @@
             </div>
         </div>
     </section>
+
+
+    <!-- Image Gallery Section with Lightbox -->
+    <section class="section gallery-section" id="gallery">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Gallery</span>
+                <h2 class="section-title">Glimpses of <em>Villa Pomona</em></h2>
+                <p class="section-desc">Explore our heritage villa, botanical garden, and the beauty of Bled.</p>
+            </div>
+            <div class="gallery-grid">
+                <div class="gallery-item reveal" data-index="0">
+                    <div class="gallery-image-wrapper">
+                        <img src="assets/images/hero-1.jpg" alt="Villa Pomona exterior — heritage villa in Bled" loading="lazy">
+                        <div class="gallery-overlay"><span class="gallery-zoom">&#128269;</span><span class="gallery-label">Villa Exterior</span></div>
+                    </div>
+                </div>
+                <div class="gallery-item reveal tall" data-index="1">
+                    <div class="gallery-image-wrapper">
+                        <img src="assets/images/gallery-1.jpg" alt="Botanical garden at Villa Pomona" loading="lazy">
+                        <div class="gallery-overlay"><span class="gallery-zoom">&#128269;</span><span class="gallery-label">Botanical Garden</span></div>
+                    </div>
+                </div>
+                <div class="gallery-item reveal" data-index="2">
+                    <div class="gallery-image-wrapper">
+                        <img src="assets/images/gallery-2.jpg" alt="Luxury suite interior at Villa Pomona" loading="lazy">
+                        <div class="gallery-overlay"><span class="gallery-zoom">&#128269;</span><span class="gallery-label">Heritage Suite</span></div>
+                    </div>
+                </div>
+                <div class="gallery-item reveal wide" data-index="3">
+                    <div class="gallery-image-wrapper">
+                        <img src="assets/images/gallery-3.jpg" alt="Lake Bled view from Villa Pomona" loading="lazy">
+                        <div class="gallery-overlay"><span class="gallery-zoom">&#128269;</span><span class="gallery-label">Lake Bled View</span></div>
+                    </div>
+                </div>
+                <div class="gallery-item reveal" data-index="4">
+                    <div class="gallery-image-wrapper">
+                        <img src="assets/images/gallery-4.jpg" alt="Pool and relaxation area at Villa Pomona" loading="lazy">
+                        <div class="gallery-overlay"><span class="gallery-zoom">&#128269;</span><span class="gallery-label">Pool &amp; Relaxation</span></div>
+                    </div>
+                </div>
+                <div class="gallery-item reveal tall" data-index="5">
+                    <div class="gallery-image-wrapper">
+                        <img src="assets/images/gallery-5.jpg" alt="Private chef dining experience at Villa Pomona" loading="lazy">
+                        <div class="gallery-overlay"><span class="gallery-zoom">&#128269;</span><span class="gallery-label">Private Dining</span></div>
+                    </div>
+                </div>
+                <div class="gallery-item reveal" data-index="6">
+                    <div class="gallery-image-wrapper">
+                        <img src="assets/images/gallery-6.jpg" alt="Wellness and sauna at Villa Pomona" loading="lazy">
+                        <div class="gallery-overlay"><span class="gallery-zoom">&#128269;</span><span class="gallery-label">Wellness &amp; Sauna</span></div>
+                    </div>
+                </div>
+                <div class="gallery-item reveal" data-index="7">
+                    <div class="gallery-image-wrapper">
+                        <img src="assets/images/about.jpg" alt="Villa Pomona garden terrace" loading="lazy">
+                        <div class="gallery-overlay"><span class="gallery-zoom">&#128269;</span><span class="gallery-label">Garden Terrace</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Lightbox Modal -->
+    <div class="lightbox" id="lightbox">
+        <button class="lightbox-close" id="lightboxClose" aria-label="Close gallery">&times;</button>
+        <button class="lightbox-prev" id="lightboxPrev" aria-label="Previous image">&#8249;</button>
+        <button class="lightbox-next" id="lightboxNext" aria-label="Next image">&#8250;</button>
+        <div class="lightbox-content">
+            <img src="" alt="" id="lightboxImage">
+            <div class="lightbox-caption" id="lightboxCaption"></div>
+        </div>
+        <div class="lightbox-counter" id="lightboxCounter"></div>
+    </div>
 
     <section class="section contact" id="contact">
         <div class="container">
