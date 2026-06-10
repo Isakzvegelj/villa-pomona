@@ -1,3 +1,7 @@
 node_modules/
 dist/
 .DS_Store
+.ignored-old-villa-pomona/
+*.db
+__pycache__/
+*.pyc
