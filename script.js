@@ -270,14 +270,14 @@ window.addEventListener('load', function() {
             addMsg(getLocalResponse(text), 'bot');
             chatInput.focus();
         };
-        xhr.send(JSON.stringify({conversation_id: convId, message: text}));
+        xhr.send(JSON.stringify({session_id: convId, message: text}));
     }
 
     // Local fallback responses when bot API is unavailable
     function getLocalResponse(q) {
         var ql = q.toLowerCase();
         if (/suite|room|stay|sleep|bed/i.test(ql)) {
-            return "Villa Pomona has 5 distinctive suites: Heritage Suite (55m², from €280), Garden Suite (45m², from €230), Lakeview Deluxe (40m², from €250), Orchard Room (35m², from €200), and Tower Suite (60m², from €350). All include breakfast & WiFi. Which interests you?";
+            return "Villa Pomona has 8 botanical suites: Pomona Heritage Suite (55m², from €280), Garden Suite (45m², from €230), Lakeview Deluxe (50m², from €320), Orchard Room (35m², from €190), Tower Suite (60m², from €350), Greenhouse Suite (42m², from €260), Fig Suite (32m², from €180), and Olive Suite (30m², from €170). All include breakfast, WiFi, and parking. Which interests you?";
         }
         if (/book|reserve|reservation/i.test(ql)) {
             return "I'd love to help you book! You can reach us at info@villapomona.si or call +386 4 572 7880. You can also fill out the booking form on this page. What dates are you considering?";
@@ -292,13 +292,25 @@ window.addEventListener('load', function() {
             return "Villa Pomona offers in-villa spa services: Classic Massage (€85), Deep Tissue (€95), Aromatherapy (€105), Hot Stone Therapy (€110), and Couples Massage (€180). We also have a traditional sauna and yoga sessions in the garden.";
         }
         if (/breakfast/i.test(ql)) {
-            return "Breakfast is included! Served 7:30–10:30 in the dining room or on the terrace with garden views. Fresh pastries, local products, and options for dietary requirements.";
+            return "Breakfast is included! Served 7:30–10:30 in the dining room or on the terrace with garden views. Fresh pastries, local products, vegan, vegetarian, gluten-free, and allergy-friendly options are available on request.";
+        }
+        if (/garden|botanical|plant|greenhouse|herb/i.test(ql)) {
+            return "Villa Pomona's botanical garden has 200+ plant species, lavender beds, herb garden areas, a greenhouse, and quiet paths. It is especially beautiful from May through September and is available for guest walks, stargazing, and private yoga sessions.";
+        }
+        if (/pool|swimming|heated/i.test(ql)) {
+            return "The seasonal heated pool has a pool house, loungers, and panoramic garden views. Pool access is included for guests.";
+        }
+        if (/ev|electric|charging|charger/i.test(ql)) {
+            return "EV charging is available for guests. Please tell us when booking if you plan to charge an electric vehicle so we can reserve a suitable parking space.";
+        }
+        if (/dietary|vegan|vegetarian|gluten|allerg/i.test(ql)) {
+            return "Dietary needs are welcome. Please tell us when booking so the team can prepare vegan, vegetarian, gluten-free, and allergy-friendly breakfast options.";
         }
         if (/parking|car|drive|transport/i.test(ql)) {
             return "Free private parking is available on-site. We're located at Cesta svobode 22, 4260 Bled. Airport transfer from Ljubljana (LJU) is available for €60 one way.";
         }
         if (/price|cost|how much|rate/i.test(ql)) {
-            return "Our suites range from €200–€350/night depending on the suite and season. All include breakfast, WiFi, and parking. The Heritage Suite starts at €280/night and the Tower Suite at €350/night.";
+            return "Our suites range from €170–€350/night depending on the suite and season. All include breakfast, WiFi, and parking. The Olive Suite starts at €170/night and the Tower Suite at €350/night.";
         }
         if (/cancel|refund|deposit|payment/i.test(ql)) {
             return "Free cancellation up to 7 days before arrival. A 30% deposit secures your booking. We accept Visa, Mastercard, Amex, bank transfer, and cash.";
