@@ -287,7 +287,7 @@ function initAvailabilityLazyLoad() {
                 cell.classList.add('unavailable');
             } else {
                 cell.setAttribute('data-date', dateStr);
-                cell.addEventListener('click', (function(d, ds) { return function() { selectDate(ds, d); }; })(cell, dateStr));
+                cell.addEventListener('click', (function(cd, ds) { return function() { selectDate(ds, cd); }; })(cellDate, dateStr));
             }
             if (cellDate.getTime() === today.getTime()) cell.classList.add('today');
             if (checkIn && cellDate.getTime() === checkIn.getTime()) cell.classList.add('selected');
