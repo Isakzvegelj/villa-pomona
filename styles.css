@@ -100,6 +100,7 @@ ul { list-style: none; }
 .btn-outline { background: transparent; color: #fff; border: 1px solid rgba(255,255,255,0.3); }
 .btn-outline:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.6); }
 .btn-full { width: 100%; }
+.suite-info .btn-full { margin-top: auto; }
 
 .section { padding: var(--section-padding) 0; }
 .section-header { text-align: center; max-width: 640px; margin: 0 auto 64px; }
@@ -123,13 +124,13 @@ ul { list-style: none; }
 
 .suites { background: #fff; }
 .suites-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 32px; }
-.suite-card { background: #fff; border-radius: 12px; overflow: hidden; border: 1px solid var(--neutral-200); transition: all 0.4s var(--ease); }
+.suite-card { background: #fff; border-radius: 12px; overflow: hidden; border: 1px solid var(--neutral-200); transition: all 0.4s var(--ease); display: flex; flex-direction: column; }
 .suite-card:hover { transform: translateY(-8px); box-shadow: 0 20px 60px rgba(0,0,0,0.08); border-color: var(--green-300); }
 .suite-image { position: relative; overflow: hidden; }
 .suite-img { width: 100%; aspect-ratio: 16/10; object-fit: cover; display: block; transition: transform 0.6s var(--ease); }
 .suite-card:hover .suite-img { transform: scale(1.05); }
 .suite-badge { position: absolute; top: 16px; left: 16px; background: var(--gold); color: #fff; font-size: 0.7rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; padding: 6px 14px; border-radius: 50px; }
-.suite-info { padding: 28px; }
+.suite-info { padding: 28px; display: flex; flex-direction: column; flex: 1; }
 .suite-info h3 { font-family: var(--font-serif); font-size: 1.5rem; font-weight: 500; color: var(--green-900); margin-bottom: 4px; }
 .suite-size { font-size: 0.8rem; color: var(--green-600); font-weight: 500; margin-bottom: 12px; }
 .suite-desc { font-size: 0.9rem; color: var(--neutral-600); line-height: 1.6; margin-bottom: 16px; }

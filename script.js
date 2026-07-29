@@ -105,6 +105,8 @@ function initSmoothScroll() {
 function initBookingForm() {
     var form = document.getElementById('bookingForm');
     if (!form) return;
+    var loadTimeField = document.getElementById('formLoadTime');
+    if (loadTimeField) loadTimeField.value = Date.now();
     var today = new Date().toISOString().split('T')[0];
     var checkinInput = document.getElementById('checkin');
     var checkoutInput = document.getElementById('checkout');
@@ -158,6 +160,12 @@ function initBookingForm() {
     form.addEventListener('submit', function(e) {
         e.preventDefault();
         var submitBtn = form.querySelector('button[type="submit"]');
+        // Anti-spam: reject if honeypot filled or submitted too fast (< 3 seconds)
+        var botField = form.querySelector('input[name="bot-field"]');
+        var websiteField = form.querySelector('input[name="website"]');
+        var loadTs = form.querySelector('#formLoadTime');
+        if ((botField && botField.value) || (websiteField && websiteField.value)) return;
+        if (loadTs && loadTs.value && (Date.now() - parseInt(loadTs.value)) < 3000) return;
         submitBtn.disabled = true;
         submitBtn.textContent = 'Sending...';
 
@@ -214,7 +222,7 @@ function initBookingForm() {
     });
 
     function mailtoFallback(subject, body, form) {
-        window.location.href = 'mailto:evita.vilebled@gmail.com?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+        window.location.href = 'mailto:isakzv@gmail.com?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
         showFormConfirmation(form);
     }
 }

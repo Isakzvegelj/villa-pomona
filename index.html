@@ -33,7 +33,7 @@
         "image": "https://isakzvegelj.github.io/villa-pomona/assets/images/hero-1.webp",
         "url": "https://isakzvegelj.github.io/villa-pomona/",
         "telephone": "+38651603858",
-        "email": "evita.vilebled@gmail.com",
+        "email": "isakzv@gmail.com",
         "priceRange": "€170–€980",
         "description": "A peaceful villa in Bled's most tranquil neighbourhood of historic villas. Three charming bedrooms, a private pool house, swimming pool, lounge library, and parking for five cars.",
         "address": {
@@ -161,7 +161,7 @@
                             <li>Double bed</li><li>Garden view</li><li>Quiet &amp; cosy</li><li>Premium linen</li><li>Pool &amp; sauna access</li>
                         </ul>
                         <div class="suite-price"><span class="price-from">from</span><span class="price-amount">€170</span><span class="price-night">/ night</span></div>
-                        <a href="#contact" class="btn btn-primary btn-full" style="margin-top:16px;">Book This Room</a>
+                        <a href="#contact" class="btn btn-primary btn-full">Book This Room</a>
                     </div>
                 </div>
                 <div class="suite-card reveal">
@@ -177,7 +177,7 @@
                             <li>Private balcony</li><li>Pool view</li><li>Double bed</li><li>Garden aspect</li><li>Pool &amp; sauna access</li>
                         </ul>
                         <div class="suite-price"><span class="price-from">from</span><span class="price-amount">€210</span><span class="price-night">/ night</span></div>
-                        <a href="#contact" class="btn btn-primary btn-full" style="margin-top:16px;">Book This Room</a>
+                        <a href="#contact" class="btn btn-primary btn-full">Book This Room</a>
                     </div>
                 </div>
                 <div class="suite-card reveal">
@@ -193,7 +193,7 @@
                             <li>Private terrace</li><li>Mountain views</li><li>Spacious layout</li><li>Natural light</li><li>Pool &amp; sauna access</li>
                         </ul>
                         <div class="suite-price"><span class="price-from">from</span><span class="price-amount">€250</span><span class="price-night">/ night</span></div>
-                        <a href="#contact" class="btn btn-primary btn-full" style="margin-top:16px;">Book This Room</a>
+                        <a href="#contact" class="btn btn-primary btn-full">Book This Room</a>
                     </div>
                 </div>
                 <div class="suite-card reveal">
@@ -209,7 +209,7 @@
                             <li>Private terrace</li><li>Smart TV</li><li>Bathtub</li><li>Direct pool access</li><li>Sauna access</li>
                         </ul>
                         <div class="suite-price"><span class="price-from">from</span><span class="price-amount">€390</span><span class="price-night">/ night</span></div>
-                        <a href="#contact" class="btn btn-primary btn-full" style="margin-top:16px;">Book Pool House</a>
+                        <a href="#contact" class="btn btn-primary btn-full">Book Pool House</a>
                     </div>
                 </div>
                 <div class="suite-card reveal">
@@ -225,7 +225,7 @@
                             <li>3 bedrooms + pool house</li><li>Private pool</li><li>Sauna</li><li>Full kitchen</li><li>Parking for 5</li>
                         </ul>
                         <div class="suite-price"><span class="price-from">from</span><span class="price-amount">€980</span><span class="price-night">/ night</span></div>
-                        <a href="#contact" class="btn btn-primary btn-full" style="margin-top:16px;">Book Entire Villa</a>
+                        <a href="#contact" class="btn btn-primary btn-full">Book Entire Villa</a>
                     </div>
                 </div>
             </div>
@@ -570,7 +570,7 @@
                     <p class="lead">Ready to experience Villa Pomona? Reach out to us directly for the best rates and personalized service.</p>
                     <div class="contact-details">
                         <div class="contact-item"><span class="ci-icon" aria-hidden="true">&#128205;</span><div><strong>Address</strong><p>Crtomirova ulica 2, 4260 Bled, Slovenia<br>Tranquil villa neighbourhood, 3 min from Lake Bled</p></div></div>
-                        <div class="contact-item"><span class="ci-icon" aria-hidden="true">&#9993;</span><div><strong>Email</strong><p><a href="mailto:evita.vilebled@gmail.com">evita.vilebled@gmail.com</a></p></div></div>
+                        <div class="contact-item"><span class="ci-icon" aria-hidden="true">&#9993;</span><div><strong>Email</strong><p><a href="mailto:isakzv@gmail.com">isakzv@gmail.com</a></p></div></div>
                         <div class="contact-item"><span class="ci-icon" aria-hidden="true">&#128222;</span><div><strong>Phone / WhatsApp</strong><p><a href="https://wa.me/38651603858" target="_blank" rel="noopener">+386 51 603 858</a> &middot; <a href="tel:+38651603858" style="font-size:0.8rem;opacity:0.7;">Call</a></p></div></div>
                     </div>
                     <a href="https://wa.me/38651603858" class="btn btn-outline" style="color:#fff;border-color:var(--green-400);display:inline-flex;align-items:center;gap:10px;margin-bottom:24px;" target="_blank" rel="noopener"><span aria-hidden="true">&#128242;</span> Chat on WhatsApp</a>
@@ -579,6 +579,9 @@
                 <div class="contact-form-wrapper reveal">
                     <form class="contact-form" id="bookingForm" name="booking">
                         <p hidden><label>Don't fill this out: <input name="bot-field"></label></p>
+                        <p hidden><label>Leave empty: <input name="website" type="url" tabindex="-1" autocomplete="off"></label></p>
+                        <input type="hidden" name="_gotcha" value="">
+                        <input type="hidden" id="formLoadTime" name="_load_ts" value="">
                         <h3>Reserve Your Stay</h3>
                         <div class="form-row">
                             <div class="form-group"><label for="name">Full Name *</label><input type="text" id="name" name="name" required placeholder="Your name"></div>
@@ -614,7 +617,7 @@
                 <div class="footer-links"><h4>Explore</h4><ul><li><a href="#about">About</a></li><li><a href="#bedrooms">Bedrooms</a></li><li><a href="#gallery">Gallery</a></li></ul></div>
                 <div class="footer-links"><h4>Visit</h4><ul><li><a href="#location">Location</a></li><li><a href="#contact">Contact</a></li><li><a href="#contact">Book Now</a></li></ul></div>
                 <div class="footer-links"><h4>Legal</h4><ul><li><a href="privacy.html">Privacy Policy</a></li><li><a href="terms.html">Terms &amp; Conditions</a></li></ul></div>
-                <div class="footer-links"><h4>Connect</h4><ul><li><a href="mailto:evita.vilebled@gmail.com">evita.vilebled@gmail.com</a></li><li><a href="tel:+38651603858">+386 51 603 858</a></li></ul></div>
+                <div class="footer-links"><h4>Connect</h4><ul><li><a href="mailto:isakzv@gmail.com">isakzv@gmail.com</a></li><li><a href="tel:+38651603858">+386 51 603 858</a></li></ul></div>
             </div>
             <div class="footer-bottom">
                 <p>&copy; <span id="footerYear">2026</span> Villa Pomona Bled. All rights reserved.</p>
