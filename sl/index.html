@@ -60,13 +60,20 @@
             {"@type": "Question", "name": "Kdaj je prijava in odjava?", "acceptedAnswer": {"@type": "Answer", "text": "Prijava je od 15:00, odjava pa do 10:00. Zgodnja prijava in pozna odjava sta na voljo na zahtevo, odvisno od razpoložljivosti."}},
             {"@type": "Question", "name": "Kdaj je bazen odprt?", "acceptedAnswer": {"@type": "Answer", "text": "Bazen je sezonski in je običajno odprt od maja do septembra, odvisno od vremenskih razmer. Ni ogrevan."}},
             {"@type": "Question", "name": "Ali je parkirišče na voljo?", "acceptedAnswer": {"@type": "Answer", "text": "Da, Vila Pomona ponuja brezplačno zasebno parkirišče na kraju samem za do pet vozil."}},
-            {"@type": "Question", "name": "Ali nudite prevoz z letališča?", "acceptedAnswer": {"@type": "Answer", "text": "Da, lahko uredimo prevoz z letališča Ljubljana (LJU, 60 €) ali letališča Celovec (KLU, 90 €)."}},
+            {"@type": "Question", "name": "Ali nudite prevoz z letališča?", "acceptedAnswer": {"@type": "Answer", "text": "Da, lahko uredimo prevoz z letališča Ljubljana (LJU) ali letališča Celovec (KLU). Cene so na voljo na zahtevo."}},
             {"@type": "Question", "name": "Ali lahko rezerviram posamezne spalnice ali celotno vilo?", "acceptedAnswer": {"@type": "Answer", "text": "Lahko rezervirate posamezne spalnice, ločeno hiško ob bazenu ali celotno Vilo Pomona za do 8 gostov."}}
         ]
     }
     </script>
     <!-- TODO(user): Insert analytics snippet here (Plausible script tag or GoatCounter code) -->
     <link rel="stylesheet" href="../styles.css">
+    <script>
+        (function(){
+            var t = localStorage.getItem('theme');
+            if (t) document.documentElement.setAttribute('data-theme', t);
+            else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) document.documentElement.setAttribute('data-theme', 'dark');
+        })();
+    </script>
 </head>
 <body>
     <a href="#bedrooms" class="skip-link">Preskoči na vsebino</a>
@@ -80,11 +87,13 @@
             </button>
             <ul class="nav-links" id="navLinks">
                 <li><a href="#bedrooms">Spalnice</a></li>
+                <li><a href="#availability">Razpoložljivost</a></li>
                 <li><a href="#amenities">Ugodnosti</a></li>
                 <li><a href="#location">Lokacija</a></li>
                 <li><a href="#faq">Pogosta vprašanja</a></li>
                 <li><a href="#gallery">Galerija</a></li>
                 <li class="nav-lang-item"><a href="../" lang="en" hreflang="en">EN</a> | <a href="./" lang="sl" hreflang="sl" class="active">SL</a> | <a href="../de/" lang="de" hreflang="de">DE</a></li>
+                <li class="theme-toggle-wrap"><button class="theme-toggle" id="themeToggle" aria-label="Preklopi temni način"><span class="icon-sun" aria-hidden="true">&#9788;</span><span class="icon-moon" aria-hidden="true">&#9790;</span></button></li>
                 <li><a href="#contact" class="nav-cta">Rezerviraj</a></li>
             </ul>
         </div>
@@ -194,6 +203,39 @@
                         <div class="suite-price"><span class="price-from">od</span><span class="price-amount">€980</span><span class="price-night">/ noč</span></div>
                         <a href="#contact" class="btn btn-primary btn-full">Rezerviraj celotno vilo</a>
                     </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section availability" id="availability">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Razpoložljivost</span>
+                <h2 class="section-title">Preverite <em>razpoložljivost</em></h2>
+                <p class="section-desc">Izberite želene datume spodaj. Kliknite datum za začetek izbire, nato kliknite končni datum za dokončanje.</p>
+            </div>
+            <div class="availability-widget" id="availabilityWidget">
+                <div class="cal-wrap">
+                    <div class="cal-header">
+                        <button class="cal-nav" id="calPrev" aria-label="Prejšnji mesec">&#8249;</button>
+                        <span class="cal-month" id="calMonth"></span>
+                        <button class="cal-nav" id="calNext" aria-label="Naslednji mesec">&#8250;</button>
+                    </div>
+                    <div class="cal-grid" id="calGrid">
+                        <span class="cal-day-head">Pon</span>
+                        <span class="cal-day-head">Tor</span>
+                        <span class="cal-day-head">Sre</span>
+                        <span class="cal-day-head">Čet</span>
+                        <span class="cal-day-head">Pet</span>
+                        <span class="cal-day-head">Sob</span>
+                        <span class="cal-day-head">Ned</span>
+                    </div>
+                    <div class="cal-legend">
+                        <span><span class="cal-dot cal-dot-selected"></span> Izbrano</span>
+                        <span><span class="cal-dot cal-dot-unavailable"></span> Ni na voljo</span>
+                    </div>
+                    <p class="cal-note">Datumi so informativni. Končna razpoložljivost potrjena po <a href="#contact">zahtevi</a>.</p>
                 </div>
             </div>
         </div>
@@ -319,7 +361,7 @@
                 </details>
                 <details class="faq-item">
                     <summary>Ali nudite prevoz z letališča?</summary>
-                    <p>Da, lahko uredimo prevoz z letališča Ljubljana (LJU, 60 &euro;) ali letališča Celovec (KLU, 90 &euro;).</p>
+                    <p>Da, lahko uredimo prevoz z letališča Ljubljana (LJU) ali letališča Celovec (KLU). Cene so na voljo na zahtevo.</p>
                 </details>
                 <details class="faq-item">
                     <summary>Ali lahko rezerviram posamezne spalnice ali celotno vilo?</summary>
@@ -452,7 +494,7 @@
                             <div class="form-group"><label for="children">Otroci (mlajši od 12)</label><select id="children" name="children"><option value="0" selected>0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select></div>
                         </div>
                         <div class="form-group"><label for="suite">Želena namestitev</label><select id="suite" name="suite"><option value="">Brez preference — priporočite mi</option><option value="Bedroom 101">Spalnica 101 — Dvoposteljna soba Deluxe, od 170 €/noč</option><option value="Bedroom 102">Spalnica 102 — Suita King s pogledom na bazen, od 210 €/noč</option><option value="Bedroom 103">Spalnica 103 — Suita Queen s pogledom na bazen, od 250 €/noč</option><option value="Pool House">Hiška ob bazenu — Zasebno zatočišče ob bazenu, od 390 €/noč</option><option value="Entire Villa Pomona">Celotna Vila Pomona — 3 spalnice + hiška ob bazenu, do 8 gostov, od 980 €/noč</option></select></div>
-                        <div class="form-group"><label for="transfer">Prevoz z letališča</label><select id="transfer" name="transfer"><option value="none">Ni potrebe — imam avto</option><option value="lju">Ljubljana (LJU) — 60 €</option><option value="klu">Celovec (KLU) — 90 €</option></select></div>
+                        <div class="form-group"><label for="transfer">Prevoz z letališča</label><select id="transfer" name="transfer"><option value="none">Ni potrebe — imam avto</option><option value="lju">Iz Ljubljane (LJU) — na zahtevo</option><option value="klu">Iz Celovca (KLU) — na zahtevo</option></select></div>
                         <div class="price-estimate" id="priceEstimate"></div>
                         <div class="form-group full-width"><label for="message">Posebne želje</label><textarea id="message" name="message" rows="4" placeholder="Vse posebne želje, podrobnosti o praznovanju ali vprašanja..."></textarea></div>
                         <button type="submit" class="btn btn-primary btn-full">Pošlji povpraševanje</button>

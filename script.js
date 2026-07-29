@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
+    initDarkMode();
     initNavigation();
     initScrollAnimations();
     initMobileNav();
@@ -18,7 +19,24 @@ var NIGHTLY_RATES = {
     'Pool House': 390,
     'Entire Villa Pomona': 980
 };
-var TRANSFER_RATES = { 'lju': 60, 'klu': 90 };
+var TRANSFER_RATES = {};
+
+function initDarkMode() {
+    var toggle = document.getElementById('themeToggle');
+    if (!toggle) return;
+    var saved = localStorage.getItem('theme');
+    if (saved) {
+        document.documentElement.setAttribute('data-theme', saved);
+    } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+    }
+    toggle.addEventListener('click', function() {
+        var current = document.documentElement.getAttribute('data-theme');
+        var next = current === 'dark' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', next);
+        localStorage.setItem('theme', next);
+    });
+}
 
 function initFooterYear() {
     var yearEl = document.getElementById('footerYear');

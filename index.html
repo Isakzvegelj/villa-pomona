@@ -60,13 +60,20 @@
             {"@type": "Question", "name": "What are the check-in and check-out times?", "acceptedAnswer": {"@type": "Answer", "text": "Check-in is from 15:00 and check-out is by 10:00. Early check-in and late check-out may be available on request, subject to availability."}},
             {"@type": "Question", "name": "When is the swimming pool open?", "acceptedAnswer": {"@type": "Answer", "text": "The pool is seasonal and typically open from May to September, depending on weather conditions. It is not heated."}},
             {"@type": "Question", "name": "Is parking available?", "acceptedAnswer": {"@type": "Answer", "text": "Yes, Villa Pomona offers free private parking on-site for up to five vehicles."}},
-            {"@type": "Question", "name": "Do you offer airport transfers?", "acceptedAnswer": {"@type": "Answer", "text": "Yes, we can arrange airport transfers from Ljubljana Airport (LJU, €60) or Klagenfurt Airport (KLU, €90)."}},
+            {"@type": "Question", "name": "Do you offer airport transfers?", "acceptedAnswer": {"@type": "Answer", "text": "Yes, we can arrange airport transfers from Ljubljana Airport (LJU) or Klagenfurt Airport (KLU). Prices are provided on request."}},
             {"@type": "Question", "name": "Can I book individual bedrooms or the whole villa?", "acceptedAnswer": {"@type": "Answer", "text": "You can book individual bedrooms, the separate Pool House, or the entire Villa Pomona for up to 8 guests."}}
         ]
     }
     </script>
     <!-- TODO(user): Insert analytics snippet here (Plausible script tag or GoatCounter code) -->
     <link rel="stylesheet" href="styles.css">
+    <script>
+        (function(){
+            var t = localStorage.getItem('theme');
+            if (t) document.documentElement.setAttribute('data-theme', t);
+            else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) document.documentElement.setAttribute('data-theme', 'dark');
+        })();
+    </script>
 </head>
 <body>
     <a href="#bedrooms" class="skip-link">Skip to content</a>
@@ -80,11 +87,13 @@
             </button>
             <ul class="nav-links" id="navLinks">
                 <li><a href="#bedrooms">Bedrooms</a></li>
+                <li><a href="#availability">Availability</a></li>
                 <li><a href="#amenities">Amenities</a></li>
                 <li><a href="#location">Location</a></li>
                 <li><a href="#faq">FAQ</a></li>
                 <li><a href="#gallery">Gallery</a></li>
                 <li class="nav-lang-item"><a href="./" lang="en" hreflang="en" class="active">EN</a> | <a href="sl/" lang="sl" hreflang="sl">SL</a> | <a href="de/" lang="de" hreflang="de">DE</a></li>
+                <li class="theme-toggle-wrap"><button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode"><span class="icon-sun" aria-hidden="true">&#9788;</span><span class="icon-moon" aria-hidden="true">&#9790;</span></button></li>
                 <li><a href="#contact" class="nav-cta">Book Now</a></li>
             </ul>
         </div>
@@ -195,6 +204,39 @@
                         <div class="suite-price"><span class="price-from">from</span><span class="price-amount">€980</span><span class="price-night">/ night</span></div>
                         <a href="#contact" class="btn btn-primary btn-full">Book Entire Villa</a>
                     </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section availability" id="availability">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Availability</span>
+                <h2 class="section-title">Check <em>Availability</em></h2>
+                <p class="section-desc">Select your preferred dates below. Click a date to start your selection, then click the end date to complete it.</p>
+            </div>
+            <div class="availability-widget" id="availabilityWidget">
+                <div class="cal-wrap">
+                    <div class="cal-header">
+                        <button class="cal-nav" id="calPrev" aria-label="Previous month">&#8249;</button>
+                        <span class="cal-month" id="calMonth"></span>
+                        <button class="cal-nav" id="calNext" aria-label="Next month">&#8250;</button>
+                    </div>
+                    <div class="cal-grid" id="calGrid">
+                        <span class="cal-day-head">Mon</span>
+                        <span class="cal-day-head">Tue</span>
+                        <span class="cal-day-head">Wed</span>
+                        <span class="cal-day-head">Thu</span>
+                        <span class="cal-day-head">Fri</span>
+                        <span class="cal-day-head">Sat</span>
+                        <span class="cal-day-head">Sun</span>
+                    </div>
+                    <div class="cal-legend">
+                        <span><span class="cal-dot cal-dot-selected"></span> Selected</span>
+                        <span><span class="cal-dot cal-dot-unavailable"></span> Unavailable</span>
+                    </div>
+                    <p class="cal-note">Dates are indicative. Final availability confirmed upon <a href="#contact">request</a>.</p>
                 </div>
             </div>
         </div>
@@ -320,7 +362,7 @@
                 </details>
                 <details class="faq-item">
                     <summary>Do you offer airport transfers?</summary>
-                    <p>Yes, we can arrange airport transfers from Ljubljana Airport (LJU, &euro;60) or Klagenfurt Airport (KLU, &euro;90).</p>
+                    <p>Yes, we can arrange airport transfers from Ljubljana Airport (LJU) or Klagenfurt Airport (KLU). Prices are provided on request.</p>
                 </details>
                 <details class="faq-item">
                     <summary>Can I book individual bedrooms or the whole villa?</summary>
@@ -453,7 +495,7 @@
                             <div class="form-group"><label for="children">Children (under 12)</label><select id="children" name="children"><option value="0" selected>0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select></div>
                         </div>
                         <div class="form-group"><label for="suite">Preferred Accommodation</label><select id="suite" name="suite"><option value="">No preference — recommend for me</option><option value="Bedroom 101">Bedroom 101 — Deluxe Double Room, from €170/night</option><option value="Bedroom 102">Bedroom 102 — King Suite with Pool View, from €210/night</option><option value="Bedroom 103">Bedroom 103 — Queen Suite with Pool View, from €250/night</option><option value="Pool House">Pool House — Private poolside retreat, from €390/night</option><option value="Entire Villa Pomona">Entire Villa Pomona — 3 bedrooms + pool house, up to 8 guests, from €980/night</option></select></div>
-                        <div class="form-group"><label for="transfer">Airport Transfer</label><select id="transfer" name="transfer"><option value="none">Not needed — I have a car</option><option value="lju">Ljubljana (LJU) — €60</option><option value="klu">Klagenfurt (KLU) — €90</option></select></div>
+                        <div class="form-group"><label for="transfer">Airport Transfer</label><select id="transfer" name="transfer"><option value="none">Not needed — I have a car</option><option value="lju">From Ljubljana (LJU) — arranged on request</option><option value="klu">From Klagenfurt (KLU) — arranged on request</option></select></div>
                         <div class="price-estimate" id="priceEstimate"></div>
                         <div class="form-group full-width"><label for="message">Special Requests</label><textarea id="message" name="message" rows="4" placeholder="Any special requests, celebration details, or questions..."></textarea></div>
                         <button type="submit" class="btn btn-primary btn-full">Send Reservation Request</button>
