@@ -1,6 +1,9 @@
 # Villa Pomona Website
 
-Heritage boutique villa in Bled, Slovenia. Static HTML/CSS/JS site — no build tools, no framework. Serves directly via Netlify or GitHub Pages.
+Heritage boutique villa in Bled, Slovenia. Static HTML/CSS/JS site — no build tools, no framework.
+
+**Live:** [https://isakzvegelj.github.io/villa-pomona/](https://isakzvegelj.github.io/villa-pomona/)  
+**Deployment:** GitHub Pages via `.github/workflows/deploy.yml` (push to `main`)
 
 ## Quick Start
 
@@ -13,76 +16,87 @@ open index.html
 
 ```
 .
-├── index.html          # Main page (single-page site, all sections, ~490 lines)
-├── styles.css           # All styles (251 lines)
-├── script.js            # All interactions (247 lines)
-├── assets/images/       # Photographs (WebP and JPEG, max 1600px wide)
-│   ├── hero-1.webp
-│   ├── hero-2.webp
-│   ├── about.webp
-│   ├── master-suite.webp
-│   ├── superior-suite.webp
-│   ├── pool-house.webp
-│   ├── og-image.jpg
-│   └── gallery-1.webp through gallery-8.webp
-├── favicon.svg          # SVG favicon
-├── robots.txt           # SEO
-├── sitemap.xml          # SEO
-├── netlify.toml         # Netlify deploy config
-└── .gitignore
+├── index.html            # Main page (English)
+├── sl/index.html          # Slovenian translation
+├── de/index.html          # German translation
+├── styles.css             # All styles
+├── script.js              # All interactions
+├── favicon.svg            # SVG favicon
+├── robots.txt             # SEO
+├── sitemap.xml            # SEO with hreflang alternates
+├── privacy.html           # Privacy Policy
+├── terms.html             # Terms & Conditions
+├── 404.html               # Custom 404 page
+├── assets/
+│   ├── images/            # Photographs (WebP, max 1600px wide)
+│   │   ├── *.webp         # Full-size images (1600px)
+│   │   ├── *-800.webp     # Responsive variants (800px)
+│   │   ├── apple-touch-icon.png  # iOS home screen icon (180×180)
+│   │   └── og-image.jpg   # Social sharing image
+│   └── fonts/             # Self-hosted fonts (woff2)
+│       ├── CormorantGaramond-*.woff2
+│       └── Inter-*.woff2
+├── netlify.toml           # Inactive (GitHub Pages ignores it)
+└── .github/workflows/deploy.yml
 ```
 
-## Site Sections (in `index.html`)
+## Site Sections
 
 | Section | ID | Description |
 |---------|-----|-------------|
-| Hero | `#hero` | Full-screen hero with background image, title, CTA |
-| About | `#about` | Villa description, stats (3 bedrooms, pool house, 5 parking, 3 min to lake) |
-| Bedrooms | `#bedrooms` | 5 accommodation cards: 3 bedrooms, pool house, entire villa. Prices from €170–€980/night |
-| Pool House | `#poolhouse` | Dedicated pool house section with features |
-| Amenities | `#amenities` | 9 amenity cards (pool, pool house, lounge library, balcony, parking, garden, staff, breakfast, kitchen) |
-| Location | `#location` | Location description with walking distances and nearby attractions |
-| Testimonials | — | 3 guest review cards |
-| Gallery | `#gallery` | Image grid with lightbox (keyboard & touch navigation) |
-| Contact | `#contact` | Contact info + booking form |
+| Hero | `#hero` | Full-screen hero with img, title, CTA |
+| About | `#about` | Villa description, stats |
+| Bedrooms | `#bedrooms` | 5 accommodation cards (€170–€980/night) |
+| Pool House | `#poolhouse` | Dedicated pool house section |
+| Amenities | `#amenities` | 9 amenity cards |
+| Location | `#location` | Location info + click-to-load Google Maps |
+| FAQ | `#faq` | Accordion FAQ with FAQPage JSON-LD |
+| Reviews | `#reviews` | Links to Airbnb, Booking.com, Google |
+| Gallery | `#gallery` | Image grid with lightbox |
+| Availability | `#availability` | Lazy-loaded channel-manager widget |
+| Contact | `#contact` | Booking form (Formspree) + contact details |
+
+## Key Features
+
+- **No external dependencies** — fonts are self-hosted; no Google Fonts requests
+- **Multilingual** — English (`/`), Slovenian (`/sl/`), German (`/de/`) with `hreflang` cluster
+- **Self-hosted fonts** — Cormorant Garamond (300–600, italic 300/400) + Inter (300–600) via `@font-face` with `font-display: swap`
+- **Responsive images** — all content images have `srcset` (800w + 1600w) and `sizes`
+- **Booking form** — POSTs to Formspree (`FORMSPREE_FORM_ID` must be configured in `script.js`), falls back to `mailto:` on failure
+- **Price estimate** — client-side calculation (nights × nightly rate + transfer surcharge) shown in real-time
+- **Map** — click-to-load Google Maps iframe (no cookies until clicked)
+- **Gallery lightbox** — keyboard (Esc, arrows) and touch navigation, focus trap
+- **Analytics** — placeholder in `<head>` for Plausible or GoatCounter snippet
+- **JSON-LD** — LodgingBusiness + FAQPage structured data
+- **Accessibility** — skip-to-content link, semantic HTML, focus-visible outlines, reduced-motion support
+
+## Configuration Prerequisites
+
+Before deploying, configure these in `script.js`:
+```js
+var FORMSPREE_FORM_ID = 'YOUR_FORM_ID';   // Create form at formspree.io
+```
+
+User must also:
+- Replace analytics placeholder in `<head>` with Plausible/GoatCounter snippet
+- Supply real Airbnb/Booking.com/Google review URLs in the Reviews section
+- Add channel-manager widget embed code in `index.html` Availability section
+- Set up Google Search Console for the GitHub Pages property
+
+## Translation Maintenance
+
+3 HTML files (`index.html`, `sl/index.html`, `de/index.html`) must be kept in sync. When adding/updating content in one, replicate the changes in all three. Each has its own `<html lang>`, `<title>`, meta tags, OG tags, and hreflang links.
 
 ## Conventions
 
-- **No external dependencies** — pure HTML/CSS/JS. The only external resources are Google Fonts (Cormorant Garamond + Inter).
-- **Single-page** — all content is in `index.html` with anchor links (`#about`, `#bedrooms`, etc.).
-- **CSS** — all styles in `styles.css`. Uses CSS custom properties for theming (--green-\*, --neutral-\*, --gold-*).
-- **JS** — all interactions in `script.js`. Includes: smooth scroll, mobile nav toggle, scroll reveal animations, booking form (Netlify Forms), lightbox gallery, sticky nav.
-- **Images** — all images in `assets/images/`. Converted to WebP (quality 80, max 1600px wide). `hero-1.jpg` kept for social sharing compatibility.
-- **Deployment** — Netlify (`netlify.toml`). Static site hosted at `https://villapomona.si/`. Booking form submissions appear in Netlify dashboard → Forms → "booking". No build step.
-- **Netlify Forms** — booking form submits via POST to `location.pathname`. Netlify edge intercepts the form-name submission before the SPA redirect. Falls back to `mailto:` on failure.
-- **JSON-LD** — structured data for search engines is inline in `<head>` (LodgingBusiness schema).
-- **WhatsApp** — direct chat button links to `wa.me/38651603858`.
+- **CSS** — all styles in `styles.css`. Uses CSS custom properties (`--green-*`, `--neutral-*`, `--gold`).
+- **JS** — all interactions in `script.js` with `defer`. Includes: smooth scroll, mobile nav toggle, scroll reveal animations, booking form (Formspree), lightbox gallery, sticky nav, price estimate, map loader, availability lazy-loader.
+- **Images** — all images in `assets/images/`. WebP format. Responsive variants at 800px (`-800` suffix).
+- **Fonts** — self-hosted woff2 in `assets/fonts/`. No external font requests.
 - **Footer year** — auto-updated to current year via JavaScript.
-- **Security headers** — HSTS (1 year, preload) and CSP sent via Netlify headers. CSP uses `'unsafe-inline'` on `script-src` and `style-src` for JSON-LD and Google Fonts compatibility. `form-action` covers both production domain and Netlify preview URLs.
-
-## Making Changes
-
-### Content
-- Edit `index.html` — each section is clearly labeled with comments and IDs.
-- Add new sections by copying the pattern of existing sections.
-
-### Styling
-- Edit `styles.css` — colors are defined as CSS custom properties at the top of the file.
-- Responsive breakpoints: 768px (tablet), 1024px (desktop).
-
-### Interactions
-- Edit `script.js` — each feature is a self-contained function.
-- Key features: scroll reveal, sticky nav, mobile menu, gallery lightbox, booking form.
-
-### Images
-- Add new images to `assets/images/` or `assets/images/rooms/`.
-- Optimize images before adding (WebP or JPEG, ~1200px wide max).
 
 ## Deployment
 
-The site is deployed on Netlify. Push to `main` branch and Netlify auto-deploys. Configured via `netlify.toml`.
+The site is deployed on **GitHub Pages** via Actions workflow (`.github/workflows/deploy.yml`). Push to `main` branch triggers automatic deployment.
 
-To deploy on GitHub Pages instead:
-1. Enable Pages in repo settings (source: `main` branch, root folder)
-2. Update `netlify.toml` references or remove
-3. Update the canonical URL and OG URLs in `index.html` `<head>`
+`netlify.toml` exists in the repo but is **inactive** — GitHub Pages ignores it. It is kept for reference only.

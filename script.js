@@ -6,7 +6,19 @@ document.addEventListener('DOMContentLoaded', function() {
     initSmoothScroll();
     initParallax();
     initFooterYear();
+    initAvailabilityLazyLoad();
+    initMapLoad();
 });
+
+var FORMSPREE_FORM_ID = 'FORMSPREE_FORM_ID'; // TODO(user): replace with your Formspree form ID
+var NIGHTLY_RATES = {
+    'Bedroom 101': 170,
+    'Bedroom 102': 210,
+    'Bedroom 103': 250,
+    'Pool House': 390,
+    'Entire Villa Pomona': 980
+};
+var TRANSFER_RATES = { 'lju': 60, 'klu': 90 };
 
 function initFooterYear() {
     var yearEl = document.getElementById('footerYear');
@@ -96,13 +108,52 @@ function initBookingForm() {
     var today = new Date().toISOString().split('T')[0];
     var checkinInput = document.getElementById('checkin');
     var checkoutInput = document.getElementById('checkout');
+    var suiteInput = document.getElementById('suite');
+    var transferInput = document.getElementById('transfer');
+    var priceEstimate = document.getElementById('priceEstimate');
     if (checkinInput) {
         checkinInput.setAttribute('min', today);
         checkinInput.addEventListener('change', function() {
             if (checkoutInput && checkinInput.value) {
                 checkoutInput.setAttribute('min', checkinInput.value);
             }
+            updatePriceEstimate();
         });
+    }
+    if (checkoutInput) {
+        checkoutInput.addEventListener('change', updatePriceEstimate);
+    }
+    if (suiteInput) {
+        suiteInput.addEventListener('change', updatePriceEstimate);
+    }
+    if (transferInput) {
+        transferInput.addEventListener('change', updatePriceEstimate);
+    }
+    function updatePriceEstimate() {
+        if (!priceEstimate) return;
+        var checkin = checkinInput ? checkinInput.value : '';
+        var checkout = checkoutInput ? checkoutInput.value : '';
+        var suite = suiteInput ? suiteInput.value : '';
+        var transfer = transferInput ? transferInput.value : 'none';
+        if (!checkin || !checkout || !suite || !NIGHTLY_RATES[suite]) {
+            priceEstimate.style.display = 'none';
+            return;
+        }
+        var nights = Math.max(0, (new Date(checkout) - new Date(checkin)) / (1000 * 60 * 60 * 24));
+        if (!nights || nights <= 0) {
+            priceEstimate.style.display = 'none';
+            return;
+        }
+        var roomTotal = nights * NIGHTLY_RATES[suite];
+        var transferCost = TRANSFER_RATES[transfer] || 0;
+        var total = roomTotal + transferCost;
+        var parts = ['Estimated total: <strong>€' + total + '</strong> (' + nights + ' night' + (nights !== 1 ? 's' : '') + ' × €' + NIGHTLY_RATES[suite] + '/night'];
+        if (transferCost > 0) {
+            parts.push(' + €' + transferCost + ' transfer');
+        }
+        parts.push(')');
+        priceEstimate.innerHTML = parts.join('');
+        priceEstimate.style.display = 'block';
     }
     form.addEventListener('submit', function(e) {
         e.preventDefault();
@@ -112,19 +163,36 @@ function initBookingForm() {
 
         var data = new URLSearchParams(new FormData(form));
 
+        var suite = form.suite ? form.suite.value : '';
+        var transfer = form.transfer ? form.transfer.value : 'none';
+        var priceStr = '';
+        var checkinVal = form.checkin ? form.checkin.value : '';
+        var checkoutVal = form.checkout ? form.checkout.value : '';
+        if (checkinVal && checkoutVal && suite && NIGHTLY_RATES[suite]) {
+            var nights = Math.max(0, (new Date(checkoutVal) - new Date(checkinVal)) / (1000 * 60 * 60 * 24));
+            if (nights > 0) {
+                var roomTotal = nights * NIGHTLY_RATES[suite];
+                var transferCost = TRANSFER_RATES[transfer] || 0;
+                priceStr = '\nPrice Estimate: €' + (roomTotal + transferCost) + ' (' + nights + ' nights × €' + NIGHTLY_RATES[suite] + '/night';
+                if (transferCost > 0) priceStr += ' + €' + transferCost + ' transfer';
+                priceStr += ')\n';
+            }
+        }
+
         var subject = 'Reservation Request - Villa Pomona - ' + (form.name.value || '');
         var body = 'Reservation Request\n\n' +
             'Name: ' + (form.name.value || '') + '\n' +
             'Email: ' + (form.email.value || '') + '\n' +
-            'Check-in: ' + (form.checkin.value || '') + '\n' +
-            'Check-out: ' + (form.checkout.value || '') + '\n' +
-            'Suite: ' + (form.suite.value || 'Not specified') + '\n' +
+            'Check-in: ' + (checkinVal || '') + '\n' +
+            'Check-out: ' + (checkoutVal || '') + '\n' +
+            'Suite: ' + (suite || 'Not specified') + '\n' +
             'Guests: ' + (form.guests.value || '') + '\n' +
             'Children: ' + (form.children ? form.children.value : '0') + '\n' +
-            'Airport Transfer: ' + (form.transfer ? form.transfer.value : 'none') + '\n' +
+            'Airport Transfer: ' + (transfer || 'none') + '\n' +
+            priceStr +
             'Special Requests: ' + (form.message.value || 'None');
 
-        fetch(location.pathname, {
+        fetch('https://formspree.io/f/' + FORMSPREE_FORM_ID, {
             method: 'POST',
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
             body: data.toString()
@@ -173,6 +241,41 @@ function initParallax() {
             hero.style.opacity = 1 - (scrolled / window.innerHeight) * 0.5;
         }
     }, { passive: true });
+}
+
+function initAvailabilityLazyLoad() {
+    var widget = document.getElementById('availabilityWidget');
+    if (!widget) return;
+    var observer = new IntersectionObserver(function(entries) {
+        for (var e = 0; e < entries.length; e++) {
+            if (entries[e].isIntersecting) {
+                var placeholder = widget.querySelector('.availability-placeholder');
+                if (placeholder) {
+                    placeholder.innerHTML = '<p>Availability calendar loading&hellip;</p>';
+                    placeholder.innerHTML += '<!-- TODO(user): Inject your channel-manager widget embed code here (e.g. Smoobu, Beds24) -->';
+                }
+                observer.unobserve(widget);
+            }
+        }
+    }, { rootMargin: '200px' });
+    observer.observe(widget);
+}
+
+function initMapLoad() {
+    var loadBtn = document.getElementById('loadMapBtn');
+    var mapContainer = document.getElementById('mapContainer');
+    var mapTrigger = document.getElementById('mapTrigger');
+    if (!loadBtn || !mapContainer || !mapTrigger) return;
+    loadBtn.addEventListener('click', function() {
+        var iframe = document.createElement('iframe');
+        iframe.className = 'map-iframe';
+        iframe.src = 'https://maps.google.com/maps?q=Crtomirova+ulica+2,+Bled&output=embed';
+        iframe.title = 'Map of Villa Pomona location in Bled';
+        iframe.allow = 'fullscreen';
+        iframe.loading = 'lazy';
+        mapContainer.innerHTML = '';
+        mapContainer.appendChild(iframe);
+    });
 }
 
 window.addEventListener('load', function() {
