@@ -14,18 +14,16 @@ open index.html
 ```
 .
 ├── index.html          # Main page (single-page site, all sections)
-├── styles.css           # All styles (238 lines)
-├── script.js            # All interactions (240 lines)
-├── assets/images/       # Photographs (hero, gallery, about, rooms)
+├── styles.css           # All styles (~250 lines)
+├── script.js            # All interactions (~260 lines)
+├── assets/images/       # Photographs (hero, gallery, about)
 │   ├── hero-1.jpg
 │   ├── hero-2.jpg
-│   ├── hero-3.jpg
 │   ├── about.jpg
-│   ├── gallery-1.jpg through gallery-8.jpg
-│   └── rooms/
-│       ├── deluxe.jpg
-│       ├── family.jpg
-│       └── standard.jpg
+│   ├── master-suite.jpg
+│   ├── superior-suite.jpg
+│   ├── pool-house.jpg
+│   └── gallery-1.jpg through gallery-8.jpg
 ├── favicon.svg          # SVG favicon
 ├── robots.txt           # SEO
 ├── sitemap.xml          # SEO

@@ -5,7 +5,15 @@ document.addEventListener('DOMContentLoaded', function() {
     initBookingForm();
     initSmoothScroll();
     initParallax();
+    initFooterYear();
 });
+
+function initFooterYear() {
+    var yearEl = document.querySelector('.footer-bottom p:first-child');
+    if (yearEl) {
+        yearEl.textContent = '\u00a9 ' + new Date().getFullYear() + ' Villa Pomona Bled. All rights reserved.';
+    }
+}
 
 function initNavigation() {
     var nav = document.getElementById('nav');
@@ -22,21 +30,25 @@ function initMobileNav() {
     var toggle = document.getElementById('navToggle');
     var links = document.getElementById('navLinks');
     if (!toggle || !links) return;
+    toggle.setAttribute('aria-expanded', 'false');
     toggle.addEventListener('click', function() {
-        toggle.classList.toggle('active');
+        var isActive = toggle.classList.toggle('active');
         links.classList.toggle('active');
+        toggle.setAttribute('aria-expanded', isActive);
     });
     var linkAnchors = links.querySelectorAll('a');
     for (var i = 0; i < linkAnchors.length; i++) {
         linkAnchors[i].addEventListener('click', function() {
             toggle.classList.remove('active');
             links.classList.remove('active');
+            toggle.setAttribute('aria-expanded', 'false');
         });
     }
     document.addEventListener('click', function(e) {
         if (!toggle.contains(e.target) && !links.contains(e.target)) {
             toggle.classList.remove('active');
             links.classList.remove('active');
+            toggle.setAttribute('aria-expanded', 'false');
         }
     });
 }
@@ -92,7 +104,7 @@ function initBookingForm() {
             }
         });
     }
-    var FORM_ENDPOINT = 'https://formspree.io/f/your-form-id-here';
+    var FORM_ENDPOINT = '/';
 
     form.addEventListener('submit', function(e) {
         e.preventDefault();
@@ -126,8 +138,8 @@ function initBookingForm() {
 
         fetch(FORM_ENDPOINT, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-            body: JSON.stringify(formData)
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: new URLSearchParams(formData).toString()
         })
         .then(function(response) {
             submitBtn.disabled = false;
@@ -164,6 +176,8 @@ function showFormConfirmation(form) {
 function initParallax() {
     var hero = document.querySelector('.hero-content');
     if (!hero) return;
+    var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReducedMotion) return;
     window.addEventListener('scroll', function() {
         var scrolled = window.pageYOffset;
         if (scrolled < window.innerHeight) {
@@ -201,10 +215,15 @@ window.addEventListener('load', function() {
         currentIndex = index;
         updateLightbox();
         lightbox.classList.add('active');
+        lightbox.setAttribute('role', 'dialog');
+        lightbox.setAttribute('aria-modal', 'true');
         document.body.style.overflow = 'hidden';
+        document.getElementById('lightboxClose').focus();
     }
     function closeLightbox() {
         lightbox.classList.remove('active');
+        lightbox.removeAttribute('role');
+        lightbox.removeAttribute('aria-modal');
         document.body.style.overflow = '';
     }
     function updateLightbox() {
