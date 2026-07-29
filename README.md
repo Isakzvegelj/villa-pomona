@@ -13,17 +13,17 @@ open index.html
 
 ```
 .
-├── index.html          # Main page (single-page site, all sections)
-├── styles.css           # All styles (~250 lines)
-├── script.js            # All interactions (~260 lines)
-├── assets/images/       # Photographs (WebP, max 1600px wide)
+├── index.html          # Main page (single-page site, all sections, ~490 lines)
+├── styles.css           # All styles (251 lines)
+├── script.js            # All interactions (247 lines)
+├── assets/images/       # Photographs (WebP and JPEG, max 1600px wide)
 │   ├── hero-1.webp
 │   ├── hero-2.webp
 │   ├── about.webp
 │   ├── master-suite.webp
 │   ├── superior-suite.webp
 │   ├── pool-house.webp
-│   ├── og-image.webp
+│   ├── og-image.jpg
 │   └── gallery-1.webp through gallery-8.webp
 ├── favicon.svg          # SVG favicon
 ├── robots.txt           # SEO
@@ -53,7 +53,12 @@ open index.html
 - **CSS** — all styles in `styles.css`. Uses CSS custom properties for theming (--green-\*, --neutral-\*, --gold-*).
 - **JS** — all interactions in `script.js`. Includes: smooth scroll, mobile nav toggle, scroll reveal animations, booking form (Netlify Forms), lightbox gallery, sticky nav.
 - **Images** — all images in `assets/images/`. Converted to WebP (quality 80, max 1600px wide). `hero-1.jpg` kept for social sharing compatibility.
-- **Deployment** — Netlify (`netlify.toml`). Static site hosted at `https://villa-pomona-bled.netlify.app`. Booking form submissions appear in Netlify dashboard → Forms → "booking". No build step.
+- **Deployment** — Netlify (`netlify.toml`). Static site hosted at `https://villapomona.si/`. Booking form submissions appear in Netlify dashboard → Forms → "booking". No build step.
+- **Netlify Forms** — booking form submits via POST to `location.pathname`. Netlify edge intercepts the form-name submission before the SPA redirect. Falls back to `mailto:` on failure.
+- **JSON-LD** — structured data for search engines is inline in `<head>` (LodgingBusiness schema).
+- **WhatsApp** — direct chat button links to `wa.me/38651603858`.
+- **Footer year** — auto-updated to current year via JavaScript.
+- **Security headers** — HSTS (1 year, preload) and CSP sent via Netlify headers. CSP uses `'unsafe-inline'` on `script-src` and `style-src` for JSON-LD and Google Fonts compatibility. `form-action` covers both production domain and Netlify preview URLs.
 
 ## Making Changes
 
