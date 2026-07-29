@@ -45,6 +45,7 @@
         },
         "amenityFeature": [
             {"@type": "LocationFeatureSpecification", "name": "Swimming Pool", "value": true},
+            {"@type": "LocationFeatureSpecification", "name": "Sauna", "value": true},
             {"@type": "LocationFeatureSpecification", "name": "Free Parking", "value": true},
             {"@type": "LocationFeatureSpecification", "name": "Kitchen", "value": true},
             {"@type": "LocationFeatureSpecification", "name": "Wi-Fi", "value": true}
@@ -75,7 +76,6 @@
     <nav class="nav" id="nav">
         <div class="nav-container">
             <a href="#hero" class="nav-logo">
-                <span class="logo-icon" aria-hidden="true">&#127800;</span>
                 <span class="logo-text">Villa Pomona</span>
             </a>
             <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
@@ -101,7 +101,7 @@
         <div class="hero-content">
             <p class="hero-subtitle">Bled, Slovenia &mdash; Peaceful Villa Retreat</p>
             <h1 class="hero-title">Villa <em>Pomona</em></h1>
-            <p class="hero-desc">A peaceful villa in Bled's most tranquil neighbourhood of historic villas. Three charming bedrooms, a private pool house, swimming pool, lounge library, and parking for five cars &mdash; all steps from Lake Bled. Breakfast and drinks available on request.</p>
+            <p class="hero-desc">A peaceful villa in Bled's most tranquil neighbourhood of historic villas. Three charming bedrooms, a private pool house, swimming pool, sauna, lounge library, and parking for five cars &mdash; all steps from Lake Bled. All guests enjoy pool and sauna access. Breakfast and drinks available on request.</p>
             <div class="hero-actions">
                 <a href="#bedrooms" class="btn btn-primary">Explore Bedrooms</a>
                 <a href="#contact" class="btn btn-outline">Reserve Your Stay</a>
@@ -123,7 +123,7 @@
                 <div class="about-text reveal">
                     <p class="lead">Villa Pomona is nestled in Bled's finest neighbourhood of historic villas &mdash; a tranquil oasis away from city stress and noise, yet minutes from everything Bled offers.</p>
                     <p>Ideal for couples seeking relaxation, the villa sits on a quiet street lined with beautiful heritage homes. Inside, you'll find three thoughtfully appointed bedrooms, a cosy lounge library, and an outside common area balcony perfect for morning coffee or evening wine.</p>
-                    <p>The property features a private swimming pool set in lovely gardens, a separate pool house with its own charm, and parking for up to five cars. A convenience store, pharmacy, sports facilities, and the town centre are all within easy walking distance. Staff support is available on demand to ensure a seamless stay.</p>
+                    <p>The property features a private swimming pool set in lovely gardens, a sauna for relaxation, a separate pool house with its own charm, and parking for up to five cars. All guests have full access to the pool and sauna. A convenience store, pharmacy, sports facilities, and the town centre are all within easy walking distance. Staff support is available on demand to ensure a seamless stay.</p>
                     <div class="about-stats">
                         <div class="stat"><span class="stat-num">3</span><span class="stat-label">Bedrooms</span></div>
                         <div class="stat"><span class="stat-num">1</span><span class="stat-label">Pool House</span></div>
@@ -150,15 +150,15 @@
             <div class="suites-grid">
                 <div class="suite-card reveal">
                     <div class="suite-image">
-                        <img src="assets/images/gallery-8.webp" srcset="assets/images/gallery-8-800.webp 800w, assets/images/gallery-8.webp 1600w" sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw" alt="Bedroom 101 — Cosy Garden View" class="suite-img" loading="lazy" decoding="async" width="1600" height="2134">
+                        <img src="assets/images/379671244.jpg" sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw" alt="Bedroom 101 — Cosy Garden View" class="suite-img" loading="lazy" decoding="async">
                         <div class="suite-badge">Cosy</div>
                     </div>
                     <div class="suite-info">
-                        <h3>Bedroom 101</h3>
+                        <h3>Bedroom 101 — Deluxe Double Room</h3>
                         <p class="suite-size">Cosy double &bull; Garden view</p>
-                        <p class="suite-desc">The smallest of the three bedrooms, but full of charm. A comfortable double bed, garden views, and a peaceful atmosphere perfect for a restful night's sleep.</p>
+                        <p class="suite-desc">A charming Deluxe Double Room — the cosiest of the three, with a comfortable double bed, garden views, and a peaceful atmosphere perfect for a restful night's sleep.</p>
                         <ul class="suite-features">
-                            <li>Double bed</li><li>Garden view</li><li>Quiet &amp; cosy</li><li>Premium linen</li>
+                            <li>Double bed</li><li>Garden view</li><li>Quiet &amp; cosy</li><li>Premium linen</li><li>Pool &amp; sauna access</li>
                         </ul>
                         <div class="suite-price"><span class="price-from">from</span><span class="price-amount">€170</span><span class="price-night">/ night</span></div>
                         <a href="#contact" class="btn btn-primary btn-full" style="margin-top:16px;">Book This Room</a>
@@ -170,11 +170,11 @@
                         <div class="suite-badge">Balcony</div>
                     </div>
                     <div class="suite-info">
-                        <h3>Bedroom 102</h3>
+                        <h3>Bedroom 102 — King Suite with Pool View</h3>
                         <p class="suite-size">Double with private balcony &bull; Pool &amp; garden view</p>
-                        <p class="suite-desc">A bright bedroom with its own private balcony overlooking the pool and garden. The perfect spot for morning coffee or an evening glass of wine while taking in the peaceful surroundings.</p>
+                        <p class="suite-desc">A bright King Suite with its own private balcony overlooking the pool and garden. The perfect spot for morning coffee or an evening glass of wine while taking in the peaceful surroundings.</p>
                         <ul class="suite-features">
-                            <li>Private balcony</li><li>Pool view</li><li>Double bed</li><li>Garden aspect</li>
+                            <li>Private balcony</li><li>Pool view</li><li>Double bed</li><li>Garden aspect</li><li>Pool &amp; sauna access</li>
                         </ul>
                         <div class="suite-price"><span class="price-from">from</span><span class="price-amount">€210</span><span class="price-night">/ night</span></div>
                         <a href="#contact" class="btn btn-primary btn-full" style="margin-top:16px;">Book This Room</a>
@@ -182,15 +182,15 @@
                 </div>
                 <div class="suite-card reveal">
                     <div class="suite-image">
-                        <img src="assets/images/superior-suite.webp" srcset="assets/images/superior-suite-800.webp 800w, assets/images/superior-suite.webp 1600w" sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw" alt="Bedroom 103 — Terrace" class="suite-img" loading="lazy" decoding="async" width="1600" height="1200">
+                        <img src="assets/images/superior-suite.webp" sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw" alt="Bedroom 103 — Queen Suite with Pool View" class="suite-img" loading="lazy" decoding="async">
                         <div class="suite-badge">Terrace</div>
                     </div>
                     <div class="suite-info">
-                        <h3>Bedroom 103</h3>
+                        <h3>Bedroom 103 — Queen Suite with Pool View</h3>
                         <p class="suite-size">Spacious double with private terrace &bull; Garden &amp; mountain views</p>
-                        <p class="suite-desc">The largest bedroom with a private terrace offering stunning garden and mountain views. Extra space, natural light, and a serene ambiance make this the most requested room.</p>
+                        <p class="suite-desc">The largest bedroom — a spacious Queen Suite with a private terrace offering stunning garden and mountain views. Extra space, natural light, and a serene ambiance make this the most requested room.</p>
                         <ul class="suite-features">
-                            <li>Private terrace</li><li>Mountain views</li><li>Spacious layout</li><li>Natural light</li>
+                            <li>Private terrace</li><li>Mountain views</li><li>Spacious layout</li><li>Natural light</li><li>Pool &amp; sauna access</li>
                         </ul>
                         <div class="suite-price"><span class="price-from">from</span><span class="price-amount">€250</span><span class="price-night">/ night</span></div>
                         <a href="#contact" class="btn btn-primary btn-full" style="margin-top:16px;">Book This Room</a>
@@ -202,11 +202,11 @@
                         <div class="suite-badge">Pool House</div>
                     </div>
                     <div class="suite-info">
-                        <h3>Pool House</h3>
+                        <h3>Pool House — Poolside Studio</h3>
                         <p class="suite-size">Self-contained &bull; Private terrace &bull; Pool access</p>
                         <p class="suite-desc">A separate poolside retreat with bedroom, living area, smart TV, bathroom with bathtub and walk-in shower, and a private terrace facing the pool.</p>
                         <ul class="suite-features">
-                            <li>Private terrace</li><li>Smart TV</li><li>Bathtub</li><li>Direct pool access</li>
+                            <li>Private terrace</li><li>Smart TV</li><li>Bathtub</li><li>Direct pool access</li><li>Sauna access</li>
                         </ul>
                         <div class="suite-price"><span class="price-from">from</span><span class="price-amount">€390</span><span class="price-night">/ night</span></div>
                         <a href="#contact" class="btn btn-primary btn-full" style="margin-top:16px;">Book Pool House</a>
@@ -222,7 +222,7 @@
                         <p class="suite-size">Up to 8 guests &bull; 3 bedrooms + pool house &bull; Private pool</p>
                         <p class="suite-desc">Book the entire property for yourself &mdash; all three bedrooms, the pool house, private pool, lounge library, common balcony, full kitchen, garden, and parking for 5 cars. The ultimate Bled escape.</p>
                         <ul class="suite-features">
-                            <li>3 bedrooms + pool house</li><li>Private pool</li><li>Full kitchen</li><li>Parking for 5</li>
+                            <li>3 bedrooms + pool house</li><li>Private pool</li><li>Sauna</li><li>Full kitchen</li><li>Parking for 5</li>
                         </ul>
                         <div class="suite-price"><span class="price-from">from</span><span class="price-amount">€980</span><span class="price-night">/ night</span></div>
                         <a href="#contact" class="btn btn-primary btn-full" style="margin-top:16px;">Book Entire Villa</a>
@@ -244,6 +244,11 @@
                     <span class="amenity-icon" aria-hidden="true">&#127958;</span>
                     <h4>Swimming Pool</h4>
                     <p>A beautiful seasonal pool set in the garden with sun loungers and umbrellas. The heart of summer relaxation at Villa Pomona.</p>
+                </div>
+                <div class="amenity-card reveal">
+                    <span class="amenity-icon" aria-hidden="true">&#128566;</span>
+                    <h4>Sauna</h4>
+                    <p>All guests enjoy complimentary access to the private sauna &mdash; the perfect way to unwind after a day exploring Bled and the Julian Alps.</p>
                 </div>
                 <div class="amenity-card reveal">
                     <span class="amenity-icon" aria-hidden="true">&#127969;</span>
@@ -289,13 +294,31 @@
         </div>
     </section>
 
+    <section class="section feature-highlight" style="padding: 80px 0; background: #fff;">
+        <div class="container">
+            <div class="about-grid" style="gap: 60px;">
+                <div class="about-image reveal">
+                    <div class="image-frame">
+                        <img src="assets/images/376407822.jpg" sizes="(max-width: 768px) 100vw, 50vw" alt="Elegant bathroom with Slovene marble from Pohorje at Villa Pomona" class="about-img" loading="lazy" decoding="async">
+                    </div>
+                </div>
+                <div class="about-text reveal">
+                    <span class="section-tag">Craftsmanship</span>
+                    <h2 class="section-title">Prestigious <em>Marble Bathrooms</em></h2>
+                    <p class="lead">Every bathroom at Villa Pomona features genuine Slovene marble sourced from the Pohorje region &mdash; a rare and elite material renowned for its elegant, prestigious appearance.</p>
+                    <p>This distinctive natural stone gives each bathroom a luxurious feel, combining timeless beauty with the finest Slovenian craftsmanship. The cool, smooth marble surfaces create a spa-like atmosphere that elevates your entire stay.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <section class="section location" id="location">
         <div class="container">
             <div class="about-grid">
                 <div class="about-text reveal">
                     <span class="section-tag">Location</span>
                     <h2 class="section-title">The Best of <em>Bled</em></h2>
-                    <p class="lead">Villa Pomona is perfectly positioned in Bled's most desirable neighbourhood &mdash; a quiet enclave of historic villas, yet close to everything.</p>
+                    <p class="lead">Villa Pomona is perfectly positioned in Bled's most desirable neighbourhood &mdash; a quiet enclave of historic villas, yet close to everything. Just steps from the beautiful Lake Bled.</p>
                     <p>The villa is situated on a tranquil street lined with beautiful heritage homes, offering peace and privacy while being just a short walk from Lake Bled, the town centre, and all attractions.</p>
                     <div class="garden-features" style="margin-top: 32px;">
                         <div class="garden-feature" style="color: var(--neutral-700);">
@@ -314,7 +337,7 @@
                 </div>
                 <div class="about-image reveal">
                     <div class="image-frame">
-                        <img src="assets/images/gallery-4.webp" srcset="assets/images/gallery-4-800.webp 800w, assets/images/gallery-4.webp 1600w" sizes="(max-width: 768px) 100vw, 50vw" alt="Villa Pomona — perfect location in Bled, steps from the lake" class="about-img" loading="lazy" decoding="async" width="1600" height="2134">
+                        <img src="assets/images/405913649.jpg" sizes="(max-width: 768px) 100vw, 50vw" alt="Villa Pomona — just steps from beautiful Lake Bled" class="about-img" loading="lazy" decoding="async">
                     </div>
                     <div class="map-placeholder" style="margin-top: 24px;" id="mapContainer">
                         <div id="mapTrigger">
@@ -361,7 +384,7 @@
                 </details>
                 <details class="faq-item">
                     <summary>Can I book individual bedrooms or the whole villa?</summary>
-                    <p>You can book individual bedrooms (101, 102, or 103), the separate Pool House, or the entire Villa Pomona (all three bedrooms + pool house) for up to 8 guests. Each option offers a different experience.</p>
+                    <p>You can book individual bedrooms (101 — Deluxe Double, 102 — King Suite, or 103 — Queen Suite), the separate Pool House, or the entire Villa Pomona (all three bedrooms + pool house) for up to 8 guests. Each option offers a different experience.</p>
                 </details>
                 <details class="faq-item">
                     <summary>Is there staff on site?</summary>
@@ -423,7 +446,7 @@
                 </div>
                 <div class="gallery-item reveal" data-index="2">
                     <div class="gallery-image-wrapper">
-                        <img src="assets/images/gallery-2.webp" srcset="assets/images/gallery-2-800.webp 800w, assets/images/gallery-2.webp 1600w" sizes="(max-width: 768px) 50vw, 25vw" alt="Pool House interior" loading="lazy" decoding="async" width="1600" height="2134">
+                        <img src="assets/images/gallery-2.webp" sizes="(max-width: 768px) 50vw, 25vw" alt="Pool House interior" loading="lazy" decoding="async">
                         <div class="gallery-overlay"><span class="gallery-zoom" aria-hidden="true">&#128269;</span><span class="gallery-label">Pool House Living</span></div>
                     </div>
                 </div>
@@ -435,13 +458,13 @@
                 </div>
                 <div class="gallery-item reveal" data-index="4">
                     <div class="gallery-image-wrapper">
-                        <img src="assets/images/gallery-4.webp" srcset="assets/images/gallery-4-800.webp 800w, assets/images/gallery-4.webp 1600w" sizes="(max-width: 768px) 50vw, 25vw" alt="Bedroom 102 balcony" loading="lazy" decoding="async" width="1600" height="2134">
+                        <img src="assets/images/gallery-4-800.webp" sizes="(max-width: 768px) 50vw, 25vw" alt="Bedroom 102 balcony" loading="lazy" decoding="async">
                         <div class="gallery-overlay"><span class="gallery-zoom" aria-hidden="true">&#128269;</span><span class="gallery-label">Bedroom Balcony</span></div>
                     </div>
                 </div>
                 <div class="gallery-item reveal tall" data-index="5">
                     <div class="gallery-image-wrapper">
-                        <img src="assets/images/gallery-5.webp" srcset="assets/images/gallery-5-800.webp 800w, assets/images/gallery-5.webp 1600w" sizes="(max-width: 768px) 50vw, 25vw" alt="Bedroom 103 terrace" loading="lazy" decoding="async" width="1600" height="2134">
+                        <img src="assets/images/gallery-5.webp" sizes="(max-width: 768px) 50vw, 25vw" alt="Bedroom 103 terrace" loading="lazy" decoding="async">
                         <div class="gallery-overlay"><span class="gallery-zoom" aria-hidden="true">&#128269;</span><span class="gallery-label">Bedroom Terrace</span></div>
                     </div>
                 </div>
@@ -455,6 +478,24 @@
                     <div class="gallery-image-wrapper">
                         <img src="assets/images/gallery-7.webp" srcset="assets/images/gallery-7-800.webp 800w, assets/images/gallery-7.webp 1600w" sizes="(max-width: 768px) 50vw, 25vw" alt="Villa Pomona garden" loading="lazy" decoding="async" width="1600" height="2134">
                         <div class="gallery-overlay"><span class="gallery-zoom" aria-hidden="true">&#128269;</span><span class="gallery-label">Garden Views</span></div>
+                    </div>
+                </div>
+                <div class="gallery-item reveal" data-index="8">
+                    <div class="gallery-image-wrapper">
+                        <img src="assets/images/405913649.jpg" sizes="(max-width: 768px) 50vw, 25vw" alt="Steps from beautiful Lake Bled" loading="lazy" decoding="async">
+                        <div class="gallery-overlay"><span class="gallery-zoom" aria-hidden="true">&#128269;</span><span class="gallery-label">Lake Bled Nearby</span></div>
+                    </div>
+                </div>
+                <div class="gallery-item reveal tall" data-index="9">
+                    <div class="gallery-image-wrapper">
+                        <img src="assets/images/376407822.jpg" sizes="(max-width: 768px) 50vw, 25vw" alt="Prestigious marble bathroom from Pohorje" loading="lazy" decoding="async">
+                        <div class="gallery-overlay"><span class="gallery-zoom" aria-hidden="true">&#128269;</span><span class="gallery-label">Marble Bathroom</span></div>
+                    </div>
+                </div>
+                <div class="gallery-item reveal" data-index="10">
+                    <div class="gallery-image-wrapper">
+                        <img src="assets/images/379671244.jpg" sizes="(max-width: 768px) 50vw, 25vw" alt="Bedroom 101 at Villa Pomona" loading="lazy" decoding="async">
+                        <div class="gallery-overlay"><span class="gallery-zoom" aria-hidden="true">&#128269;</span><span class="gallery-label">Bedroom 101</span></div>
                     </div>
                 </div>
             </div>
@@ -525,7 +566,7 @@
                             <div class="form-group"><label for="guests">Guests</label><select id="guests" name="guests"><option value="1">1 guest</option><option value="2" selected>2 guests</option><option value="3">3 guests</option><option value="4">4 guests</option><option value="5">5 guests</option><option value="6">6 guests</option><option value="7">7 guests</option><option value="8">8 guests</option></select></div>
                             <div class="form-group"><label for="children">Children (under 12)</label><select id="children" name="children"><option value="0" selected>0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select></div>
                         </div>
-                        <div class="form-group"><label for="suite">Preferred Accommodation</label><select id="suite" name="suite"><option value="">No preference — recommend for me</option><option value="Bedroom 101">Bedroom 101 — Cosy garden view, from €170/night</option><option value="Bedroom 102">Bedroom 102 — Private balcony, from €210/night</option><option value="Bedroom 103">Bedroom 103 — Private terrace, from €250/night</option><option value="Pool House">Pool House — Private poolside retreat, from €390/night</option><option value="Entire Villa Pomona">Entire Villa Pomona — 3 bedrooms + pool house, up to 8 guests, from €980/night</option></select></div>
+                        <div class="form-group"><label for="suite">Preferred Accommodation</label><select id="suite" name="suite"><option value="">No preference — recommend for me</option><option value="Bedroom 101">Bedroom 101 — Deluxe Double Room, from €170/night</option><option value="Bedroom 102">Bedroom 102 — King Suite with Pool View, from €210/night</option><option value="Bedroom 103">Bedroom 103 — Queen Suite with Pool View, from €250/night</option><option value="Pool House">Pool House — Private poolside retreat, from €390/night</option><option value="Entire Villa Pomona">Entire Villa Pomona — 3 bedrooms + pool house, up to 8 guests, from €980/night</option></select></div>
                         <div class="form-group"><label for="transfer">Airport Transfer</label><select id="transfer" name="transfer"><option value="none">Not needed — I have a car</option><option value="lju">Ljubljana (LJU) — €60</option><option value="klu">Klagenfurt (KLU) — €90</option></select></div>
                         <div class="price-estimate" id="priceEstimate"></div>
                         <div class="form-group full-width"><label for="message">Special Requests</label><textarea id="message" name="message" rows="4" placeholder="Any special requests, celebration details, or questions..."></textarea></div>
@@ -541,7 +582,7 @@
         <div class="container">
             <div class="footer-grid">
                 <div class="footer-brand">
-                    <span class="logo-icon" aria-hidden="true">&#127800;</span><span class="logo-text">Villa Pomona</span>
+                    <span class="logo-text">Villa Pomona</span>
                     <p>A peaceful villa retreat in Bled's most tranquil neighbourhood.</p>
                 </div>
                 <div class="footer-links"><h4>Explore</h4><ul><li><a href="#about">About</a></li><li><a href="#bedrooms">Bedrooms</a></li><li><a href="#gallery">Gallery</a></li></ul></div>

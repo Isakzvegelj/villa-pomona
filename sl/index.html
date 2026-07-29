@@ -45,6 +45,7 @@
         },
         "amenityFeature": [
             {"@type": "LocationFeatureSpecification", "name": "Swimming Pool", "value": true},
+            {"@type": "LocationFeatureSpecification", "name": "Sauna", "value": true},
             {"@type": "LocationFeatureSpecification", "name": "Free Parking", "value": true},
             {"@type": "LocationFeatureSpecification", "name": "Kitchen", "value": true},
             {"@type": "LocationFeatureSpecification", "name": "Wi-Fi", "value": true}
@@ -75,7 +76,6 @@
     <nav class="nav" id="nav">
         <div class="nav-container">
             <a href="#hero" class="nav-logo">
-                <span class="logo-icon" aria-hidden="true">&#127800;</span>
                 <span class="logo-text">Villa Pomona</span>
             </a>
             <button class="nav-toggle" id="navToggle" aria-label="Preklopi meni">
@@ -100,7 +100,7 @@
         <div class="hero-content">
             <p class="hero-subtitle">Bled, Slovenija &mdash; Mirna vila za oddih</p>
             <h1 class="hero-title">Villa <em>Pomona</em></h1>
-            <p class="hero-desc">Mirna vila v najbolj mirni blejski soseski zgodovinskih vil. Tri očarljive spalnice, zasebna hiška ob bazenu, bazen, knjižnica in parkirišče za pet avtomobilov &mdash; vse le nekaj korakov od Blejskega jezera. Zajtrk in pijača na voljo na zahtevo.</p>
+            <p class="hero-desc">Mirna vila v najbolj mirni blejski soseski zgodovinskih vil. Tri očarljive spalnice, zasebna hiška ob bazenu, bazen, savna, knjižnica in parkirišče za pet avtomobilov &mdash; vse le nekaj korakov od Blejskega jezera. Vsi gostje imajo dostop do bazena in savne. Zajtrk in pijača na voljo na zahtevo.</p>
             <div class="hero-actions">
                 <a href="#bedrooms" class="btn btn-primary">Razišči spalnice</a>
                 <a href="#contact" class="btn btn-outline">Rezerviraj bivanje</a>
@@ -122,7 +122,7 @@
                 <div class="about-text reveal">
                     <p class="lead">Vila Pomona je umeščena v najlepšo blejsko sosesko zgodovinskih vil &mdash; mirna oaza daleč od mestnega stresa in hrupa, a le nekaj minut od vsega, kar Bled ponuja.</p>
                     <p>Idealna za pare, ki iščejo sprostitev, vila stoji na tihi ulici, obdani s čudovitimi dediščinskimi domovi. V notranjosti boste našli tri skrbno opremljene spalnice, prijetno knjižnico in zunanji skupni balkon, kot nalašč za jutranjo kavo ali večerno vino.</p>
-                    <p>Nepremičnina vključuje zasebni bazen sredi čudovitega vrta, ločeno hiško ob bazenu s svojim čarom in parkirišče za do pet avtomobilov. Trgovina, lekarna, športni objekti in mestno središče so v kratki peš razdalji. Podpora osebja je na voljo na zahtevo za brezhibno bivanje.</p>
+                    <p>Nepremičnina vključuje zasebni bazen sredi čudovitega vrta, savno za sprostitev, ločeno hiško ob bazenu s svojim čarom in parkirišče za do pet avtomobilov. Vsi gostje imajo poln dostop do bazena in savne. Trgovina, lekarna, športni objekti in mestno središče so v kratki peš razdalji. Podpora osebja je na voljo na zahtevo za brezhibno bivanje.</p>
                     <div class="about-stats">
                         <div class="stat"><span class="stat-num">3</span><span class="stat-label">Spalnice</span></div>
                         <div class="stat"><span class="stat-num">1</span><span class="stat-label">Hiška ob bazenu</span></div>
@@ -149,15 +149,15 @@
             <div class="suites-grid">
                 <div class="suite-card reveal">
                     <div class="suite-image">
-                        <img src="../assets/images/gallery-8.webp" srcset="../assets/images/gallery-8-800.webp 800w, ../assets/images/gallery-8.webp 1600w" sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw" alt="Spalnica 101 — Pogled na vrt" class="suite-img" loading="lazy" decoding="async" width="1600" height="2134">
+                        <img src="../assets/images/379671244.jpg" sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw" alt="Spalnica 101 — Pogled na vrt" class="suite-img" loading="lazy" decoding="async">
                         <div class="suite-badge">Prijetna</div>
                     </div>
                     <div class="suite-info">
-                        <h3>Spalnica 101</h3>
+                        <h3>Spalnica 101 — Dvoposteljna soba Deluxe</h3>
                         <p class="suite-size">Prijetna zakonska postelja &bull; Pogled na vrt</p>
-                        <p class="suite-desc">Najmanjša od treh spalnic, a polna čara. Udobna zakonska postelja, pogled na vrt in mirno vzdušje, kot nalašč za miren spanec.</p>
+                        <p class="suite-desc">Očarljiva dvoposteljna soba Deluxe — najbolj prijetna od treh, z udobno zakonsko posteljo, pogledom na vrt in mirnim vzdušjem, kot nalašč za miren spanec.</p>
                         <ul class="suite-features">
-                            <li>Zakonska postelja</li><li>Pogled na vrt</li><li>Mirna in prijetna</li><li>Vrhunsko perilo</li>
+                            <li>Zakonska postelja</li><li>Pogled na vrt</li><li>Mirna in prijetna</li><li>Vrhunsko perilo</li><li>Dostop do bazena in savne</li>
                         </ul>
                         <div class="suite-price"><span class="price-from">od</span><span class="price-amount">€170</span><span class="price-night">/ noč</span></div>
                         <a href="#contact" class="btn btn-primary btn-full" style="margin-top:16px;">Rezerviraj to sobo</a>
@@ -169,11 +169,11 @@
                         <div class="suite-badge">Balkon</div>
                     </div>
                     <div class="suite-info">
-                        <h3>Spalnica 102</h3>
+                        <h3>Spalnica 102 — Suita King s pogledom na bazen</h3>
                         <p class="suite-size">Zakonska postelja z zasebnim balkonom &bull; Pogled na bazen in vrt</p>
-                        <p class="suite-desc">Svetla spalnica z lastnim balkonom, ki gleda na bazen in vrt. Popoln kotiček za jutranjo kavo ali večerni kozarec vina ob čudovitem razgledu.</p>
+                        <p class="suite-desc">Svetla suita King z lastnim balkonom, ki gleda na bazen in vrt. Popoln kotiček za jutranjo kavo ali večerni kozarec vina ob čudovitem razgledu.</p>
                         <ul class="suite-features">
-                            <li>Zasebni balkon</li><li>Pogled na bazen</li><li>Zakonska postelja</li><li>Pogled na vrt</li>
+                            <li>Zasebni balkon</li><li>Pogled na bazen</li><li>Zakonska postelja</li><li>Pogled na vrt</li><li>Dostop do bazena in savne</li>
                         </ul>
                         <div class="suite-price"><span class="price-from">od</span><span class="price-amount">€210</span><span class="price-night">/ noč</span></div>
                         <a href="#contact" class="btn btn-primary btn-full" style="margin-top:16px;">Rezerviraj to sobo</a>
@@ -181,15 +181,15 @@
                 </div>
                 <div class="suite-card reveal">
                     <div class="suite-image">
-                        <img src="../assets/images/superior-suite.webp" srcset="../assets/images/superior-suite-800.webp 800w, ../assets/images/superior-suite.webp 1600w" sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw" alt="Spalnica 103 — Terasa" class="suite-img" loading="lazy" decoding="async" width="1600" height="1200">
+                        <img src="../assets/images/superior-suite.webp" sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw" alt="Spalnica 103 — Suita Queen s pogledom na bazen" class="suite-img" loading="lazy" decoding="async">
                         <div class="suite-badge">Terasa</div>
                     </div>
                     <div class="suite-info">
-                        <h3>Spalnica 103</h3>
+                        <h3>Spalnica 103 — Suita Queen s pogledom na bazen</h3>
                         <p class="suite-size">Prostorna zakonska postelja z zasebno teraso &bull; Pogled na vrt in gore</p>
-                        <p class="suite-desc">Največja spalnica z zasebno teraso, ki ponuja čudovit pogled na vrt in gore. Dodaten prostor, naravna svetloba in spokojno vzdušje delajo to sobo najbolj zaželeno.</p>
+                        <p class="suite-desc">Največja spalnica — prostorna suita Queen z zasebno teraso, ki ponuja čudovit pogled na vrt in gore. Dodaten prostor, naravna svetloba in spokojno vzdušje delajo to sobo najbolj zaželeno.</p>
                         <ul class="suite-features">
-                            <li>Zasebna terasa</li><li>Pogled na gore</li><li>Prostorna postavitev</li><li>Naravna svetloba</li>
+                            <li>Zasebna terasa</li><li>Pogled na gore</li><li>Prostorna postavitev</li><li>Naravna svetloba</li><li>Dostop do bazena in savne</li>
                         </ul>
                         <div class="suite-price"><span class="price-from">od</span><span class="price-amount">€250</span><span class="price-night">/ noč</span></div>
                         <a href="#contact" class="btn btn-primary btn-full" style="margin-top:16px;">Rezerviraj to sobo</a>
@@ -201,11 +201,11 @@
                         <div class="suite-badge">Hiška ob bazenu</div>
                     </div>
                     <div class="suite-info">
-                        <h3>Hiška ob bazenu</h3>
+                        <h3>Hiška ob bazenu — Studio z razgledom na bazen</h3>
                         <p class="suite-size">Samostojna enota &bull; Zasebna terasa &bull; Dostop do bazena</p>
                         <p class="suite-desc">Ločeno zatočišče ob bazenu s spalnico, dnevnim prostorom, pametnim televizorjem, kopalnico s kopalno kadjo in sprehodnim tušem ter zasebno teraso, obrnjeno proti bazenu.</p>
                         <ul class="suite-features">
-                            <li>Zasebna terasa</li><li>Pametni TV</li><li>Kopalna kad</li><li>Neposreden dostop do bazena</li>
+                            <li>Zasebna terasa</li><li>Pametni TV</li><li>Kopalna kad</li><li>Neposreden dostop do bazena</li><li>Dostop do savne</li>
                         </ul>
                         <div class="suite-price"><span class="price-from">od</span><span class="price-amount">€390</span><span class="price-night">/ noč</span></div>
                         <a href="#contact" class="btn btn-primary btn-full" style="margin-top:16px;">Rezerviraj hiško ob bazenu</a>
@@ -221,7 +221,7 @@
                         <p class="suite-size">Do 8 gostov &bull; 3 spalnice + hiška ob bazenu &bull; Zasebni bazen</p>
                         <p class="suite-desc">Rezervirajte celotno nepremičnino zase &mdash; vse tri spalnice, hiško ob bazenu, zasebni bazen, knjižnico, skupni balkon, polno kuhinjo, vrt in parkirišče za 5 avtomobilov. Vrhunski blejski oddih.</p>
                         <ul class="suite-features">
-                            <li>3 spalnice + hiška ob bazenu</li><li>Zasebni bazen</li><li>Polna kuhinja</li><li>Parkirišče za 5</li>
+                            <li>3 spalnice + hiška ob bazenu</li><li>Zasebni bazen</li><li>Savna</li><li>Polna kuhinja</li><li>Parkirišče za 5</li>
                         </ul>
                         <div class="suite-price"><span class="price-from">od</span><span class="price-amount">€980</span><span class="price-night">/ noč</span></div>
                         <a href="#contact" class="btn btn-primary btn-full" style="margin-top:16px;">Rezerviraj celotno vilo</a>
@@ -243,6 +243,11 @@
                     <span class="amenity-icon" aria-hidden="true">&#127958;</span>
                     <h4>Bazen</h4>
                     <p>Čudovit sezonski bazen na vrtu s sončnimi ležalniki in senčniki. Srce poletne sprostitve v Vili Pomona.</p>
+                </div>
+                <div class="amenity-card reveal">
+                    <span class="amenity-icon" aria-hidden="true">&#128566;</span>
+                    <h4>Savna</h4>
+                    <p>Vsi gostje imajo brezplačen dostop do zasebne savne &mdash; popoln način za sprostitev po dnevu raziskovanja Bleda in Julijcev.</p>
                 </div>
                 <div class="amenity-card reveal">
                     <span class="amenity-icon" aria-hidden="true">&#127969;</span>
@@ -288,13 +293,31 @@
         </div>
     </section>
 
+    <section class="section feature-highlight" style="padding: 80px 0; background: #fff;">
+        <div class="container">
+            <div class="about-grid" style="gap: 60px;">
+                <div class="about-image reveal">
+                    <div class="image-frame">
+                        <img src="../assets/images/376407822.jpg" sizes="(max-width: 768px) 100vw, 50vw" alt="Elegantna kopalnica s slovenskim marmorjem s Pohorja v Vili Pomona" class="about-img" loading="lazy" decoding="async">
+                    </div>
+                </div>
+                <div class="about-text reveal">
+                    <span class="section-tag">Izdelava</span>
+                    <h2 class="section-title">Prestižne <em>kopalnice iz marmorja</em></h2>
+                    <p class="lead">Vsaka kopalnica v Vili Pomona je opremljena z avtentičnim slovenskim marmorjem s Pohorja &mdash; redkim in elitnim materialom, znanim po elegantnem, prestižnem videzu.</p>
+                    <p>Ta edinstven naravni kamen vsaki kopalnici daje razkošen videz, ki združuje brezčasno lepoto z najboljšo slovensko izdelavo. Hladne, gladke marmorne površine ustvarjajo vzdušje toplic, ki celotno bivanje dvigne na višjo raven.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <section class="section location" id="location">
         <div class="container">
             <div class="about-grid">
                 <div class="about-text reveal">
                     <span class="section-tag">Lokacija</span>
                     <h2 class="section-title">Najboljše od <em>Bleda</em></h2>
-                    <p class="lead">Vila Pomona je popolnoma umeščena v najbolj zaželeni blejski soseski &mdash; tih kotiček zgodovinskih vil, a blizu vsega.</p>
+                    <p class="lead">Vila Pomona je popolnoma umeščena v najbolj zaželeni blejski soseski &mdash; tih kotiček zgodovinskih vil, a blizu vsega. Le nekaj korakov od čudovitega Blejskega jezera.</p>
                     <p>Vila stoji na mirni ulici, obdani s čudovitimi dediščinskimi domovi, kar ponuja mir in zasebnost, medtem ko je le kratek sprehod od Blejskega jezera, mestnega središča in vseh znamenitosti.</p>
                     <div class="garden-features" style="margin-top: 32px;">
                         <div class="garden-feature" style="color: var(--neutral-700);">
@@ -313,7 +336,7 @@
                 </div>
                 <div class="about-image reveal">
                     <div class="image-frame">
-                        <img src="../assets/images/gallery-4.webp" srcset="../assets/images/gallery-4-800.webp 800w, ../assets/images/gallery-4.webp 1600w" sizes="(max-width: 768px) 100vw, 50vw" alt="Vila Pomona — popolna lokacija na Bledu, korak od jezera" class="about-img" loading="lazy" decoding="async" width="1600" height="2134">
+                        <img src="../assets/images/405913649.jpg" sizes="(max-width: 768px) 100vw, 50vw" alt="Vila Pomona — le nekaj korakov od čudovitega Blejskega jezera" class="about-img" loading="lazy" decoding="async">
                     </div>
                     <div class="map-placeholder" style="margin-top: 24px;" id="mapContainer">
                         <div id="mapTrigger">
@@ -360,7 +383,7 @@
                 </details>
                 <details class="faq-item">
                     <summary>Ali lahko rezerviram posamezne spalnice ali celotno vilo?</summary>
-                    <p>Lahko rezervirate posamezne spalnice (101, 102 ali 103), ločeno hiško ob bazenu ali celotno Vilo Pomona (vse tri spalnice + hiško ob bazenu) za do 8 gostov. Vsaka možnost ponuja drugačno izkušnjo.</p>
+                    <p>Lahko rezervirate posamezne spalnice (101 — Dvoposteljna soba Deluxe, 102 — Suita King ali 103 — Suita Queen), ločeno hiško ob bazenu ali celotno Vilo Pomona (vse tri spalnice + hiško ob bazenu) za do 8 gostov. Vsaka možnost ponuja drugačno izkušnjo.</p>
                 </details>
                 <details class="faq-item">
                     <summary>Ali je osebje na kraju samem?</summary>
@@ -422,7 +445,7 @@
                 </div>
                 <div class="gallery-item reveal" data-index="2">
                     <div class="gallery-image-wrapper">
-                        <img src="../assets/images/gallery-2.webp" srcset="../assets/images/gallery-2-800.webp 800w, ../assets/images/gallery-2.webp 1600w" sizes="(max-width: 768px) 50vw, 25vw" alt="Notranjost hiške ob bazenu" loading="lazy" decoding="async" width="1600" height="2134">
+                        <img src="../assets/images/gallery-2.webp" sizes="(max-width: 768px) 50vw, 25vw" alt="Notranjost hiške ob bazenu" loading="lazy" decoding="async">
                         <div class="gallery-overlay"><span class="gallery-zoom" aria-hidden="true">&#128269;</span><span class="gallery-label">Dnevni prostor hiške</span></div>
                     </div>
                 </div>
@@ -434,13 +457,13 @@
                 </div>
                 <div class="gallery-item reveal" data-index="4">
                     <div class="gallery-image-wrapper">
-                        <img src="../assets/images/gallery-4.webp" srcset="../assets/images/gallery-4-800.webp 800w, ../assets/images/gallery-4.webp 1600w" sizes="(max-width: 768px) 50vw, 25vw" alt="Balkon spalnice 102" loading="lazy" decoding="async" width="1600" height="2134">
+                        <img src="../assets/images/gallery-4-800.webp" sizes="(max-width: 768px) 50vw, 25vw" alt="Balkon spalnice 102" loading="lazy" decoding="async">
                         <div class="gallery-overlay"><span class="gallery-zoom" aria-hidden="true">&#128269;</span><span class="gallery-label">Balkon spalnice</span></div>
                     </div>
                 </div>
                 <div class="gallery-item reveal tall" data-index="5">
                     <div class="gallery-image-wrapper">
-                        <img src="../assets/images/gallery-5.webp" srcset="../assets/images/gallery-5-800.webp 800w, ../assets/images/gallery-5.webp 1600w" sizes="(max-width: 768px) 50vw, 25vw" alt="Terasa spalnice 103" loading="lazy" decoding="async" width="1600" height="2134">
+                        <img src="../assets/images/gallery-5.webp" sizes="(max-width: 768px) 50vw, 25vw" alt="Terasa spalnice 103" loading="lazy" decoding="async">
                         <div class="gallery-overlay"><span class="gallery-zoom" aria-hidden="true">&#128269;</span><span class="gallery-label">Terasa spalnice</span></div>
                     </div>
                 </div>
@@ -454,6 +477,24 @@
                     <div class="gallery-image-wrapper">
                         <img src="../assets/images/gallery-7.webp" srcset="../assets/images/gallery-7-800.webp 800w, ../assets/images/gallery-7.webp 1600w" sizes="(max-width: 768px) 50vw, 25vw" alt="Vrt Vile Pomona" loading="lazy" decoding="async" width="1600" height="2134">
                         <div class="gallery-overlay"><span class="gallery-zoom" aria-hidden="true">&#128269;</span><span class="gallery-label">Pogled na vrt</span></div>
+                    </div>
+                </div>
+                <div class="gallery-item reveal" data-index="8">
+                    <div class="gallery-image-wrapper">
+                        <img src="../assets/images/405913649.jpg" sizes="(max-width: 768px) 50vw, 25vw" alt="Nekaj korakov od čudovitega Blejskega jezera" loading="lazy" decoding="async">
+                        <div class="gallery-overlay"><span class="gallery-zoom" aria-hidden="true">&#128269;</span><span class="gallery-label">Blejsko jezero v bližini</span></div>
+                    </div>
+                </div>
+                <div class="gallery-item reveal tall" data-index="9">
+                    <div class="gallery-image-wrapper">
+                        <img src="../assets/images/376407822.jpg" sizes="(max-width: 768px) 50vw, 25vw" alt="Prestižna marmorna kopalnica s Pohorja" loading="lazy" decoding="async">
+                        <div class="gallery-overlay"><span class="gallery-zoom" aria-hidden="true">&#128269;</span><span class="gallery-label">Marmorna kopalnica</span></div>
+                    </div>
+                </div>
+                <div class="gallery-item reveal" data-index="10">
+                    <div class="gallery-image-wrapper">
+                        <img src="../assets/images/379671244.jpg" sizes="(max-width: 768px) 50vw, 25vw" alt="Spalnica 101 v Vili Pomona" loading="lazy" decoding="async">
+                        <div class="gallery-overlay"><span class="gallery-zoom" aria-hidden="true">&#128269;</span><span class="gallery-label">Spalnica 101</span></div>
                     </div>
                 </div>
             </div>
@@ -518,7 +559,7 @@
                             <div class="form-group"><label for="guests">Gostje</label><select id="guests" name="guests"><option value="1">1 gost</option><option value="2" selected>2 gosta</option><option value="3">3 gostje</option><option value="4">4 gostje</option><option value="5">5 gostov</option><option value="6">6 gostov</option><option value="7">7 gostov</option><option value="8">8 gostov</option></select></div>
                             <div class="form-group"><label for="children">Otroci (mlajši od 12)</label><select id="children" name="children"><option value="0" selected>0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select></div>
                         </div>
-                        <div class="form-group"><label for="suite">Želena namestitev</label><select id="suite" name="suite"><option value="">Brez preference — priporočite mi</option><option value="Bedroom 101">Spalnica 101 — Prijeten pogled na vrt, od 170 €/noč</option><option value="Bedroom 102">Spalnica 102 — Zasebni balkon, od 210 €/noč</option><option value="Bedroom 103">Spalnica 103 — Zasebna terasa, od 250 €/noč</option><option value="Pool House">Hiška ob bazenu — Zasebno zatočišče ob bazenu, od 390 €/noč</option><option value="Entire Villa Pomona">Celotna Vila Pomona — 3 spalnice + hiška ob bazenu, do 8 gostov, od 980 €/noč</option></select></div>
+                        <div class="form-group"><label for="suite">Želena namestitev</label><select id="suite" name="suite"><option value="">Brez preference — priporočite mi</option><option value="Bedroom 101">Spalnica 101 — Dvoposteljna soba Deluxe, od 170 €/noč</option><option value="Bedroom 102">Spalnica 102 — Suita King s pogledom na bazen, od 210 €/noč</option><option value="Bedroom 103">Spalnica 103 — Suita Queen s pogledom na bazen, od 250 €/noč</option><option value="Pool House">Hiška ob bazenu — Zasebno zatočišče ob bazenu, od 390 €/noč</option><option value="Entire Villa Pomona">Celotna Vila Pomona — 3 spalnice + hiška ob bazenu, do 8 gostov, od 980 €/noč</option></select></div>
                         <div class="form-group"><label for="transfer">Prevoz z letališča</label><select id="transfer" name="transfer"><option value="none">Ni potrebe — imam avto</option><option value="lju">Ljubljana (LJU) — 60 €</option><option value="klu">Celovec (KLU) — 90 €</option></select></div>
                         <div class="price-estimate" id="priceEstimate"></div>
                         <div class="form-group full-width"><label for="message">Posebne želje</label><textarea id="message" name="message" rows="4" placeholder="Vse posebne želje, podrobnosti o praznovanju ali vprašanja..."></textarea></div>
@@ -534,7 +575,7 @@
         <div class="container">
             <div class="footer-grid">
                 <div class="footer-brand">
-                    <span class="logo-icon" aria-hidden="true">&#127800;</span><span class="logo-text">Villa Pomona</span>
+                    <span class="logo-text">Villa Pomona</span>
                     <p>Mirna vila v najbolj mirni blejski soseski.</p>
                 </div>
                 <div class="footer-links"><h4>Raziščite</h4><ul><li><a href="#about">O vili</a></li><li><a href="#bedrooms">Spalnice</a></li><li><a href="#gallery">Galerija</a></li></ul></div>
