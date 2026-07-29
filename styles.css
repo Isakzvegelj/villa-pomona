@@ -144,8 +144,8 @@ ul { list-style: none; }
 .amenities-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
 .amenity-card { background: #fff; padding: 0; border-radius: 12px; border: 1px solid var(--neutral-200); transition: all 0.3s var(--ease); text-align: center; overflow: hidden; }
 .amenity-card:hover { border-color: var(--green-300); transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,0,0,0.06); }
-.amenity-img { width: 100%; height: 180px; object-fit: cover; display: block; }
-.amity-card-text-icon { display: flex; align-items: center; justify-content: center; height: 180px; background: var(--green-50); }
+.amenity-img { width: 100%; height: 200px; object-fit: cover; object-position: center 40%; display: block; }
+.amenity-card-text-icon { display: flex; align-items: center; justify-content: center; height: 200px; background: var(--green-50); }
 .amenity-card-text-icon span { font-size: 3rem; color: var(--green-300); font-weight: 300; font-family: var(--font-serif); }
 .amenity-icon { font-size: 2.5rem; margin-bottom: 16px; display: block; }
 .amenity-card-body { padding: 28px; }
