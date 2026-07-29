@@ -87,7 +87,7 @@
             </button>
             <ul class="nav-links" id="navLinks">
                 <li><a href="#bedrooms">Spalnice</a></li>
-                <li><a href="#availability">Razpoložljivost</a></li>
+                <li><a href="#contact">Razpoložljivost</a></li>
                 <li><a href="#amenities">Ugodnosti</a></li>
                 <li><a href="#location">Lokacija</a></li>
                 <li><a href="#faq">Pogosta vprašanja</a></li>
@@ -203,39 +203,6 @@
                         <div class="suite-price"><span class="price-from">od</span><span class="price-amount">€980</span><span class="price-night">/ noč</span></div>
                         <a href="#contact" class="btn btn-primary btn-full">Rezerviraj celotno vilo</a>
                     </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="section availability" id="availability">
-        <div class="container">
-            <div class="section-header">
-                <span class="section-tag">Razpoložljivost</span>
-                <h2 class="section-title">Preverite <em>razpoložljivost</em></h2>
-                <p class="section-desc">Izberite želene datume spodaj. Kliknite datum za začetek izbire, nato kliknite končni datum za dokončanje.</p>
-            </div>
-            <div class="availability-widget" id="availabilityWidget">
-                <div class="cal-wrap">
-                    <div class="cal-header">
-                        <button class="cal-nav" id="calPrev" aria-label="Prejšnji mesec">&#8249;</button>
-                        <span class="cal-month" id="calMonth"></span>
-                        <button class="cal-nav" id="calNext" aria-label="Naslednji mesec">&#8250;</button>
-                    </div>
-                    <div class="cal-grid" id="calGrid">
-                        <span class="cal-day-head">Pon</span>
-                        <span class="cal-day-head">Tor</span>
-                        <span class="cal-day-head">Sre</span>
-                        <span class="cal-day-head">Čet</span>
-                        <span class="cal-day-head">Pet</span>
-                        <span class="cal-day-head">Sob</span>
-                        <span class="cal-day-head">Ned</span>
-                    </div>
-                    <div class="cal-legend">
-                        <span><span class="cal-dot cal-dot-selected"></span> Izbrano</span>
-                        <span><span class="cal-dot cal-dot-unavailable"></span> Ni na voljo</span>
-                    </div>
-                    <p class="cal-note">Datumi so informativni. Končna razpoložljivost potrjena po <a href="#contact">zahtevi</a>.</p>
                 </div>
             </div>
         </div>
@@ -475,6 +442,29 @@
                     <div class="contact-note"><p><span aria-hidden="true">&#127800;</span> <strong>Boniteta direktne rezervacije:</strong> Rezervirajte neposredno pri nas in prejmite brezplačne dobrodošle pijače ter pozno odjavo (odvisno od razpoložljivosti).</p></div>
                 </div>
                 <div class="contact-form-wrapper reveal">
+                    <div class="availability-widget" id="availabilityWidget" style="margin-bottom:32px;">
+                        <div class="cal-wrap">
+                            <div class="cal-header">
+                                <button class="cal-nav" id="calPrev" aria-label="Prejšnji mesec">&#8249;</button>
+                                <span class="cal-month" id="calMonth"></span>
+                                <button class="cal-nav" id="calNext" aria-label="Naslednji mesec">&#8250;</button>
+                            </div>
+                            <div class="cal-grid" id="calGrid">
+                                <span class="cal-day-head">Pon</span>
+                                <span class="cal-day-head">Tor</span>
+                                <span class="cal-day-head">Sre</span>
+                                <span class="cal-day-head">Čet</span>
+                                <span class="cal-day-head">Pet</span>
+                                <span class="cal-day-head">Sob</span>
+                                <span class="cal-day-head">Ned</span>
+                            </div>
+                            <div class="cal-legend">
+                                <span><span class="cal-dot cal-dot-selected"></span> Izbrano</span>
+                                <span><span class="cal-dot cal-dot-unavailable"></span> Ni na voljo</span>
+                            </div>
+                            <p class="cal-note">Datumi so informativni. Končna razpoložljivost potrjena po zahtevi.</p>
+                        </div>
+                    </div>
                     <form class="contact-form" id="bookingForm" name="booking">
                         <p hidden><label>Ne izpolnjujte tega: <input name="bot-field"></label></p>
                         <p hidden><label>Pustite prazno: <input name="website" type="url" tabindex="-1" autocomplete="off"></label></p>

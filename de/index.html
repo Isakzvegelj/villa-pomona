@@ -87,7 +87,7 @@
             </button>
             <ul class="nav-links" id="navLinks">
                 <li><a href="#bedrooms">Schlafzimmer</a></li>
-                <li><a href="#availability">Verfügbarkeit</a></li>
+                <li><a href="#contact">Verfügbarkeit</a></li>
                 <li><a href="#amenities">Ausstattung</a></li>
                 <li><a href="#location">Lage</a></li>
                 <li><a href="#faq">FAQ</a></li>
@@ -203,39 +203,6 @@
                         <div class="suite-price"><span class="price-from">ab</span><span class="price-amount">€980</span><span class="price-night">/ Nacht</span></div>
                         <a href="#contact" class="btn btn-primary btn-full">Gesamte Villa buchen</a>
                     </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="section availability" id="availability">
-        <div class="container">
-            <div class="section-header">
-                <span class="section-tag">Verfügbarkeit</span>
-                <h2 class="section-title">Verfügbarkeit <em>prüfen</em></h2>
-                <p class="section-desc">Wählen Sie Ihre Wunschtermine unten. Klicken Sie auf ein Datum, um Ihre Auswahl zu beginnen, und dann auf das Enddatum, um sie abzuschließen.</p>
-            </div>
-            <div class="availability-widget" id="availabilityWidget">
-                <div class="cal-wrap">
-                    <div class="cal-header">
-                        <button class="cal-nav" id="calPrev" aria-label="Vorheriger Monat">&#8249;</button>
-                        <span class="cal-month" id="calMonth"></span>
-                        <button class="cal-nav" id="calNext" aria-label="Nächster Monat">&#8250;</button>
-                    </div>
-                    <div class="cal-grid" id="calGrid">
-                        <span class="cal-day-head">Mo</span>
-                        <span class="cal-day-head">Di</span>
-                        <span class="cal-day-head">Mi</span>
-                        <span class="cal-day-head">Do</span>
-                        <span class="cal-day-head">Fr</span>
-                        <span class="cal-day-head">Sa</span>
-                        <span class="cal-day-head">So</span>
-                    </div>
-                    <div class="cal-legend">
-                        <span><span class="cal-dot cal-dot-selected"></span> Ausgewählt</span>
-                        <span><span class="cal-dot cal-dot-unavailable"></span> Nicht verfügbar</span>
-                    </div>
-                    <p class="cal-note">Termine sind Richtwerte. Endgültige Verfügbarkeit wird bei <a href="#contact">Anfrage</a> bestätigt.</p>
                 </div>
             </div>
         </div>
@@ -475,6 +442,29 @@
                     <div class="contact-note"><p><span aria-hidden="true">&#127800;</span> <strong>Direktbuchungsvorteil:</strong> Buchen Sie direkt bei uns und erhalten Sie kostenlose Begrüßungsgetränke und einen späten Check-out (nach Verfügbarkeit).</p></div>
                 </div>
                 <div class="contact-form-wrapper reveal">
+                    <div class="availability-widget" id="availabilityWidget" style="margin-bottom:32px;">
+                        <div class="cal-wrap">
+                            <div class="cal-header">
+                                <button class="cal-nav" id="calPrev" aria-label="Vorheriger Monat">&#8249;</button>
+                                <span class="cal-month" id="calMonth"></span>
+                                <button class="cal-nav" id="calNext" aria-label="Nächster Monat">&#8250;</button>
+                            </div>
+                            <div class="cal-grid" id="calGrid">
+                                <span class="cal-day-head">Mo</span>
+                                <span class="cal-day-head">Di</span>
+                                <span class="cal-day-head">Mi</span>
+                                <span class="cal-day-head">Do</span>
+                                <span class="cal-day-head">Fr</span>
+                                <span class="cal-day-head">Sa</span>
+                                <span class="cal-day-head">So</span>
+                            </div>
+                            <div class="cal-legend">
+                                <span><span class="cal-dot cal-dot-selected"></span> Ausgewählt</span>
+                                <span><span class="cal-dot cal-dot-unavailable"></span> Nicht verfügbar</span>
+                            </div>
+                            <p class="cal-note">Termine sind Richtwerte. Endgültige Verfügbarkeit wird bei Anfrage bestätigt.</p>
+                        </div>
+                    </div>
                     <form class="contact-form" id="bookingForm" name="booking">
                         <p hidden><label>Füllen Sie dies nicht aus: <input name="bot-field"></label></p>
                         <p hidden><label>Leer lassen: <input name="website" type="url" tabindex="-1" autocomplete="off"></label></p>
