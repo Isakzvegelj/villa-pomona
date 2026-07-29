@@ -246,19 +246,98 @@ function initParallax() {
 function initAvailabilityLazyLoad() {
     var widget = document.getElementById('availabilityWidget');
     if (!widget) return;
-    var observer = new IntersectionObserver(function(entries) {
-        for (var e = 0; e < entries.length; e++) {
-            if (entries[e].isIntersecting) {
-                var placeholder = widget.querySelector('.availability-placeholder');
-                if (placeholder) {
-                    placeholder.innerHTML = '<p>Availability calendar loading&hellip;</p>';
-                    placeholder.innerHTML += '<!-- TODO(user): Inject your channel-manager widget embed code here (e.g. Smoobu, Beds24) -->';
-                }
-                observer.unobserve(widget);
-            }
+    // Unavailable dates (YYYY-MM-DD format) — update these manually or connect to a channel manager
+    var unavailableDates = [];
+    // Initialize calendar
+    var calMonthEl = document.getElementById('calMonth');
+    var calGrid = document.getElementById('calGrid');
+    var calPrev = document.getElementById('calPrev');
+    var calNext = document.getElementById('calNext');
+    if (!calMonthEl || !calGrid || !calPrev || !calNext) return;
+    var today = new Date();
+    today.setHours(0,0,0,0);
+    var viewYear = today.getFullYear();
+    var viewMonth = today.getMonth();
+    var checkIn = null;
+    var checkOut = null;
+    var monthNames = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+    function render() {
+        calMonthEl.textContent = monthNames[viewMonth] + ' ' + viewYear;
+        // Remove old day cells but keep headers
+        var existing = calGrid.querySelectorAll('.cal-day');
+        for (var i = 0; i < existing.length; i++) existing[i].remove();
+        var firstDay = new Date(viewYear, viewMonth, 1);
+        var lastDay = new Date(viewYear, viewMonth + 1, 0);
+        var startDow = (firstDay.getDay() + 6) % 7; // Monday=0
+        for (var d = 0; d < startDow; d++) {
+            var empty = document.createElement('span');
+            empty.className = 'cal-day empty';
+            calGrid.appendChild(empty);
         }
-    }, { rootMargin: '200px' });
-    observer.observe(widget);
+        for (var day = 1; day <= lastDay.getDate(); day++) {
+            var cell = document.createElement('span');
+            cell.className = 'cal-day';
+            cell.textContent = day;
+            var cellDate = new Date(viewYear, viewMonth, day);
+            cellDate.setHours(0,0,0,0);
+            var dateStr = viewYear + '-' + String(viewMonth+1).padStart(2,'0') + '-' + String(day).padStart(2,'0');
+            if (cellDate < today) {
+                cell.classList.add('past');
+            } else if (unavailableDates.indexOf(dateStr) !== -1) {
+                cell.classList.add('unavailable');
+            } else {
+                cell.setAttribute('data-date', dateStr);
+                cell.addEventListener('click', (function(d, ds) { return function() { selectDate(ds, d); }; })(cell, dateStr));
+            }
+            if (cellDate.getTime() === today.getTime()) cell.classList.add('today');
+            if (checkIn && cellDate.getTime() === checkIn.getTime()) cell.classList.add('selected');
+            if (checkOut && cellDate.getTime() === checkOut.getTime()) cell.classList.add('selected');
+            if (checkIn && checkOut && cellDate > checkIn && cellDate < checkOut) cell.classList.add('in-range');
+            calGrid.appendChild(cell);
+        }
+    }
+    function selectDate(dateStr, cellDate) {
+        if (!checkIn || (checkIn && checkOut)) {
+            checkIn = cellDate;
+            checkOut = null;
+        } else if (cellDate > checkIn) {
+            // Check no unavailable dates in range
+            var d = new Date(checkIn);
+            var blocked = false;
+            while (d < cellDate) {
+                var ds = d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
+                if (unavailableDates.indexOf(ds) !== -1) { blocked = true; break; }
+                d.setDate(d.getDate() + 1);
+            }
+            if (blocked) { checkIn = cellDate; checkOut = null; }
+            else { checkOut = cellDate; syncFormDates(); }
+        } else {
+            checkIn = cellDate;
+            checkOut = null;
+        }
+        render();
+    }
+    function syncFormDates() {
+        if (checkIn) {
+            var ci = document.getElementById('checkin');
+            if (ci) ci.value = checkIn.getFullYear() + '-' + String(checkIn.getMonth()+1).padStart(2,'0') + '-' + String(checkIn.getDate()).padStart(2,'0');
+        }
+        if (checkOut) {
+            var co = document.getElementById('checkout');
+            if (co) co.value = checkOut.getFullYear() + '-' + String(checkOut.getMonth()+1).padStart(2,'0') + '-' + String(checkOut.getDate()).padStart(2,'0');
+        }
+    }
+    calPrev.addEventListener('click', function() {
+        viewMonth--;
+        if (viewMonth < 0) { viewMonth = 11; viewYear--; }
+        render();
+    });
+    calNext.addEventListener('click', function() {
+        viewMonth++;
+        if (viewMonth > 11) { viewMonth = 0; viewYear++; }
+        render();
+    });
+    render();
 }
 
 function initMapLoad() {
