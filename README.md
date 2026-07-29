@@ -16,14 +16,15 @@ open index.html
 ├── index.html          # Main page (single-page site, all sections)
 ├── styles.css           # All styles (~250 lines)
 ├── script.js            # All interactions (~260 lines)
-├── assets/images/       # Photographs (hero, gallery, about)
-│   ├── hero-1.jpg
-│   ├── hero-2.jpg
-│   ├── about.jpg
-│   ├── master-suite.jpg
-│   ├── superior-suite.jpg
-│   ├── pool-house.jpg
-│   └── gallery-1.jpg through gallery-8.jpg
+├── assets/images/       # Photographs (WebP, max 1600px wide)
+│   ├── hero-1.webp
+│   ├── hero-2.webp
+│   ├── about.webp
+│   ├── master-suite.webp
+│   ├── superior-suite.webp
+│   ├── pool-house.webp
+│   ├── og-image.webp
+│   └── gallery-1.webp through gallery-8.webp
 ├── favicon.svg          # SVG favicon
 ├── robots.txt           # SEO
 ├── sitemap.xml          # SEO
@@ -50,9 +51,9 @@ open index.html
 - **No external dependencies** — pure HTML/CSS/JS. The only external resources are Google Fonts (Cormorant Garamond + Inter).
 - **Single-page** — all content is in `index.html` with anchor links (`#about`, `#bedrooms`, etc.).
 - **CSS** — all styles in `styles.css`. Uses CSS custom properties for theming (--green-\*, --neutral-\*, --gold-*).
-- **JS** — all interactions in `script.js`. Includes: smooth scroll, mobile nav toggle, scroll reveal animations, booking form, lightbox gallery, sticky nav.
-- **Images** — all images in `assets/images/`. Organized by purpose (hero, gallery, about, rooms).
-- **Deployment** — Netlify (`netlify.toml`). Static site hosted at `https://villa-pomona-bled.netlify.app`. No build step.
+- **JS** — all interactions in `script.js`. Includes: smooth scroll, mobile nav toggle, scroll reveal animations, booking form (Netlify Forms), lightbox gallery, sticky nav.
+- **Images** — all images in `assets/images/`. Converted to WebP (quality 80, max 1600px wide). `hero-1.jpg` kept for social sharing compatibility.
+- **Deployment** — Netlify (`netlify.toml`). Static site hosted at `https://villa-pomona-bled.netlify.app`. Booking form submissions appear in Netlify dashboard → Forms → "booking". No build step.
 
 ## Making Changes
 

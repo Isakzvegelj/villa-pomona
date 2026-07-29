@@ -9,9 +9,9 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function initFooterYear() {
-    var yearEl = document.querySelector('.footer-bottom p:first-child');
+    var yearEl = document.getElementById('footerYear');
     if (yearEl) {
-        yearEl.textContent = '\u00a9 ' + new Date().getFullYear() + ' Villa Pomona Bled. All rights reserved.';
+        yearEl.textContent = new Date().getFullYear();
     }
 }
 
@@ -104,42 +104,30 @@ function initBookingForm() {
             }
         });
     }
-    var FORM_ENDPOINT = '/';
-
     form.addEventListener('submit', function(e) {
         e.preventDefault();
         var submitBtn = form.querySelector('button[type="submit"]');
         submitBtn.disabled = true;
         submitBtn.textContent = 'Sending...';
 
-        var formData = {
-            name: form.name.value,
-            email: form.email.value,
-            checkin: form.checkin.value,
-            checkout: form.checkout.value,
-            suite: form.suite.value || 'Not specified',
-            guests: form.guests.value,
-            children: form.children ? form.children.value : '0',
-            transfer: form.transfer ? form.transfer.value : 'none',
-            message: form.message.value || 'None'
-        };
+        var data = new URLSearchParams(new FormData(form));
 
-        var subject = 'Reservation Request - Villa Pomona - ' + formData.name;
+        var subject = 'Reservation Request - Villa Pomona - ' + (form.name.value || '');
         var body = 'Reservation Request\n\n' +
-            'Name: ' + formData.name + '\n' +
-            'Email: ' + formData.email + '\n' +
-            'Check-in: ' + formData.checkin + '\n' +
-            'Check-out: ' + formData.checkout + '\n' +
-            'Suite: ' + formData.suite + '\n' +
-            'Guests: ' + formData.guests + '\n' +
-            'Children: ' + formData.children + '\n' +
-            'Airport Transfer: ' + formData.transfer + '\n' +
-            'Special Requests: ' + formData.message;
+            'Name: ' + (form.name.value || '') + '\n' +
+            'Email: ' + (form.email.value || '') + '\n' +
+            'Check-in: ' + (form.checkin.value || '') + '\n' +
+            'Check-out: ' + (form.checkout.value || '') + '\n' +
+            'Suite: ' + (form.suite.value || 'Not specified') + '\n' +
+            'Guests: ' + (form.guests.value || '') + '\n' +
+            'Children: ' + (form.children ? form.children.value : '0') + '\n' +
+            'Airport Transfer: ' + (form.transfer ? form.transfer.value : 'none') + '\n' +
+            'Special Requests: ' + (form.message.value || 'None');
 
-        fetch(FORM_ENDPOINT, {
+        fetch(location.pathname, {
             method: 'POST',
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            body: new URLSearchParams(formData).toString()
+            body: data.toString()
         })
         .then(function(response) {
             submitBtn.disabled = false;
@@ -206,25 +194,24 @@ window.addEventListener('load', function() {
     var currentIndex = 0;
     var totalItems = items.length;
     var images = [];
+    var lastFocused = null;
     items.forEach(function(item, i){
         var img = item.querySelector('img');
         var label = item.querySelector('.gallery-label');
         images.push({src: img.src, alt: img.alt, label: label ? label.textContent : ''});
     });
     function openLightbox(index) {
+        lastFocused = document.activeElement;
         currentIndex = index;
         updateLightbox();
         lightbox.classList.add('active');
-        lightbox.setAttribute('role', 'dialog');
-        lightbox.setAttribute('aria-modal', 'true');
         document.body.style.overflow = 'hidden';
         document.getElementById('lightboxClose').focus();
     }
     function closeLightbox() {
         lightbox.classList.remove('active');
-        lightbox.removeAttribute('role');
-        lightbox.removeAttribute('aria-modal');
         document.body.style.overflow = '';
+        if (lastFocused) { lastFocused.focus(); lastFocused = null; }
     }
     function updateLightbox() {
         var img = images[currentIndex];
