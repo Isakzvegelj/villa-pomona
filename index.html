@@ -443,54 +443,12 @@
                     <div class="contact-note"><p><span aria-hidden="true">&#127800;</span> <strong>Direct booking bonus:</strong> Book directly with us and receive complimentary welcome drinks and late check-out (subject to availability).</p></div>
                 </div>
                 <div class="contact-form-wrapper reveal">
-                    <div class="availability-widget" id="availabilityWidget" style="margin-bottom:32px;">
-                        <div class="cal-wrap">
-                            <div class="cal-header">
-                                <button class="cal-nav" id="calPrev" aria-label="Previous month">&#8249;</button>
-                                <span class="cal-month" id="calMonth"></span>
-                                <button class="cal-nav" id="calNext" aria-label="Next month">&#8250;</button>
-                            </div>
-                            <div class="cal-grid" id="calGrid">
-                                <span class="cal-day-head">Mon</span>
-                                <span class="cal-day-head">Tue</span>
-                                <span class="cal-day-head">Wed</span>
-                                <span class="cal-day-head">Thu</span>
-                                <span class="cal-day-head">Fri</span>
-                                <span class="cal-day-head">Sat</span>
-                                <span class="cal-day-head">Sun</span>
-                            </div>
-                            <div class="cal-legend">
-                                <span><span class="cal-dot cal-dot-selected"></span> Selected</span>
-                                <span><span class="cal-dot cal-dot-unavailable"></span> Unavailable</span>
-                            </div>
-                            <p class="cal-note">Dates are indicative. Final availability confirmed upon request.</p>
-                        </div>
+                    <div class="bentral-widget" id="bentralCalendar" style="margin-bottom:32px;">
+                        <script src="//www.bentral.com/service/embed/calendar.js?uid=5f5441304d7a494d&last=true&lang=sl&key=ef32fbc68fd13b8f9e5ba7a55520e061"></script>
                     </div>
-                    <form class="contact-form" id="bookingForm" name="booking">
-                        <p hidden><label>Don't fill this out: <input name="bot-field"></label></p>
-                        <p hidden><label>Leave empty: <input name="website" type="url" tabindex="-1" autocomplete="off"></label></p>
-                        <input type="hidden" name="_gotcha" value="">
-                        <input type="hidden" id="formLoadTime" name="_load_ts" value="">
-                        <h3>Reserve Your Stay</h3>
-                        <div class="form-row">
-                            <div class="form-group"><label for="name">Full Name *</label><input type="text" id="name" name="name" required placeholder="Your name"></div>
-                            <div class="form-group"><label for="email">Email *</label><input type="email" id="email" name="email" required placeholder="your@email.com"></div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group"><label for="checkin">Check-in *</label><input type="date" id="checkin" name="checkin" required></div>
-                            <div class="form-group"><label for="checkout">Check-out *</label><input type="date" id="checkout" name="checkout" required></div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group"><label for="guests">Guests</label><select id="guests" name="guests"><option value="1">1 guest</option><option value="2" selected>2 guests</option><option value="3">3 guests</option><option value="4">4 guests</option><option value="5">5 guests</option><option value="6">6 guests</option><option value="7">7 guests</option><option value="8">8 guests</option></select></div>
-                            <div class="form-group"><label for="children">Children (under 12)</label><select id="children" name="children"><option value="0" selected>0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select></div>
-                        </div>
-                        <div class="form-group"><label for="suite">Preferred Accommodation</label><select id="suite" name="suite"><option value="">No preference — recommend for me</option><option value="Bedroom 101">Bedroom 101 — Deluxe Double Room, from €170/night</option><option value="Bedroom 102">Bedroom 102 — King Suite with Pool View, from €210/night</option><option value="Bedroom 103">Bedroom 103 — Queen Suite with Pool View, from €250/night</option><option value="Pool House">Pool House — Private poolside retreat, from €390/night</option><option value="Entire Villa Pomona">Entire Villa Pomona — 3 bedrooms + pool house, up to 8 guests, from €980/night</option></select></div>
-                        <div class="form-group"><label for="transfer">Airport Transfer</label><select id="transfer" name="transfer"><option value="none">Not needed — I have a car</option><option value="lju">From Ljubljana (LJU) — arranged on request</option><option value="klu">From Klagenfurt (KLU) — arranged on request</option></select></div>
-                        <div class="price-estimate" id="priceEstimate"></div>
-                        <div class="form-group full-width"><label for="message">Special Requests</label><textarea id="message" name="message" rows="4" placeholder="Any special requests, celebration details, or questions..."></textarea></div>
-                        <button type="submit" class="btn btn-primary btn-full">Send Reservation Request</button>
-                        <p class="form-note">By sending you agree to our <a href="privacy.html" style="color:var(--green-600);text-decoration:underline;">Privacy Policy</a>. We'll respond within 24 hours. No payment required to inquire.</p>
-                    </form>
+                    <div class="bentral-widget" id="bentralBooking">
+                        <script src="//www.bentral.com/service/embed/booking.js?id=5f444d324e675f4e&lang=sl&key=ef32fbc68fd13b8f9e5ba7a55520e061"></script>
+                    </div>
                 </div>
             </div>
         </div>

@@ -442,54 +442,12 @@
                     <div class="contact-note"><p><span aria-hidden="true">&#127800;</span> <strong>Direktbuchungsvorteil:</strong> Buchen Sie direkt bei uns und erhalten Sie kostenlose Begrüßungsgetränke und einen späten Check-out (nach Verfügbarkeit).</p></div>
                 </div>
                 <div class="contact-form-wrapper reveal">
-                    <div class="availability-widget" id="availabilityWidget" style="margin-bottom:32px;">
-                        <div class="cal-wrap">
-                            <div class="cal-header">
-                                <button class="cal-nav" id="calPrev" aria-label="Vorheriger Monat">&#8249;</button>
-                                <span class="cal-month" id="calMonth"></span>
-                                <button class="cal-nav" id="calNext" aria-label="Nächster Monat">&#8250;</button>
-                            </div>
-                            <div class="cal-grid" id="calGrid">
-                                <span class="cal-day-head">Mo</span>
-                                <span class="cal-day-head">Di</span>
-                                <span class="cal-day-head">Mi</span>
-                                <span class="cal-day-head">Do</span>
-                                <span class="cal-day-head">Fr</span>
-                                <span class="cal-day-head">Sa</span>
-                                <span class="cal-day-head">So</span>
-                            </div>
-                            <div class="cal-legend">
-                                <span><span class="cal-dot cal-dot-selected"></span> Ausgewählt</span>
-                                <span><span class="cal-dot cal-dot-unavailable"></span> Nicht verfügbar</span>
-                            </div>
-                            <p class="cal-note">Termine sind Richtwerte. Endgültige Verfügbarkeit wird bei Anfrage bestätigt.</p>
-                        </div>
+                    <div class="bentral-widget" id="bentralCalendar" style="margin-bottom:32px;">
+                        <script src="//www.bentral.com/service/embed/calendar.js?uid=5f5441304d7a494d&last=true&lang=sl&key=ef32fbc68fd13b8f9e5ba7a55520e061"></script>
                     </div>
-                    <form class="contact-form" id="bookingForm" name="booking">
-                        <p hidden><label>Füllen Sie dies nicht aus: <input name="bot-field"></label></p>
-                        <p hidden><label>Leer lassen: <input name="website" type="url" tabindex="-1" autocomplete="off"></label></p>
-                        <input type="hidden" name="_gotcha" value="">
-                        <input type="hidden" id="formLoadTime" name="_load_ts" value="">
-                        <h3>Reservieren Sie Ihren Aufenthalt</h3>
-                        <div class="form-row">
-                            <div class="form-group"><label for="name">Vollständiger Name *</label><input type="text" id="name" name="name" required placeholder="Ihr Name"></div>
-                            <div class="form-group"><label for="email">E-Mail *</label><input type="email" id="email" name="email" required placeholder="ihre@email.com"></div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group"><label for="checkin">Check-in *</label><input type="date" id="checkin" name="checkin" required></div>
-                            <div class="form-group"><label for="checkout">Check-out *</label><input type="date" id="checkout" name="checkout" required></div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group"><label for="guests">Gäste</label><select id="guests" name="guests"><option value="1">1 Gast</option><option value="2" selected>2 Gäste</option><option value="3">3 Gäste</option><option value="4">4 Gäste</option><option value="5">5 Gäste</option><option value="6">6 Gäste</option><option value="7">7 Gäste</option><option value="8">8 Gäste</option></select></div>
-                            <div class="form-group"><label for="children">Kinder (unter 12)</label><select id="children" name="children"><option value="0" selected>0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select></div>
-                        </div>
-                        <div class="form-group"><label for="suite">Bevorzugte Unterkunft</label><select id="suite" name="suite"><option value="">Keine Präferenz — für mich empfehlen</option><option value="Bedroom 101">Schlafzimmer 101 — Deluxe-Doppelzimmer, ab €170/Nacht</option><option value="Bedroom 102">Schlafzimmer 102 — King Suite mit Poolblick, ab €210/Nacht</option><option value="Bedroom 103">Schlafzimmer 103 — Queen Suite mit Poolblick, ab €250/Nacht</option><option value="Pool House">Poolhaus — Privater Rückzugsort am Pool, ab €390/Nacht</option><option value="Entire Villa Pomona">Gesamte Villa Pomona — 3 Schlafzimmer + Poolhaus, bis zu 8 Gäste, ab €980/Nacht</option></select></div>
-                        <div class="form-group"><label for="transfer">Flughafentransfer</label><select id="transfer" name="transfer"><option value="none">Nicht nötig — ich habe ein Auto</option><option value="lju">Ab Ljubljana (LJU) — auf Anfrage</option><option value="klu">Ab Klagenfurt (KLU) — auf Anfrage</option></select></div>
-                        <div class="price-estimate" id="priceEstimate"></div>
-                        <div class="form-group full-width"><label for="message">Besondere Wünsche</label><textarea id="message" name="message" rows="4" placeholder="Besondere Wünsche, Feierlichkeiten oder Fragen..."></textarea></div>
-                        <button type="submit" class="btn btn-primary btn-full">Anfrage senden</button>
-                        <p class="form-note">Mit dem Absenden stimmen Sie unserer <a href="../privacy.html" style="color:var(--green-600);text-decoration:underline;">Datenschutzerklärung</a> zu. Wir antworten innerhalb von 24 Stunden. Keine Zahlung für die Anfrage erforderlich.</p>
-                    </form>
+                    <div class="bentral-widget" id="bentralBooking">
+                        <script src="//www.bentral.com/service/embed/booking.js?id=5f444d324e675f4e&lang=sl&key=ef32fbc68fd13b8f9e5ba7a55520e061"></script>
+                    </div>
                 </div>
             </div>
         </div>

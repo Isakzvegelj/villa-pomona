@@ -442,54 +442,12 @@
                     <div class="contact-note"><p><span aria-hidden="true">&#127800;</span> <strong>Boniteta direktne rezervacije:</strong> Rezervirajte neposredno pri nas in prejmite brezplačne dobrodošle pijače ter pozno odjavo (odvisno od razpoložljivosti).</p></div>
                 </div>
                 <div class="contact-form-wrapper reveal">
-                    <div class="availability-widget" id="availabilityWidget" style="margin-bottom:32px;">
-                        <div class="cal-wrap">
-                            <div class="cal-header">
-                                <button class="cal-nav" id="calPrev" aria-label="Prejšnji mesec">&#8249;</button>
-                                <span class="cal-month" id="calMonth"></span>
-                                <button class="cal-nav" id="calNext" aria-label="Naslednji mesec">&#8250;</button>
-                            </div>
-                            <div class="cal-grid" id="calGrid">
-                                <span class="cal-day-head">Pon</span>
-                                <span class="cal-day-head">Tor</span>
-                                <span class="cal-day-head">Sre</span>
-                                <span class="cal-day-head">Čet</span>
-                                <span class="cal-day-head">Pet</span>
-                                <span class="cal-day-head">Sob</span>
-                                <span class="cal-day-head">Ned</span>
-                            </div>
-                            <div class="cal-legend">
-                                <span><span class="cal-dot cal-dot-selected"></span> Izbrano</span>
-                                <span><span class="cal-dot cal-dot-unavailable"></span> Ni na voljo</span>
-                            </div>
-                            <p class="cal-note">Datumi so informativni. Končna razpoložljivost potrjena po zahtevi.</p>
-                        </div>
+                    <div class="bentral-widget" id="bentralCalendar" style="margin-bottom:32px;">
+                        <script src="//www.bentral.com/service/embed/calendar.js?uid=5f5441304d7a494d&last=true&lang=sl&key=ef32fbc68fd13b8f9e5ba7a55520e061"></script>
                     </div>
-                    <form class="contact-form" id="bookingForm" name="booking">
-                        <p hidden><label>Ne izpolnjujte tega: <input name="bot-field"></label></p>
-                        <p hidden><label>Pustite prazno: <input name="website" type="url" tabindex="-1" autocomplete="off"></label></p>
-                        <input type="hidden" name="_gotcha" value="">
-                        <input type="hidden" id="formLoadTime" name="_load_ts" value="">
-                        <h3>Rezervirajte bivanje</h3>
-                        <div class="form-row">
-                            <div class="form-group"><label for="name">Ime in priimek *</label><input type="text" id="name" name="name" required placeholder="Vaše ime"></div>
-                            <div class="form-group"><label for="email">E-pošta *</label><input type="email" id="email" name="email" required placeholder="vas@email.com"></div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group"><label for="checkin">Prijava *</label><input type="date" id="checkin" name="checkin" required></div>
-                            <div class="form-group"><label for="checkout">Odjava *</label><input type="date" id="checkout" name="checkout" required></div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group"><label for="guests">Gostje</label><select id="guests" name="guests"><option value="1">1 gost</option><option value="2" selected>2 gosta</option><option value="3">3 gostje</option><option value="4">4 gostje</option><option value="5">5 gostov</option><option value="6">6 gostov</option><option value="7">7 gostov</option><option value="8">8 gostov</option></select></div>
-                            <div class="form-group"><label for="children">Otroci (mlajši od 12)</label><select id="children" name="children"><option value="0" selected>0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select></div>
-                        </div>
-                        <div class="form-group"><label for="suite">Želena namestitev</label><select id="suite" name="suite"><option value="">Brez preference — priporočite mi</option><option value="Bedroom 101">Spalnica 101 — Dvoposteljna soba Deluxe, od 170 €/noč</option><option value="Bedroom 102">Spalnica 102 — Suita King s pogledom na bazen, od 210 €/noč</option><option value="Bedroom 103">Spalnica 103 — Suita Queen s pogledom na bazen, od 250 €/noč</option><option value="Pool House">Hiška ob bazenu — Zasebno zatočišče ob bazenu, od 390 €/noč</option><option value="Entire Villa Pomona">Celotna Vila Pomona — 3 spalnice + hiška ob bazenu, do 8 gostov, od 980 €/noč</option></select></div>
-                        <div class="form-group"><label for="transfer">Prevoz z letališča</label><select id="transfer" name="transfer"><option value="none">Ni potrebe — imam avto</option><option value="lju">Iz Ljubljane (LJU) — na zahtevo</option><option value="klu">Iz Celovca (KLU) — na zahtevo</option></select></div>
-                        <div class="price-estimate" id="priceEstimate"></div>
-                        <div class="form-group full-width"><label for="message">Posebne želje</label><textarea id="message" name="message" rows="4" placeholder="Vse posebne želje, podrobnosti o praznovanju ali vprašanja..."></textarea></div>
-                        <button type="submit" class="btn btn-primary btn-full">Pošlji povpraševanje</button>
-                        <p class="form-note">S pošiljanjem se strinjate z našo <a href="privacy.html" style="color:var(--green-600);text-decoration:underline;">Politiko zasebnosti</a>. Odgovorili vam bomo v 24 urah. Za povpraševanje ni potrebno plačilo.</p>
-                    </form>
+                    <div class="bentral-widget" id="bentralBooking">
+                        <script src="//www.bentral.com/service/embed/booking.js?id=5f444d324e675f4e&lang=sl&key=ef32fbc68fd13b8f9e5ba7a55520e061"></script>
+                    </div>
                 </div>
             </div>
         </div>
