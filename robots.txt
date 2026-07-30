@@ -1,11 +1,11 @@
 # robots.txt for Villa Pomona — Historic Boutique Villa, Bled, Slovenia
-# https://www.villa-pomona-bled.com/
+# https://villa-pomona-bled.com/
 
 User-agent: *
 Allow: /
 
 # Sitemap
-Sitemap: https://www.villa-pomona-bled.com/sitemap.xml
+Sitemap: https://villa-pomona-bled.com/sitemap.xml
 
 # Crawl-delay
 Crawl-delay: 1

@@ -2,7 +2,7 @@
 
 Heritage boutique villa in Bled, Slovenia. Static HTML/CSS/JS site — no build tools, no framework.
 
-**Live:** [https://www.villa-pomona-bled.com/](https://www.villa-pomona-bled.com/)  
+**Live:** [https://villa-pomona-bled.com/](https://villa-pomona-bled.com/)  
 **Deployment:** GitHub Pages via `.github/workflows/deploy.yml` (push to `main`)
 
 ## Quick Start
