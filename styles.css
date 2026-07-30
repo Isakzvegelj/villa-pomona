@@ -463,6 +463,17 @@ ul { list-style: none; }
     padding: 12px;
 }
 
+.bentral-book-btn {
+    margin-top: 16px;
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+}
+
+.bentral-calendar a,
+.bentral-calendar [role="link"] {
+    cursor: pointer;
+}
+
 .bentral-pricelist {
     max-width: 600px;
     margin: 0 auto;

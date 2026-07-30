@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initParallax();
     initFooterYear();
     initMapLoad();
+    initBentralCalendarClicks();
 });
 
 function initDarkMode() {
@@ -120,6 +121,27 @@ function initParallax() {
             hero.style.opacity = 1 - (scrolled / window.innerHeight) * 0.5;
         }
     }, { passive: true });
+}
+
+function initBentralCalendarClicks() {
+    var contactSection = document.getElementById('contact');
+    if (!contactSection) return;
+
+    document.addEventListener('click', function(e) {
+        var card = e.target.closest('.availability-card');
+        if (!card) return;
+        if (e.target.closest('.bentral-book-btn')) return;
+
+        var calendar = card.querySelector('.bentral-calendar');
+        if (!calendar) return;
+
+        var target = e.target;
+        if (target.closest('.bentral-nav') || target.closest('[class*="nav"]') || target.closest('[class*="arrow"]') || target.closest('[class*="prev"]') || target.closest('[class*="next"]')) return;
+
+        var navHeight = document.getElementById('nav').offsetHeight;
+        var targetPosition = contactSection.getBoundingClientRect().top + window.pageYOffset - navHeight;
+        window.scrollTo({ top: targetPosition, behavior: 'smooth' });
+    });
 }
 
 function initMapLoad() {
