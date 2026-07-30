@@ -72,7 +72,7 @@ function initMobileNav() {
 }
 
 function initScrollAnimations() {
-    var selectors = ['.about-text', '.about-image', '.suite-card', '.amenity-card', '.testimonial-card', '.contact-info', '.contact-form-wrapper', '.section-header', '.gallery-item'];
+    var selectors = ['.about-text', '.about-image', '.suite-card', '.amenity-card', '.testimonial-card', '.contact-info', '.contact-form-wrapper', '.section-header', '.gallery-item', '.availability-card'];
     for (var s = 0; s < selectors.length; s++) {
         var elements = document.querySelectorAll(selectors[s]);
         for (var i = 0; i < elements.length; i++) {

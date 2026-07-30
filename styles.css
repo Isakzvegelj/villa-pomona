@@ -419,6 +419,61 @@ ul { list-style: none; }
     border-color: var(--green-300);
 }
 
+/* Availability Grid */
+.availability-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+}
+
+.availability-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 24px;
+    transition: border-color 0.3s var(--ease);
+}
+
+.availability-card:hover {
+    border-color: var(--green-300);
+}
+
+.availability-card h4 {
+    font-family: var(--font-serif);
+    font-size: 1.15rem;
+    font-weight: 600;
+    margin: 0 0 16px 0;
+    color: var(--green-800);
+}
+
+[data-theme="dark"] .availability-card {
+    background: var(--bg-card);
+    border-color: var(--border-color);
+}
+
+[data-theme="dark"] .availability-card:hover {
+    border-color: var(--green-300);
+}
+
+[data-theme="dark"] .availability-card h4 {
+    color: var(--green-200);
+}
+
+.bentral-calendar {
+    padding: 12px;
+}
+
+.bentral-pricelist {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+    .availability-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
 /* Dark mode overrides for sections */
 [data-theme="dark"] .nav-links.active {
     background: rgba(18,18,18,0.98);
