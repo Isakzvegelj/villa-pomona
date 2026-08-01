@@ -301,6 +301,9 @@ ul { list-style: none; }
 .contact-item p { color: rgba(255,255,255,0.8); font-size: 0.95rem; }
 .contact-item a { color: rgba(255,255,255,0.8); transition: color 0.3s; }
 .contact-item a:hover { color: var(--gold-light); }
+.phone-protected { cursor: pointer; border-bottom: 1px dashed currentColor; }
+.phone-protected:hover { opacity: 0.85; }
+.wa-protected { cursor: pointer; }
 .contact-note { background: rgba(255,255,255,0.06); padding: 20px; border-radius: 8px; border-left: 3px solid var(--gold); }
 .contact-note p { font-size: 0.9rem; color: rgba(255,255,255,0.8); line-height: 1.6; }
 .contact-form-wrapper { background: var(--form-bg); border-radius: 16px; padding: 40px; color: var(--text-primary); }

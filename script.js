@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initFooterYear();
     initMapLoad();
     initBentralCalendarClicks();
+    initPhoneProtection();
 });
 
 function initDarkMode() {
@@ -141,6 +142,28 @@ function initBentralCalendarClicks() {
         var navHeight = document.getElementById('nav').offsetHeight;
         var targetPosition = contactSection.getBoundingClientRect().top + window.pageYOffset - navHeight;
         window.scrollTo({ top: targetPosition, behavior: 'smooth' });
+    });
+}
+
+function initPhoneProtection() {
+    // Phone number reveal: mask the number in visible text, reveal on click
+    document.querySelectorAll('.phone-protected').forEach(function(el) {
+        el.addEventListener('click', function(e) {
+            var phone = this.getAttribute('data-phone');
+            if (!phone) return;
+            if (this.tagName === 'A') e.preventDefault();
+            this.textContent = phone;
+            this.removeAttribute('data-phone');
+            this.classList.remove('phone-protected');
+        });
+    });
+    // WhatsApp link protection: construct URL from data attr on click
+    document.querySelectorAll('.wa-protected').forEach(function(el) {
+        el.addEventListener('click', function(e) {
+            e.preventDefault();
+            var wa = this.getAttribute('data-wa');
+            if (wa) window.open('https://wa.me/' + wa, '_blank');
+        });
     });
 }
 
