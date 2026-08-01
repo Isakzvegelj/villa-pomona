@@ -153,6 +153,11 @@ function initPhoneProtection() {
             if (!phone) return;
             if (this.tagName === 'A') e.preventDefault();
             this.textContent = phone;
+            // Also fix the tel: href on <a> elements so calling works
+            if (this.tagName === 'A' && this.getAttribute('href') && this.getAttribute('href').indexOf('tel:') === 0) {
+                var raw = phone.replace(/[^+\d]/g, '');
+                this.setAttribute('href', 'tel:' + raw);
+            }
             this.removeAttribute('data-phone');
             this.classList.remove('phone-protected');
         });
@@ -162,7 +167,7 @@ function initPhoneProtection() {
         el.addEventListener('click', function(e) {
             e.preventDefault();
             var wa = this.getAttribute('data-wa');
-            if (wa) window.open('https://wa.me/' + wa, '_blank');
+            if (wa) window.location.href = 'https://wa.me/' + wa;
         });
     });
 }
