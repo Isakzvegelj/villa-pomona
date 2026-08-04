@@ -62,7 +62,7 @@
             <p>We use the following third-party services to process your data:</p>
             <ul>
                 <li><strong>Bentral</strong> — processes booking calendar and form submissions for availability and reservations.</li>
-                <li><strong>Email</strong> — we receive your inquiry via email at info@villa-pomona-bled.com.</li>
+                <li><strong>Email</strong> — we receive your inquiry via email at <span class="email-self" data-email-user="info" data-email-host="villa-pomona-bled.com">[email]</span>.</li>
                 <li><strong>WhatsApp</strong> — if you choose to contact us via WhatsApp, your messages are subject to Meta's privacy policy.</li>
             </ul>
 
@@ -85,12 +85,12 @@
                 <li>Data portability</li>
                 <li>Withdraw consent at any time</li>
             </ul>
-            <p>To exercise any of these rights, please contact us at <a href="mailto:info@villa-pomona-bled.com">info@villa-pomona-bled.com</a>.</p>
+            <p>To exercise any of these rights, please contact us at <a class="mailto mailto-self" data-email-user="info" data-email-host="villa-pomona-bled.com" href="#">[email]</a>.</p>
 
             <h2>8. Contact</h2>
             <p>If you have questions about this Privacy Policy, please contact us:</p>
             <ul>
-                <li>Email: <a href="mailto:info@villa-pomona-bled.com">info@villa-pomona-bled.com</a></li>
+                <li>Email: <a class="mailto mailto-self" data-email-user="info" data-email-host="villa-pomona-bled.com" href="#">[email]</a></li>
                 <li>Phone/WhatsApp: <a href="#" class="wa-protected" data-wa="38651603858">+386 51 *** ***</a></li>
                 <li>Address: Crtomirova ulica 2, 4260 Bled, Slovenia</li>
             </ul>
@@ -106,7 +106,7 @@
                 </div>
                 <div class="footer-links"><h4>Explore</h4><ul><li><a href="index.html#about">About</a></li><li><a href="index.html#bedrooms">Bedrooms</a></li><li><a href="index.html#gallery">Gallery</a></li></ul></div>
                 <div class="footer-links"><h4>Legal</h4><ul><li><a href="privacy.html">Privacy Policy</a></li><li><a href="terms.html">Terms &amp; Conditions</a></li></ul></div>
-                <div class="footer-links"><h4>Connect</h4><ul><li><a href="mailto:info@villa-pomona-bled.com">info@villa-pomona-bled.com</a></li><li><a href="tel:+38651603858" class="phone-protected" data-phone="+386 51 603 858">+386 51 *** ***</a></li></ul></div>
+                <div class="footer-links"><h4>Connect</h4><ul><li><a class="mailto mailto-self" data-email-user="info" data-email-host="villa-pomona-bled.com" href="#">[email]</a></li><li><a href="tel:+38651603858" class="phone-protected" data-phone="+386 51 603 858">+386 51 *** ***</a></li></ul></div>
             </div>
             <div class="footer-bottom">
                 <p>&copy; 2026 Villa Pomona Bled. All rights reserved.</p>
@@ -114,5 +114,23 @@
             </div>
         </div>
     </footer>
+
+<script>
+(function(){
+  function em(el){var u=el.getAttribute('data-email-user')||'',h=el.getAttribute('data-email-host')||'';return u&&h?u+'@'+h:'';}
+  function bind(){
+    var as=document.querySelectorAll('a.mailto');
+    for(var i=0;i<as.length;i++){var a=as[i],ad=em(a);if(!ad)continue;
+      var s=a.getAttribute('data-email-subject')||'';
+      a.href='mailto:'+ad+(s?'?subject='+encodeURIComponent(s):'');
+      if(a.hasAttribute('data-email-self'))a.textContent=ad;
+      a.removeAttribute('data-email-user');a.removeAttribute('data-email-host');a.removeAttribute('data-email-self');}
+    var sp=document.querySelectorAll('.email-self');
+    for(var j=0;j<sp.length;j++){var e=sp[j],ad2=em(e);if(ad2)e.textContent=ad2;}
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',bind);else bind();
+})();
+</script>
+
 </body>
 </html>

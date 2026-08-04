@@ -83,7 +83,7 @@
             <p>These terms are governed by the laws of the Republic of Slovenia. Any disputes shall be subject to the exclusive jurisdiction of the courts of Bled, Slovenia.</p>
 
             <h2>10. Contact</h2>
-            <p>For questions about these terms, please contact us at <a href="mailto:info@villa-pomona-bled.com">info@villa-pomona-bled.com</a> or <a href="#" class="wa-protected" data-wa="38651603858">+386 51 *** ***</a>.</p>
+            <p>For questions about these terms, please contact us at <a class="mailto mailto-self" data-email-user="info" data-email-host="villa-pomona-bled.com" href="#">[email]</a> or <a href="#" class="wa-protected" data-wa="38651603858">+386 51 *** ***</a>.</p>
         </div>
     </main>
 
@@ -96,7 +96,7 @@
                 </div>
                 <div class="footer-links"><h4>Explore</h4><ul><li><a href="index.html#about">About</a></li><li><a href="index.html#bedrooms">Bedrooms</a></li><li><a href="index.html#gallery">Gallery</a></li></ul></div>
                 <div class="footer-links"><h4>Legal</h4><ul><li><a href="privacy.html">Privacy Policy</a></li><li><a href="terms.html">Terms &amp; Conditions</a></li></ul></div>
-                <div class="footer-links"><h4>Connect</h4><ul><li><a href="mailto:info@villa-pomona-bled.com">info@villa-pomona-bled.com</a></li><li><a href="tel:+38651603858" class="phone-protected" data-phone="+386 51 603 858">+386 51 *** ***</a></li></ul></div>
+                <div class="footer-links"><h4>Connect</h4><ul><li><a class="mailto mailto-self" data-email-user="info" data-email-host="villa-pomona-bled.com" href="#">[email]</a></li><li><a href="tel:+38651603858" class="phone-protected" data-phone="+386 51 603 858">+386 51 *** ***</a></li></ul></div>
             </div>
             <div class="footer-bottom">
                 <p>&copy; 2026 Villa Pomona Bled. All rights reserved.</p>
@@ -104,5 +104,23 @@
             </div>
         </div>
     </footer>
+
+<script>
+(function(){
+  function em(el){var u=el.getAttribute('data-email-user')||'',h=el.getAttribute('data-email-host')||'';return u&&h?u+'@'+h:'';}
+  function bind(){
+    var as=document.querySelectorAll('a.mailto');
+    for(var i=0;i<as.length;i++){var a=as[i],ad=em(a);if(!ad)continue;
+      var s=a.getAttribute('data-email-subject')||'';
+      a.href='mailto:'+ad+(s?'?subject='+encodeURIComponent(s):'');
+      if(a.hasAttribute('data-email-self'))a.textContent=ad;
+      a.removeAttribute('data-email-user');a.removeAttribute('data-email-host');a.removeAttribute('data-email-self');}
+    var sp=document.querySelectorAll('.email-self');
+    for(var j=0;j<sp.length;j++){var e=sp[j],ad2=em(e);if(ad2)e.textContent=ad2;}
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',bind);else bind();
+})();
+</script>
+
 </body>
 </html>
