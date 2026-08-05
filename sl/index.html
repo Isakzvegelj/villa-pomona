@@ -46,7 +46,6 @@
         ],
         "url": "https://villa-pomona-bled.com/sl/",
         "telephone": "+38651603858",
-        "email": "info@villa-pomona-bled.com",
         "priceRange": "€170–€980",
         "description": "Luksuzna vila v Bledu, Slovenija s 3 spalnicami, hiško ob bazenu, bazenom, savno, knjižnico in parkiriščem za 5 avtomobilov. Le nekaj korakov od Blejskega jezera.",
         "address": {
@@ -518,7 +517,7 @@
                     <p class="lead">Ste pripravljeni doživeti Vilo Pomona? Stopite v stik z nami neposredno za najboljše cene in osebno storitev.</p>
                     <div class="contact-details">
                         <div class="contact-item"><span class="ci-icon" aria-hidden="true">&#128205;</span><div><strong>Naslov</strong><p>Crtomirova ulica 2, 4260 Bled, Slovenija<br>Mirna vila soseska, 3 min od Blejskega jezera</p></div></div>
-                        <div class="contact-item"><span class="ci-icon" aria-hidden="true">&#9993;</span><div><strong>E-pošta</strong><p><a href="mailto:info@villa-pomona-bled.com">info@villa-pomona-bled.com</a></p></div></div>
+                        <div class="contact-item"><span class="ci-icon" aria-hidden="true">&#9993;</span><div><strong>E-pošta</strong><p><a href="#" class="mailto mailto-self" data-email-user="info" data-email-host="villa-pomona-bled.com">[email]</a></p></div></div>
                         <div class="contact-item"><span class="ci-icon" aria-hidden="true">&#128222;</span><div><strong>Telefon / WhatsApp</strong><p><span class="phone-protected" data-phone="+386 51 603 858">+386 51 *** ***</span> &middot; <a href="tel:+38651603858" style="font-size:0.8rem;opacity:0.7;">Pokliči</a></p></div></div>
                     </div>
                     <a href="#" class="wa-protected btn btn-outline" data-wa="38651603858" style="color:#fff;border-color:var(--green-400);display:inline-flex;align-items:center;gap:10px;margin-bottom:24px;"><span aria-hidden="true">&#128242;</span> Klepet na WhatsApp</a>
@@ -542,7 +541,7 @@
                 <div class="footer-links"><h4>Raziščite</h4><ul><li><a href="#bedrooms">Spalnice</a></li><li><a href="#gallery">Galerija</a></li></ul></div>
                 <div class="footer-links"><h4>Obisk</h4><ul><li><a href="#location">Lokacija</a></li><li><a href="#contact">Kontakt</a></li><li><a href="#contact">Rezerviraj</a></li></ul></div>
                 <div class="footer-links"><h4>Pravno</h4><ul><li><a href="privacy.html">Politika zasebnosti</a></li><li><a href="terms.html">Pogoji poslovanja</a></li></ul></div>
-                <div class="footer-links"><h4>Povezava</h4><ul><li><a href="mailto:info@villa-pomona-bled.com">info@villa-pomona-bled.com</a></li><li><a href="tel:+38651603858" class="phone-protected" data-phone="+386 51 603 858">+386 51 *** ***</a></li></ul></div>
+                <div class="footer-links"><h4>Povezava</h4><ul><li><a href="#" class="mailto mailto-self" data-email-user="info" data-email-host="villa-pomona-bled.com">[email]</a></li><li><a href="tel:+38651603858" class="phone-protected" data-phone="+386 51 603 858">+386 51 *** ***</a></li></ul></div>
             </div>
             <div class="footer-bottom">
                 <p>&copy; <span id="footerYear">2026</span> Villa Pomona Bled. Vse pravice pridržane.</p>
@@ -552,5 +551,21 @@
     </footer>
 
     <script src="../script.js" defer></script>
+<script>
+(function(){
+  function em(el){var u=el.getAttribute('data-email-user')||'',h=el.getAttribute('data-email-host')||'';return u&&h?u+'@'+h:'';}
+  function bind(){
+    var as=document.querySelectorAll('a.mailto');
+    for(var i=0;i<as.length;i++){var a=as[i],ad=em(a);if(!ad)continue;
+      var s=a.getAttribute('data-email-subject')||'';
+      a.href='mailto:'+ad+(s?'?subject='+encodeURIComponent(s):'');
+      if(a.hasAttribute('data-email-self'))a.textContent=ad;
+      a.removeAttribute('data-email-user');a.removeAttribute('data-email-host');a.removeAttribute('data-email-self');}
+    var sp=document.querySelectorAll('.email-self');
+    for(var j=0;j<sp.length;j++){var e=sp[j],ad2=em(e);if(ad2)e.textContent=ad2;}
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',bind);else bind();
+})();
+</script>
 </body>
 </html>
