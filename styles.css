@@ -189,10 +189,6 @@ ul { list-style: none; }
 .suite-desc { font-size: 0.9rem; color: var(--neutral-600); line-height: 1.6; margin-bottom: 16px; }
 .suite-features { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
 .suite-features li { font-size: 0.75rem; background: var(--green-50); color: var(--green-700); padding: 4px 12px; border-radius: 50px; font-weight: 500; }
-.suite-price { display: flex; align-items: baseline; gap: 4px; padding-top: 16px; border-top: 1px solid var(--neutral-200); margin-top: auto; margin-bottom: 16px; }
-.price-from { font-size: 0.75rem; color: var(--neutral-500); text-transform: uppercase; }
-.price-amount { font-family: var(--font-serif); font-size: 1.8rem; font-weight: 500; color: var(--green-700); }
-.price-night { font-size: 0.8rem; color: var(--neutral-500); }
 
 .amenities { background: var(--green-50); }
 .amenities-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
@@ -612,8 +608,6 @@ ul { list-style: none; }
 /* Suite features pills in dark mode */
 [data-theme="dark"] .suite-features li { background: var(--green-50); color: var(--green-400); }
 [data-theme="dark"] .suite-size { color: var(--green-400); }
-[data-theme="dark"] .price-amount { color: var(--green-400); }
-[data-theme="dark"] .price-from { color: var(--text-secondary); }
 
 /* Dark mode form confirmation */
 [data-theme="dark"] .contact-form-wrapper > div h3 { color: var(--text-primary); }
