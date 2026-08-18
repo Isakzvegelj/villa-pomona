@@ -121,23 +121,25 @@
     <link rel="stylesheet" href="styles.css">
     <script>
         (function(){
-            var t = localStorage.getItem('theme');
+            document.documentElement.classList.add('js');
+            var t = null;
+            try { t = localStorage.getItem('theme'); } catch (e) {}
             if (t) document.documentElement.setAttribute('data-theme', t);
             else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) document.documentElement.setAttribute('data-theme', 'dark');
         })();
     </script>
 </head>
 <body>
-    <a href="#bedrooms" class="skip-link">Skip to content</a>
+    <a href="#hero" class="skip-link">Skip to content</a>
     <nav class="nav" id="nav">
         <div class="nav-container">
             <a href="#hero" class="nav-logo">
                 <span class="logo-text">Villa Pomona</span>
             </a>
-            <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+            <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="navLinks">
                 <span></span><span></span><span></span>
             </button>
-            <ul class="nav-links" id="navLinks">
+            <ul class="nav-links" id="navLinks" aria-label="Primary navigation">
                 <li><a href="#bedrooms">Bedrooms</a></li>
                 <li><a href="#availability">Availability</a></li>
                 <li><a href="#amenities">Amenities</a></li>
@@ -151,6 +153,7 @@
         </div>
     </nav>
 
+    <main id="main-content">
     <section class="hero" id="hero">
         <img class="hero-bg-img" src="assets/images/hero-1.webp" srcset="assets/images/hero-1-800.webp 800w, assets/images/hero-1.webp 1600w" sizes="100vw" alt="Villa Pomona exterior and pool house in Bled, Slovenia" fetchpriority="high" decoding="async" width="1600" height="1200">
         <div class="hero-overlay"></div>
@@ -265,22 +268,22 @@
             </div>
             <div class="availability-grid">
                 <div class="availability-card" data-room="Bedroom 101">
-                    <h4>Bedroom 101 &mdash; Deluxe Double Room</h4>
+                    <h3>Bedroom 101 &mdash; Deluxe Double Room</h3>
                     <div class="bentral-widget bentral-calendar"><script src="//www.bentral.com/service/embed/calendar.js?uid=5f5441304d7a514d&last=true&key=ef32fbc68fd13b8f9e5ba7a55520e061"></script></div>
                     <a href="#contact" class="btn btn-primary btn-full bentral-book-btn">Book This Room</a>
                 </div>
                 <div class="availability-card" data-room="Bedroom 102">
-                    <h4>Bedroom 102 &mdash; King Suite with Pool View</h4>
+                    <h3>Bedroom 102 &mdash; King Suite with Pool View</h3>
                     <div class="bentral-widget bentral-calendar"><script src="//www.bentral.com/service/embed/calendar.js?uid=5f5441304d7a494d&last=true&key=ef32fbc68fd13b8f9e5ba7a55520e061"></script></div>
                     <a href="#contact" class="btn btn-primary btn-full bentral-book-btn">Book This Room</a>
                 </div>
                 <div class="availability-card" data-room="Bedroom 103">
-                    <h4>Bedroom 103 &mdash; Queen Suite with Pool View</h4>
+                    <h3>Bedroom 103 &mdash; Queen Suite with Pool View</h3>
                     <div class="bentral-widget bentral-calendar"><script src="//www.bentral.com/service/embed/calendar.js?uid=5f5441304d7a4d4d&last=true&key=ef32fbc68fd13b8f9e5ba7a55520e061"></script></div>
                     <a href="#contact" class="btn btn-primary btn-full bentral-book-btn">Book This Room</a>
                 </div>
                 <div class="availability-card" data-room="Pool House">
-                    <h4>Pool House &mdash; Poolside Studio</h4>
+                    <h3>Pool House &mdash; Poolside Studio</h3>
                     <div class="bentral-widget bentral-calendar"><script src="//www.bentral.com/service/embed/calendar.js?uid=5f5441304d7a554d&last=true&key=ef32fbc68fd13b8f9e5ba7a55520e061"></script></div>
                     <a href="#contact" class="btn btn-primary btn-full bentral-book-btn">Book This Room</a>
                 </div>
@@ -298,49 +301,49 @@
                 <div class="amenity-card reveal">
                     <img class="amenity-img" src="assets/images/pool.jpg" alt="Swimming pool at Villa Pomona" loading="lazy" decoding="async" style="object-position: center 65%;">
                     <div class="amenity-card-body">
-                        <h4>Swimming Pool</h4>
+                        <h3>Swimming Pool</h3>
                         <p>A beautiful seasonal pool set in the garden with sun loungers and umbrellas. The heart of summer relaxation at Villa Pomona.</p>
                     </div>
                 </div>
                 <div class="amenity-card reveal">
                     <img class="amenity-img" src="assets/images/sauna.jpg" alt="Private sauna at Villa Pomona" loading="lazy" decoding="async">
                     <div class="amenity-card-body">
-                        <h4>Sauna</h4>
+                        <h3>Sauna</h3>
                         <p>All guests enjoy complimentary access to the private sauna &mdash; the perfect way to unwind after a day exploring Bled and the Julian Alps.</p>
                     </div>
                 </div>
                 <div class="amenity-card reveal">
                     <img class="amenity-img" src="assets/images/lounge.webp" alt="Lounge Library at Villa Pomona" loading="lazy" decoding="async" style="object-position: center 35%;">
                     <div class="amenity-card-body">
-                        <h4>Lounge Library</h4>
+                        <h3>Lounge Library</h3>
                         <p>A cosy indoor lounge with a curated selection of books, perfect for quiet afternoons, reading, or simply unwinding.</p>
                     </div>
                 </div>
                 <div class="amenity-card reveal">
                     <img class="amenity-img" src="assets/images/103terrace.jpg" alt="Common balcony at Villa Pomona" loading="lazy" decoding="async">
                     <div class="amenity-card-body">
-                        <h4>Common Balcony</h4>
+                        <h3>Common Balcony</h3>
                         <p>An outdoor common area balcony overlooking the garden &mdash; ideal for morning coffee, evening drinks, or a quiet moment.</p>
                     </div>
                 </div>
                 <div class="amenity-card reveal">
                     <div class="amenity-card-text-icon"><span>&#128664;</span></div>
                     <div class="amenity-card-body">
-                        <h4>Parking for 5 Cars</h4>
+                        <h3>Parking for 5 Cars</h3>
                         <p>Free private parking on-site for up to five vehicles. Rare in central Bled and perfect for groups arriving by car.</p>
                     </div>
                 </div>
                 <div class="amenity-card reveal">
                     <img class="amenity-img" src="assets/images/garden.jpg" alt="Garden at Villa Pomona" loading="lazy" decoding="async">
                     <div class="amenity-card-body">
-                        <h4>Garden &amp; Outdoors</h4>
+                        <h3>Garden &amp; Outdoors</h3>
                         <p>Lovely garden surroundings with seating areas, perfect for relaxing, reading, or enjoying the fresh Bled air.</p>
                     </div>
                 </div>
                 <div class="amenity-card reveal">
                     <img class="amenity-img" src="assets/images/kitchen.webp" alt="Kitchen at Villa Pomona" loading="lazy" decoding="async" style="object-position: 65% 40%;">
                     <div class="amenity-card-body">
-                        <h4>Self-Catering Kitchen</h4>
+                        <h3>Self-Catering Kitchen</h3>
                         <p>Fully equipped kitchen for preparing your own meals. Available exclusively when booking the entire villa. Local supermarket and bakery just a short walk away.</p>
                     </div>
                 </div>
@@ -359,15 +362,15 @@
                     <div class="garden-features" style="margin-top: 32px;">
                         <div class="garden-feature">
                             <span class="gf-icon" style="background: var(--green-100); color: var(--green-700);">&#128205;</span>
-                            <div><h4>Walking Distance</h4><p>Lake Bled (3 min), town centre (5 min), convenience store (2 min), pharmacy (3 min), sports facilities (4 min)</p></div>
+                            <div><h3>Walking Distance</h3><p>Lake Bled (3 min), town centre (5 min), convenience store (2 min), pharmacy (3 min), sports facilities (4 min)</p></div>
                         </div>
                         <div class="garden-feature">
                             <span class="gf-icon" style="background: var(--green-100); color: var(--green-700);">&#127984;</span>
-                            <div><h4>Nearby Attractions</h4><p>Bled Castle (10 min walk), Bled Island (boat 3 min away), Vintgar Gorge (5 min drive), Triglav National Park (20 min drive)</p></div>
+                            <div><h3>Nearby Attractions</h3><p>Bled Castle (10 min walk), Bled Island (boat 3 min away), Vintgar Gorge (5 min drive), Triglav National Park (20 min drive)</p></div>
                         </div>
                         <div class="garden-feature">
                             <span class="gf-icon" style="background: var(--green-100); color: var(--green-700);">&#128694;</span>
-                            <div><h4>Perfect for Couples</h4><p>Tranquil villa neighbourhood ideal for escaping city stress and noise. Peaceful days by the pool, romantic walks to the lake, and quiet evenings on the balcony.</p></div>
+                            <div><h3>Perfect for Couples</h3><p>Tranquil villa neighbourhood ideal for escaping city stress and noise. Peaceful days by the pool, romantic walks to the lake, and quiet evenings on the balcony.</p></div>
                         </div>
                     </div>
                 </div>
@@ -425,67 +428,67 @@
                 <h2 class="section-title">Glimpses of <em>Villa Pomona</em></h2>
             </div>
             <div class="gallery-grid">
-                <div class="gallery-item reveal" data-index="0">
+                <div class="gallery-item reveal" tabindex="0" role="button" data-index="0">
                     <div class="gallery-image-wrapper">
                         <img src="assets/images/hero-1.webp" srcset="assets/images/hero-1-800.webp 800w, assets/images/hero-1.webp 1600w" sizes="(max-width: 768px) 50vw, 25vw" alt="Villa Pomona exterior" loading="lazy" decoding="async" width="1600" height="1200">
                         <div class="gallery-overlay"><span class="gallery-zoom" aria-hidden="true">&#128269;</span><span class="gallery-label">Villa Exterior</span></div>
                     </div>
                 </div>
-                <div class="gallery-item reveal tall" data-index="1">
+                <div class="gallery-item reveal tall" tabindex="0" role="button" data-index="1">
                     <div class="gallery-image-wrapper">
                         <img src="assets/images/gallery-1.webp" srcset="assets/images/gallery-1-800.webp 800w, assets/images/gallery-1.webp 1600w" sizes="(max-width: 768px) 50vw, 25vw" alt="Pool at Villa Pomona" loading="lazy" decoding="async" width="1600" height="2134">
                         <div class="gallery-overlay"><span class="gallery-zoom" aria-hidden="true">&#128269;</span><span class="gallery-label">Pool &amp; Garden</span></div>
                     </div>
                 </div>
-                <div class="gallery-item reveal" data-index="2">
+                <div class="gallery-item reveal" tabindex="0" role="button" data-index="2">
                     <div class="gallery-image-wrapper">
                         <img src="assets/images/gallery-2.webp" sizes="(max-width: 768px) 50vw, 25vw" alt="Pool House interior" loading="lazy" decoding="async">
                         <div class="gallery-overlay"><span class="gallery-zoom" aria-hidden="true">&#128269;</span><span class="gallery-label">Pool House Living</span></div>
                     </div>
                 </div>
-                <div class="gallery-item reveal wide" data-index="3">
+                <div class="gallery-item reveal wide" tabindex="0" role="button" data-index="3">
                     <div class="gallery-image-wrapper">
                         <img src="assets/images/gallery-3.webp" srcset="assets/images/gallery-3-800.webp 800w, assets/images/gallery-3.webp 1600w" sizes="(max-width: 768px) 50vw, 25vw" alt="Pool terrace view" loading="lazy" decoding="async" width="1600" height="2134">
                         <div class="gallery-overlay"><span class="gallery-zoom" aria-hidden="true">&#128269;</span><span class="gallery-label">Pool Terrace</span></div>
                     </div>
                 </div>
-                <div class="gallery-item reveal" data-index="4">
+                <div class="gallery-item reveal" tabindex="0" role="button" data-index="4">
                     <div class="gallery-image-wrapper">
                         <img src="assets/images/gallery-4-800.webp" sizes="(max-width: 768px) 50vw, 25vw" alt="Bedroom 102 balcony" loading="lazy" decoding="async">
                         <div class="gallery-overlay"><span class="gallery-zoom" aria-hidden="true">&#128269;</span><span class="gallery-label">Bedroom Balcony</span></div>
                     </div>
                 </div>
-                <div class="gallery-item reveal tall" data-index="5">
+                <div class="gallery-item reveal tall" tabindex="0" role="button" data-index="5">
                     <div class="gallery-image-wrapper">
                         <img src="assets/images/gallery-5.webp" sizes="(max-width: 768px) 50vw, 25vw" alt="Bedroom 103 terrace" loading="lazy" decoding="async">
                         <div class="gallery-overlay"><span class="gallery-zoom" aria-hidden="true">&#128269;</span><span class="gallery-label">Bedroom Terrace</span></div>
                     </div>
                 </div>
-                <div class="gallery-item reveal" data-index="6">
+                <div class="gallery-item reveal" tabindex="0" role="button" data-index="6">
                     <div class="gallery-image-wrapper">
                         <img src="assets/images/gallery-6.webp" srcset="assets/images/gallery-6-800.webp 800w, assets/images/gallery-6.webp 1600w" sizes="(max-width: 768px) 50vw, 25vw" alt="Pool house terrace" loading="lazy" decoding="async" width="1600" height="2134">
                         <div class="gallery-overlay"><span class="gallery-zoom" aria-hidden="true">&#128269;</span><span class="gallery-label">Pool House Terrace</span></div>
                     </div>
                 </div>
-                <div class="gallery-item reveal" data-index="7">
+                <div class="gallery-item reveal" tabindex="0" role="button" data-index="7">
                     <div class="gallery-image-wrapper">
                         <img src="assets/images/gallery-7.webp" srcset="assets/images/gallery-7-800.webp 800w, assets/images/gallery-7.webp 1600w" sizes="(max-width: 768px) 50vw, 25vw" alt="Villa Pomona garden" loading="lazy" decoding="async" width="1600" height="2134">
                         <div class="gallery-overlay"><span class="gallery-zoom" aria-hidden="true">&#128269;</span><span class="gallery-label">Garden Views</span></div>
                     </div>
                 </div>
-                <div class="gallery-item reveal" data-index="8">
+                <div class="gallery-item reveal" tabindex="0" role="button" data-index="8">
                     <div class="gallery-image-wrapper">
                         <img src="assets/images/405913649.jpg" sizes="(max-width: 768px) 50vw, 25vw" alt="Steps from beautiful Lake Bled" loading="lazy" decoding="async">
                         <div class="gallery-overlay"><span class="gallery-zoom" aria-hidden="true">&#128269;</span><span class="gallery-label">Lake Bled Nearby</span></div>
                     </div>
                 </div>
-                <div class="gallery-item reveal tall" data-index="9">
+                <div class="gallery-item reveal tall" tabindex="0" role="button" data-index="9">
                     <div class="gallery-image-wrapper">
                         <img src="assets/images/102bath.jpg" sizes="(max-width: 768px) 50vw, 25vw" alt="Prestigious marble bathroom from Pohorje" loading="lazy" decoding="async">
                         <div class="gallery-overlay"><span class="gallery-zoom" aria-hidden="true">&#128269;</span><span class="gallery-label">Marble Bathroom</span></div>
                     </div>
                 </div>
-                <div class="gallery-item reveal" data-index="10">
+                <div class="gallery-item reveal" tabindex="0" role="button" data-index="10">
                     <div class="gallery-image-wrapper">
                         <img src="assets/images/101.1.jpg" sizes="(max-width: 768px) 50vw, 25vw" alt="Bedroom 101 at Villa Pomona" loading="lazy" decoding="async">
                         <div class="gallery-overlay"><span class="gallery-zoom" aria-hidden="true">&#128269;</span><span class="gallery-label">Bedroom 101</span></div>
@@ -528,10 +531,10 @@
                     <p class="lead">Ready to experience Villa Pomona? Reach out to us directly for the best rates and personalized service.</p>
                     <div class="contact-details">
                         <div class="contact-item"><span class="ci-icon" aria-hidden="true">&#128205;</span><div><strong>Address</strong><p>Crtomirova ulica 2, 4260 Bled, Slovenia<br>Tranquil villa neighbourhood, 3 min from Lake Bled</p></div></div>
-                        <div class="contact-item"><span class="ci-icon" aria-hidden="true">&#9993;</span><div><strong>Email</strong><p><a class="mailto mailto-self" data-email-user="info" data-email-host="villa-pomona-bled.com" href="#">[email]</a></p></div></div>
+                        <div class="contact-item"><span class="ci-icon" aria-hidden="true">&#9993;</span><div><strong>Email</strong><p><a class="mailto mailto-self" data-email-self data-email-user="info" data-email-host="villa-pomona-bled.com" href="#">[email]</a></p></div></div>
                         <div class="contact-item"><span class="ci-icon" aria-hidden="true">&#128222;</span><div><strong>Phone / WhatsApp</strong><p><span class="phone-protected" data-phone="+386 51 603 858">+386 51 *** ***</span> &middot; <a href="tel:+38651603858" style="font-size:0.8rem;opacity:0.7;">Call</a></p></div></div>
                     </div>
-                    <a href="#" class="wa-protected btn btn-outline" data-wa="38651603858" style="color:#fff;border-color:var(--green-400);display:inline-flex;align-items:center;gap:10px;margin-bottom:24px;"><span aria-hidden="true">&#128242;</span> Chat on WhatsApp</a>
+                    <a href="https://wa.me/38651603858" class="wa-protected btn btn-outline" data-wa="38651603858" style="color:#fff;border-color:var(--green-400);display:inline-flex;align-items:center;gap:10px;margin-bottom:24px;"><span aria-hidden="true">&#128242;</span> Chat on WhatsApp</a>
                 </div>
                 <div class="contact-form-wrapper reveal">
                     <div class="bentral-widget" id="bentralBooking">
@@ -542,6 +545,7 @@
         </div>
     </section>
 
+    </main>
     <footer class="footer">
         <div class="container">
             <div class="footer-grid">
@@ -549,10 +553,10 @@
                     <span class="logo-text">Villa Pomona</span>
                     <p>A peaceful villa retreat in Bled's most tranquil neighbourhood.</p>
                 </div>
-                <div class="footer-links"><h4>Explore</h4><ul><li><a href="#bedrooms">Bedrooms</a></li><li><a href="#gallery">Gallery</a></li></ul></div>
-                <div class="footer-links"><h4>Visit</h4><ul><li><a href="#location">Location</a></li><li><a href="#contact">Contact</a></li><li><a href="#contact">Book Now</a></li></ul></div>
-                <div class="footer-links"><h4>Legal</h4><ul><li><a href="privacy.html">Privacy Policy</a></li><li><a href="terms.html">Terms &amp; Conditions</a></li></ul></div>
-                <div class="footer-links"><h4>Connect</h4><ul><li><a class="mailto mailto-self" data-email-user="info" data-email-host="villa-pomona-bled.com" href="#">[email]</a></li><li><a href="tel:+38651603858" class="phone-protected" data-phone="+386 51 603 858">+386 51 *** ***</a></li></ul></div>
+                <div class="footer-links"><h3>Explore</h3><ul><li><a href="#bedrooms">Bedrooms</a></li><li><a href="#gallery">Gallery</a></li></ul></div>
+                <div class="footer-links"><h3>Visit</h3><ul><li><a href="#location">Location</a></li><li><a href="#contact">Contact</a></li><li><a href="#contact">Book Now</a></li></ul></div>
+                <div class="footer-links"><h3>Legal</h3><ul><li><a href="privacy.html">Privacy Policy</a></li><li><a href="terms.html">Terms &amp; Conditions</a></li></ul></div>
+                <div class="footer-links"><h3>Connect</h3><ul><li><a class="mailto mailto-self" data-email-self data-email-user="info" data-email-host="villa-pomona-bled.com" href="#">[email]</a></li><li><a href="tel:+38651603858" class="phone-protected" data-phone="+386 51 603 858">+386 51 *** ***</a></li></ul></div>
             </div>
             <div class="footer-bottom">
                 <p>&copy; <span id="footerYear">2026</span> Villa Pomona Bled. All rights reserved.</p>

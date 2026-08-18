@@ -348,8 +348,9 @@ ul { list-style: none; }
 
 @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
 @keyframes scrollPulse { 0%, 100% { opacity: 1; transform: scaleY(1); } 50% { opacity: 0.3; transform: scaleY(0.6); } }
-.reveal { opacity: 0; transform: translateY(40px); transition: all 0.8s var(--ease); }
-.reveal.visible { opacity: 1; transform: translateY(0); }
+html.js .reveal { opacity: 0; transform: translateY(40px); transition: all 0.8s var(--ease); }
+html.js .reveal.visible { opacity: 1; transform: translateY(0); }
+section[id]{scroll-margin-top:88px;}
 
 /* Dark Mode Toggle Button */
 .theme-toggle {
@@ -677,3 +678,7 @@ ul { list-style: none; }
     .section-title { font-size: 1.8rem; }
     .suite-info { padding: 20px; }
 }
+/* Accessible contrast for primary actions across themes. */
+.btn-primary,.nav-cta{background:var(--green-700)!important;color:#fff!important;}
+[data-theme="dark"] .btn-primary,[data-theme="dark"] .nav-cta{background:var(--green-800)!important;color:#fff!important;}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}.hero-content{transform:none!important}}
