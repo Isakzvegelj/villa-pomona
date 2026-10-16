@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initMapLoad();
     initBentralCalendarClicks();
     initPhoneProtection();
+    initBookingFrameTitles();
 });
 
 function initDarkMode() {
@@ -259,3 +260,21 @@ window.addEventListener('load', function() {
         }
     }, {passive: true});
 })();
+
+// Label provider frames from their surrounding room or section heading.
+function initBookingFrameTitles() {
+    document.querySelectorAll('.bentral-widget').forEach(function(widget) {
+        function labelFrames() {
+            var card = widget.closest('.availability-card');
+            var heading = card && card.querySelector('h3');
+            var title = heading ? 'Availability for ' + heading.textContent.trim()
+                : widget.id === 'bentralBooking' ? 'Villa Pomona booking form'
+                : 'Villa Pomona prices and services';
+            widget.querySelectorAll('iframe:not([title])').forEach(function(frame) {
+                frame.title = title;
+            });
+        }
+        labelFrames();
+        new MutationObserver(labelFrames).observe(widget, {childList: true, subtree: true});
+    });
+}
