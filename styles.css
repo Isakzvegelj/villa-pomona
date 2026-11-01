@@ -701,3 +701,72 @@ ul { list-style: none; }
  .nav-links .nav-cta { color: #fff !important; }
  body:has(.lightbox.active) .mobile-booking-cta { display: none; }
 }
+
+/* Reviewed follow-up: persistent desktop booking and a quieter booking section. */
+.mobile-booking-cta {
+ display: flex;
+ position: fixed;
+ align-items: center;
+ justify-content: space-between;
+ gap: 28px;
+ right: 28px;
+ bottom: 24px;
+ left: auto;
+ z-index: 990;
+ min-height: 54px;
+ padding: 15px 26px;
+ border-radius: 40px;
+ box-shadow: 0 6px 28px rgba(17, 40, 28, .18);
+ font-size: .9rem;
+ letter-spacing: .015em;
+}
+.mobile-booking-cta:focus-visible { outline: 3px solid #173b2a; outline-offset: 4px; }
+.nav-links .nav-cta { background: #eed8a7 !important; color: #173b2a !important; }
+.nav-links .nav-cta:hover { background: #fff0cf !important; color: #173b2a !important; }
+body:has(.lightbox.active) .mobile-booking-cta { display: none; }
+
+.booking-section { background: #f7f6f1; padding: 88px 0 96px; }
+.booking-section .contact-form-wrapper {
+ display: grid;
+ grid-template-columns: minmax(0, .82fr) minmax(0, 1.8fr);
+ align-items: start;
+ gap: clamp(32px, 4vw, 64px);
+ max-width: none;
+ padding: 0;
+ border-radius: 0;
+ background: transparent;
+}
+.booking-intro { margin: 10px 0 0; }
+.booking-intro::before { content: ''; display: block; width: 44px; height: 2px; background: #b7975e; margin-bottom: 28px; }
+.booking-intro .booking-kicker { color: #657266; font-size: .7rem; letter-spacing: .14em; line-height: 1.7; }
+.booking-intro h2 { font-size: clamp(2.2rem, 3.25vw, 3rem); font-weight: 400; color: #234533; line-height: 1.08; margin: 16px 0 22px; }
+.booking-intro p { max-width: 36ch; color: #626b64; font-size: .94rem; line-height: 1.85; }
+.booking-section #bentralBooking,
+.booking-section #bentralBooking:hover {
+ min-width: 0;
+ padding: 24px;
+ border: 1px solid #dedfd5;
+ border-radius: 14px;
+ background: #fff;
+ box-shadow: 0 12px 40px rgba(26, 58, 42, .045);
+}
+.booking-section #bentralBooking iframe { display: block; border-radius: 0; }
+[data-theme="dark"] .booking-section { background: #17211b; }
+[data-theme="dark"] .booking-intro .booking-kicker { color: #b9c5b9; }
+[data-theme="dark"] .booking-intro h2 { color: #e1e9de; }
+[data-theme="dark"] .booking-intro p { color: #b9c5b9; }
+[data-theme="dark"] .booking-section #bentralBooking { border-color: #536254; }
+
+@media (max-width: 960px) {
+ .booking-section { padding: 52px 0 60px; }
+ .booking-section .contact-form-wrapper { grid-template-columns: minmax(0, 1fr); gap: 28px; }
+ .booking-intro { margin-top: 0; }
+ .booking-intro::before { margin-bottom: 20px; }
+ .booking-intro h2 { font-size: 2.4rem; margin: 12px 0 16px; }
+ .booking-intro p { max-width: 52ch; }
+}
+@media (max-width: 768px) {
+ .mobile-booking-cta { bottom: calc(12px + env(safe-area-inset-bottom)); left: 16px; right: 16px; padding: 12px 20px; border-radius: 8px; min-height: 52px; font-size: .95rem; }
+ .booking-section #bentralBooking { padding: 12px; border-radius: 10px; }
+ .booking-intro h2 { font-size: 2.2rem; }
+}
