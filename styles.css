@@ -839,8 +839,9 @@ body:has(.lightbox.active) .mobile-booking-cta { display: none; }
 .availability-card summary:hover { background:var(--neutral-50); }
 .availability-card summary:focus-visible { outline:3px solid var(--green-500); outline-offset:-4px; border-radius:10px; }
 .calendar-panel { padding:20px 24px 26px; max-width:720px; margin:0 auto; }
-.calendar-panel .bentral-calendar { padding:0; min-width:0; }
-.calendar-panel iframe { max-width:100%; }
+.calendar-panel .bentral-calendar { padding:0; min-width:0; overflow-x:auto; overscroll-behavior-x:contain; }
+.calendar-panel iframe { display:block; width:100%; min-width:640px; max-width:none; }
+.calendar-scroll-hint { display:none; }
 .calendar-panel .bentral-book-btn { display:flex; width:max-content; max-width:100%; margin:20px auto 0; }
 [data-theme="dark"] .calendar-toggle { color:var(--green-300); }
 [data-theme="dark"] .availability-card summary:hover { background:var(--bg-secondary); }
@@ -849,4 +850,5 @@ body:has(.lightbox.active) .mobile-booking-cta { display: none; }
  .availability-card summary h3 { font-size:1.1rem; }
  .calendar-toggle { width:100%; justify-content:space-between; }
  .calendar-panel { padding:16px 12px 20px; }
+ .calendar-scroll-hint { display:block; margin:0 0 12px; color:var(--text-secondary); font-size:.78rem; line-height:1.6; }
 }
