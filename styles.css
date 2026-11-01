@@ -689,6 +689,9 @@ ul { list-style: none; }
 .villa-enquiry { margin: 0 0 28px; color: #fff; font-size: .95rem; }
 .villa-enquiry a { display: inline-block; color: #eed8a7; text-decoration: underline; text-underline-offset: 4px; margin-bottom: 8px; }
 .mobile-booking-cta { display: none; }
+.booking-section { background: var(--bg-secondary); padding: 56px 0; }
+.booking-section .contact-form-wrapper { max-width: 900px; margin: auto; }
+.contact-grid { grid-template-columns: 1fr; }
 @media(min-width:769px) and (max-width:1200px) { .nav-links { gap: 12px; } .nav-links a { font-size: .68rem; letter-spacing: .02em; } .nav-cta { padding: 12px 16px; } }
 @media(max-width:768px) {
  body { padding-bottom: calc(82px + env(safe-area-inset-bottom)); }
