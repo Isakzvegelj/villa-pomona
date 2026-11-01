@@ -860,7 +860,7 @@ body:has(.lightbox.active) .mobile-booking-cta { display: none; }
 .music-toggle:hover { background:#eeeee5; border-color:#a2b09e; }
 .music-toggle[aria-pressed="true"] { color:#f7f6f1; background:#234533; border-color:#234533; }
 .music-toggle:focus-visible { outline:3px solid #b7975e; outline-offset:3px; }
-.music-credit { flex-basis:100%; font-size:.72rem; line-height:1.8; color:var(--text-secondary); }
+.music-credit { margin:0 0 20px; font-size:.75rem; line-height:1.8; color:rgba(255,255,255,.75); }
 .music-credit a { color:inherit; text-decoration:underline; text-underline-offset:3px; }
 .music-status { position:fixed; left:28px; bottom:80px; z-index:992; max-width:240px; padding:0; font-size:.78rem; color:var(--text-primary); background:var(--bg-card); }
 .music-status:not(:empty) { padding:10px 14px; border:1px solid var(--border-color); border-radius:8px; }
