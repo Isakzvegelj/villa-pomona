@@ -871,3 +871,15 @@ body:has(.lightbox.active) .music-toggle, body:has(.lightbox.active) .music-stat
  .music-toggle { left:16px; bottom:calc(80px + env(safe-area-inset-bottom)); min-height:44px; padding:9px 13px; font-size:.73rem; }
  .music-status { left:16px; bottom:calc(132px + env(safe-area-inset-bottom)); }
 }
+
+/* Discreet music control, retaining a full 44px touch target. */
+.music-toggle, .music-toggle[aria-pressed="true"] { width:44px; height:44px; min-height:44px; padding:0; gap:0; justify-content:center; border-radius:50%; background:rgba(247,246,241,.92); color:#3d5746; border-color:rgba(35,69,51,.22); box-shadow:none; }
+.music-toggle svg { width:16px; height:16px; opacity:.9; }
+.music-toggle:hover { background:#f7f6f1; border-color:#899a86; }
+.music-toggle[aria-pressed="false"]::before { content:""; position:absolute; width:20px; height:1px; left:11px; top:21px; background:currentColor; transform:rotate(-45deg); opacity:.75; }
+.music-toggle[aria-pressed="true"]::after { content:""; position:absolute; right:8px; bottom:8px; width:5px; height:5px; border-radius:50%; background:#477954; border:1px solid #f7f6f1; }
+.music-toggle > [data-music-label] { position:absolute; left:0; bottom:52px; width:max-content; max-width:240px; padding:7px 10px; border-radius:6px; background:#173b2a; color:#f7f6f1; font-size:.7rem; line-height:1.5; font-weight:400; visibility:hidden; opacity:0; pointer-events:none; }
+.music-toggle:focus-visible > [data-music-label] { visibility:visible; opacity:1; }
+[data-theme="dark"] .music-toggle, [data-theme="dark"] .music-toggle[aria-pressed="true"] { background:rgba(29,48,36,.92); color:#dae4d8; border-color:rgba(185,203,179,.4); }
+[data-theme="dark"] .music-toggle[aria-pressed="true"]::after { background:#b9cbb3; border-color:#1d3024; }
+@media(hover:hover) { .music-toggle:hover > [data-music-label] { visibility:visible; opacity:1; } }
