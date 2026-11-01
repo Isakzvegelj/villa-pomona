@@ -770,3 +770,11 @@ body:has(.lightbox.active) .mobile-booking-cta { display: none; }
  .booking-section #bentralBooking { padding: 12px; border-radius: 10px; }
  .booking-intro h2 { font-size: 2.2rem; }
 }
+
+/* Restrained decorative line icons replace platform-dependent emoji. */
+.ui-icon { display:inline-block; width:22px; height:22px; flex:none; vertical-align:middle; }
+.theme-toggle .ui-icon { width:19px; height:19px; }
+.gallery-zoom .ui-icon { width:30px; height:30px; }
+.amenity-card-text-icon .ui-icon { width:76px; height:76px; stroke-width:1; }
+.amenity-card-text-icon { background:#f5f4ed; color:#7a684a; }
+[data-theme="dark"] .amenity-card-text-icon { background:#1b2920; color:#cbb995; }
