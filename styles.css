@@ -781,6 +781,7 @@ body:has(.lightbox.active) .mobile-booking-cta { display: none; }
 
 /* Readability proposal: reliable contrast behind copy over photographs. */
 .hero-overlay { background: linear-gradient(135deg, rgba(12,34,23,.30), rgba(12,34,23,.16)); }
+.hero-content { opacity:1 !important; }
 .hero-content::before { content:""; position:absolute; inset:-28px -20px; z-index:-1; border-radius:16px; background:rgba(10,28,19,.84); box-shadow:0 12px 48px rgba(0,0,0,.16); }
 .hero-title { font-weight:400; line-height:1.15; text-shadow:0 2px 8px rgba(0,0,0,.28); }
 .hero-title em, [data-theme="dark"] .hero-title em { color:#f3dda6; }
