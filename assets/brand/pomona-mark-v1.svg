@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+  <title>Villa Pomona</title>
+  <rect width="128" height="128" rx="25" fill="#234533"/>
+  <path transform="translate(-6 0)" d="M32 103V96H43V31H32V24H73C96 24 107 36 107 53C107 73 93 84 72 84H59V96H72V103H32ZM59 32V76H70C84 76 91 68 91 54C91 39 84 32 70 32H59Z" fill="#f5f3ed" fill-rule="evenodd"/>
+</svg>
