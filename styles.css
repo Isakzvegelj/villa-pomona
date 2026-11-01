@@ -799,3 +799,25 @@ body:has(.lightbox.active) .mobile-booking-cta { display: none; }
  .hero-desc { font-size:1rem; }
 }
 @media (hover:none) { .gallery-overlay { opacity:1; } }
+
+/* Booking proposal: a wider native form with an editorial introduction. */
+.booking-section { padding:80px 0 88px; background:#f7f6f1; }
+.booking-section .contact-form-wrapper { display:block; max-width:1040px; margin:0 auto; }
+.booking-intro { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); column-gap:64px; row-gap:12px; padding-bottom:28px; margin:0 0 28px; border-bottom:1px solid #dedfd5; }
+.booking-intro::before { display:none; }
+.booking-intro .booking-kicker { grid-column:1/-1; display:flex; align-items:center; gap:12px; margin:0; color:#73806f; font-size:.7rem; letter-spacing:.15em; }
+.booking-intro .booking-kicker::before { content:""; width:32px; height:1px; background:#ac9262; }
+.booking-intro h2 { margin:0; max-width:15ch; font-size:clamp(2.2rem,3.2vw,2.9rem); font-weight:400; line-height:1.1; }
+.booking-intro p:not(.booking-kicker) { align-self:end; margin:0; max-width:46ch; font-size:.94rem; line-height:1.85; }
+.booking-section #bentralBooking, .booking-section #bentralBooking:hover { padding:28px; border:1px solid #e2e3d9; border-radius:16px; background:#fff; box-shadow:0 10px 40px rgba(26,58,42,.035); }
+.booking-section #bentralBooking iframe { width:100%; display:block; background:#fff; border:0; }
+[data-theme="dark"] .booking-intro { border-bottom-color:#344739; }
+[data-theme="dark"] .booking-intro .booking-kicker { color:#bac9b9; }
+[data-theme="dark"] .booking-section #bentralBooking { border-color:#536254; }
+@media(max-width:768px) {
+ .booking-section { padding:44px 0 52px; }
+ .booking-intro { grid-template-columns:minmax(0,1fr); gap:14px; padding-bottom:24px; margin-bottom:24px; }
+ .booking-intro h2 { font-size:2.2rem; max-width:18ch; }
+ .booking-intro p:not(.booking-kicker) { max-width:44ch; font-size:.91rem; }
+ .booking-section #bentralBooking, .booking-section #bentralBooking:hover { padding:12px; border-radius:12px; }
+}
