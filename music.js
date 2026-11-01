@@ -1,4 +1,4 @@
-// Opt-in ambience. No audio URL is assigned until the guest presses Play.
+// Quiet ambience: try autoplay where permitted, with a clear manual fallback.
 (function () {
   var button = document.getElementById('musicToggle');
   if (!button) return;
@@ -7,6 +7,9 @@
   var audio = null;
   var wanted = false;
   var revision = 0;
+  var preferenceKey = 'pomona-music-muted-v1';
+  function isMuted() { try { return localStorage.getItem(preferenceKey) === 'true'; } catch (_) { return false; } }
+  function rememberMuted(value) { try { localStorage.setItem(preferenceKey, String(value)); } catch (_) {} }
   function update(playing) {
     button.setAttribute('aria-pressed', String(playing));
     label.textContent = playing ? button.dataset.off : button.dataset.on;
@@ -18,9 +21,8 @@
     if (audio) audio.pause();
     update(false);
   }
-  button.addEventListener('click', function () {
+  function start(automatic) {
     status.textContent = '';
-    if (wanted) { stop(); return; }
     if (!audio) {
       audio = new Audio();
       audio.preload = 'none';
@@ -38,10 +40,16 @@
     audio.play().then(function () {
       if (attempt !== revision) return;
       if (!wanted || document.hidden) stop();
-    }).catch(function () {
+    }).catch(function (error) {
       if (!wanted || attempt !== revision) return;
-      stop(); status.textContent = button.dataset.error;
+      stop();
+      if (automatic && error.name === 'NotAllowedError') { label.textContent = button.dataset.tap; }
+      else { status.textContent = button.dataset.error; }
     });
+  }
+  button.addEventListener('click', function () {
+    if (wanted) { rememberMuted(true); stop(); return; }
+    rememberMuted(false); start(false);
   });
   // Respect the guest's attention and stop decoding while the page is hidden.
   document.addEventListener('visibilitychange', function () { if (document.hidden) stop(); });
@@ -49,4 +57,6 @@
   document.addEventListener('play', function (event) {
     if (event.target !== audio && (event.target.tagName === 'VIDEO' || event.target.tagName === 'AUDIO')) stop();
   }, true);
+  // Data Saver users remain opt-in; never start audio from an unrelated tap.
+  if (!document.hidden && !isMuted() && !(navigator.connection && navigator.connection.saveData)) start(true);
 })();
