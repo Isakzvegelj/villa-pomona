@@ -821,3 +821,32 @@ body:has(.lightbox.active) .mobile-booking-cta { display: none; }
  .booking-intro p:not(.booking-kicker) { max-width:44ch; font-size:.91rem; }
  .booking-section #bentralBooking, .booking-section #bentralBooking:hover { padding:12px; border-radius:12px; }
 }
+
+/* Room calendars: compact, accessible native disclosures. */
+.availability .availability-grid { display:block; max-width:1000px; margin:0 auto; }
+.availability details.availability-card { padding:0; margin:0 0 12px; overflow:hidden; }
+.availability-card summary { display:flex; align-items:center; justify-content:space-between; gap:24px; min-height:82px; padding:22px 26px; cursor:pointer; list-style:none; }
+.availability-card summary::-webkit-details-marker { display:none; }
+.availability-card summary::marker { content:""; }
+.availability-card summary h3 { margin:0; font-size:1.15rem; line-height:1.4; }
+.calendar-toggle { display:inline-flex; flex-shrink:0; align-items:center; gap:16px; color:var(--green-800); font-size:.78rem; line-height:1.5; font-weight:600; }
+.calendar-chevron { width:8px; height:8px; border-right:1.5px solid currentColor; border-bottom:1.5px solid currentColor; transform:rotate(45deg); margin-top:-4px; }
+.calendar-hide { display:none; }
+.availability-card[open] .calendar-show { display:none; }
+.availability-card[open] .calendar-hide { display:inline; }
+.availability-card[open] .calendar-chevron { transform:rotate(225deg); margin-top:4px; }
+.availability-card[open] summary { border-bottom:1px solid var(--border-color); }
+.availability-card summary:hover { background:var(--neutral-50); }
+.availability-card summary:focus-visible { outline:3px solid var(--green-500); outline-offset:-4px; border-radius:10px; }
+.calendar-panel { padding:20px 24px 26px; max-width:720px; margin:0 auto; }
+.calendar-panel .bentral-calendar { padding:0; min-width:0; }
+.calendar-panel iframe { max-width:100%; }
+.calendar-panel .bentral-book-btn { display:flex; width:max-content; max-width:100%; margin:20px auto 0; }
+[data-theme="dark"] .calendar-toggle { color:var(--green-300); }
+[data-theme="dark"] .availability-card summary:hover { background:var(--bg-secondary); }
+@media(max-width:768px) {
+ .availability-card summary { align-items:flex-start; flex-direction:column; gap:10px; padding:18px 20px; min-height:100px; }
+ .availability-card summary h3 { font-size:1.1rem; }
+ .calendar-toggle { width:100%; justify-content:space-between; }
+ .calendar-panel { padding:16px 12px 20px; }
+}

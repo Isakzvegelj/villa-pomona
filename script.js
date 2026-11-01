@@ -132,6 +132,7 @@ function initBentralCalendarClicks() {
     document.addEventListener('click', function(e) {
         var card = e.target.closest('.availability-card');
         if (!card) return;
+        if (e.target.closest('summary')) return;
         if (e.target.closest('.bentral-book-btn')) return;
 
         var calendar = card.querySelector('.bentral-calendar');
@@ -278,3 +279,13 @@ function initBookingFrameTitles() {
         new MutationObserver(labelFrames).observe(widget, {childList: true, subtree: true});
     });
 }
+
+// Keep the room calendars compact while retaining native keyboard disclosures.
+document.querySelectorAll('details.availability-card').forEach(function(card) {
+    card.addEventListener('toggle', function() {
+        if (!card.open) return;
+        document.querySelectorAll('details.availability-card').forEach(function(other) {
+            if (other !== card) other.open = false;
+        });
+    });
+});
