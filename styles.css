@@ -778,3 +778,23 @@ body:has(.lightbox.active) .mobile-booking-cta { display: none; }
 .amenity-card-text-icon .ui-icon { width:76px; height:76px; stroke-width:1; }
 .amenity-card-text-icon { background:#f5f4ed; color:#7a684a; }
 [data-theme="dark"] .amenity-card-text-icon { background:#1b2920; color:#cbb995; }
+
+/* Readability proposal: reliable contrast behind copy over photographs. */
+.hero-overlay { background: linear-gradient(135deg, rgba(12,34,23,.30), rgba(12,34,23,.16)); }
+.hero-content::before { content:""; position:absolute; inset:-28px -20px; z-index:-1; border-radius:16px; background:rgba(10,28,19,.84); box-shadow:0 12px 48px rgba(0,0,0,.16); }
+.hero-title { font-weight:400; line-height:1.15; text-shadow:0 2px 8px rgba(0,0,0,.28); }
+.hero-title em, [data-theme="dark"] .hero-title em { color:#f3dda6; }
+.hero-subtitle { color:#f3dda6; font-size:.8rem; font-weight:600; letter-spacing:.16em; }
+.hero-desc { color:#fff; font-size:1.06rem; line-height:1.75; font-weight:500; text-shadow:0 1px 3px rgba(0,0,0,.3); }
+.hero-booking-hint { color:#fff; font-size:.92rem; font-weight:500; line-height:1.7; }
+.hero-scroll span { color:#fff; font-size:.75rem; font-weight:500; }
+.hero-actions .btn-outline { color:#fff; border-color:rgba(255,255,255,.72); }
+.nav:not(.scrolled) { background:linear-gradient(to bottom,rgba(7,24,16,.88),rgba(7,24,16,.52)); }
+.nav:not(.scrolled) .nav-links a { color:#fff; }
+.gallery-overlay, [data-theme="dark"] .gallery-item .gallery-overlay { background:linear-gradient(to top,rgba(6,20,13,.96),rgba(6,20,13,.76) 38%,rgba(6,20,13,.12) 75%,transparent); }
+.gallery-label { font-size:.94rem; font-weight:600; line-height:1.45; text-shadow:0 1px 3px #000; }
+@media (max-width:768px) {
+ .hero-content::before { inset:80px 12px 84px; border-radius:12px; }
+ .hero-desc { font-size:1rem; }
+}
+@media (hover:none) { .gallery-overlay { opacity:1; } }
