@@ -852,3 +852,6 @@ body:has(.lightbox.active) .mobile-booking-cta { display: none; }
  .calendar-panel { padding:16px 12px 20px; }
  .calendar-scroll-hint { display:block; margin:0 0 12px; color:var(--text-secondary); font-size:.78rem; line-height:1.6; }
 }
+.availability.section { padding:64px 0; }
+.availability .section-header { margin-bottom:32px; }
+@media(max-width:768px) { .availability.section { padding:40px 0; } }
