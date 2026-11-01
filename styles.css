@@ -805,8 +805,8 @@ body:has(.lightbox.active) .mobile-booking-cta { display: none; }
 .booking-section .contact-form-wrapper { display:block; max-width:1040px; margin:0 auto; }
 .booking-intro { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); column-gap:64px; row-gap:12px; padding-bottom:28px; margin:0 0 28px; border-bottom:1px solid #dedfd5; }
 .booking-intro::before { display:none; }
-.booking-intro .booking-kicker { grid-column:1/-1; display:flex; align-items:center; gap:12px; margin:0; color:#73806f; font-size:.7rem; letter-spacing:.15em; }
-.booking-intro .booking-kicker::before { content:""; width:32px; height:1px; background:#ac9262; }
+.booking-intro .booking-kicker { grid-column:1/-1; display:flex; align-items:center; gap:12px; margin:0; max-width:none; color:#73806f; font-size:.7rem; letter-spacing:.15em; }
+.booking-intro .booking-kicker::before { content:""; flex-shrink:0; width:32px; height:1px; background:#ac9262; }
 .booking-intro h2 { margin:0; max-width:15ch; font-size:clamp(2.2rem,3.2vw,2.9rem); font-weight:400; line-height:1.1; }
 .booking-intro p:not(.booking-kicker) { align-self:end; margin:0; max-width:46ch; font-size:.94rem; line-height:1.85; }
 .booking-section #bentralBooking, .booking-section #bentralBooking:hover { padding:28px; border:1px solid #e2e3d9; border-radius:16px; background:#fff; box-shadow:0 10px 40px rgba(26,58,42,.035); }
