@@ -607,6 +607,7 @@
             </div>
             <div class="footer-bottom">
                 <p>&copy; <span id="footerYear">2026</span> Villa Pomona Bled. Alle Rechte vorbehalten.</p>
+                <p class="music-credit">Musik: <a href="https://www.scottbuckley.com.au/library/hymn/" target="_blank" rel="noopener">“Hymn” — Scott Buckley</a> · <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC BY 4.0</a> · Komprimiert; leisere Wiedergabe</p>
                 <p class="footer-sister">Verwaltet von <a href="https://www.adorabled.com">Vile Bled, d.o.o.</a></p>
             </div>
         </div>
@@ -630,5 +631,8 @@
 })();
 </script>
 <a href="#bookingHeading" class="mobile-booking-cta">Verfügbarkeit prüfen <span aria-hidden="true">&rarr;</span></a>
+<button type="button" class="music-toggle" id="musicToggle" aria-pressed="false" aria-label="Hintergrundmusik abspielen" data-on="Musik aus" data-off="Musik an" data-play="Hintergrundmusik abspielen" data-stop="Hintergrundmusik ausschalten" data-error="Musik konnte nicht abgespielt werden. Bitte erneut versuchen." data-src="../assets/audio/hymn-piano-v1.mp3"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18V5l11-2v13M9 8l11-2"/><ellipse cx="6" cy="18" rx="3" ry="2"/><ellipse cx="17" cy="16" rx="3" ry="2"/></svg><span data-music-label>Musik aus</span></button>
+<p id="musicStatus" class="music-status" role="status"></p>
+<script src="../music.js" defer></script>
 </body>
 </html>
