@@ -883,3 +883,5 @@ body:has(.lightbox.active) .music-toggle, body:has(.lightbox.active) .music-stat
 [data-theme="dark"] .music-toggle, [data-theme="dark"] .music-toggle[aria-pressed="true"] { background:rgba(29,48,36,.92); color:#dae4d8; border-color:rgba(185,203,179,.4); }
 [data-theme="dark"] .music-toggle[aria-pressed="true"]::after { background:#b9cbb3; border-color:#1d3024; }
 @media(hover:hover) { .music-toggle:hover > [data-music-label] { visibility:visible; opacity:1; } }
+
+.direct-stay-choices{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin:24px 0 40px}.direct-stay-choices>div{padding:24px;border:1px solid var(--border-color,#c9cec5);border-radius:12px}.direct-stay-choices h3{font-size:1.5rem}.direct-stay-choices p{margin:12px 0 20px}@media(max-width:700px){.direct-stay-choices{grid-template-columns:1fr}.direct-stay-choices .btn{white-space:normal;text-align:center}}
